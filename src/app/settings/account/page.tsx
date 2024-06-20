@@ -1,3 +1,9 @@
+import AccountCard from "~/components/AccountCard";
+
 export default function Account() {
-  return <div>Account</div>;
+  return (
+    <div>
+      <AccountCard />
+    </div>
+  );
 }

@@ -1,3 +1,5 @@
+import { Fullscreen } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import {
   Pagination,
@@ -21,6 +23,15 @@ export default async function Home() {
 
   return (
     <main>
+      <div className="h-700 w-full fill-current">
+        <Image
+          object-fit="cover"
+          width={200}
+          height={200}
+          src="/business.jpg"
+          alt="business-bg"
+        ></Image>
+      </div>
       <div>
         <head>
           <link rel="icon" href="/shopping-icon.png" />
@@ -29,7 +40,7 @@ export default async function Home() {
       </div>
       <div className="column-1 items-center px-5 text-center">
         <div className="text-left">
-          <h1 className="px-10 py-10 text-3xl font-bold">Home</h1>
+          <h1 className="px-10 py-10 text-3xl font-bold"></h1>
         </div>
       </div>
     </main>

@@ -22,10 +22,12 @@ export default function NavBar() {
             width="30"
             height={30}
           ></Image>
-          <Link href="/">Home</Link>
+          <Link className="font-bold" href="/">
+            Home
+          </Link>
         </div>
         <Link href="/listings">Listings</Link>
-        <Link href="/settings">Settings</Link>
+        <Link href="/settings/account">Settings</Link>
       </div>
 
       <div className="items-left flex">

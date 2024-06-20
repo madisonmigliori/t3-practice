@@ -41,7 +41,7 @@ export default function Listing() {
           </Command>
         </div>
       </div>
-      <div className="mx-10 grid grid-flow-row-dense grid-cols-2 grid-rows-5 gap-4">
+      <div className="mx-20 my-10 grid grid-flow-row-dense grid-cols-2 grid-rows-5 gap-4">
         <ListingCard />
         <ListingCard />
         <ListingCard />
