@@ -18,19 +18,16 @@ import { api } from "~/trpc/server";
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const hello = await api.post.hello({ text: "from tRPC" });
-  const session = await getServerAuthSession();
-
   return (
     <main>
       <div className="h-700 w-full fill-current">
-        <Image
+        {/* <Image
           object-fit="cover"
           width={200}
           height={200}
           src="/business.jpg"
           alt="business-bg"
-        ></Image>
+        ></Image> */}
       </div>
       <div>
         <head>
@@ -40,7 +37,7 @@ export default async function Home() {
       </div>
       <div className="column-1 items-center px-5 text-center">
         <div className="text-left">
-          <h1 className="px-10 py-10 text-3xl font-bold"></h1>
+          <h1 className="px-10 py-10 text-3xl font-bold">Home</h1>
         </div>
       </div>
     </main>

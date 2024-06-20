@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import { permanentRedirect } from "next/navigation";
+import { any } from "zod";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import {
   DropdownMenu,
@@ -23,6 +25,7 @@ export default function NavBar() {
             height={30}
           ></Image>
           <Link className="font-bold" href="/">
+            {/* {permanentRedirect("/listings")} */}
             Home
           </Link>
         </div>
