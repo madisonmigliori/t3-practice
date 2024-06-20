@@ -2,23 +2,9 @@ import "~/styles/globals.css";
 
 import { GeistSans } from "geist/font/sans";
 
+import NavBar from "~/components/NavBar";
+import { Pagination } from "~/components/ui/pagination";
 import { TRPCReactProvider } from "~/trpc/react";
-
-export function TopNav() {
-  return (
-    <nav className="flex w-full items-center justify-between px-4 py-4">
-      <div>
-        <img src="/public/shopping-icon.png"></img>
-        <span>Dealonomy </span>
-        <span>Listing </span>
-        <span>Settings </span>
-      </div>
-      <div>
-        <span>Profile</span>
-      </div>
-    </nav>
-  );
-}
 
 export default function RootLayout({
   children,
@@ -27,8 +13,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body className={`gap -4 flex flex-col`}>
-        <TopNav />
+      <body className={`flex flex-col bg-slate-100`}>
+        <NavBar />
+        {children}
       </body>
     </html>
   );

@@ -1,4 +1,13 @@
 import Link from "next/link";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "~/components/ui/pagination";
 
 import { getServerAuthSession } from "~/server/auth";
 import { db } from "~/server/db";
@@ -11,8 +20,18 @@ export default async function Home() {
   const session = await getServerAuthSession();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div>T3 Practice Loading..</div>
+    <main>
+      <div>
+        <head>
+          <link rel="icon" href="/shopping-icon.png" />
+          <title>T3 Practice</title>
+        </head>
+      </div>
+      <div className="column-1 items-center px-5 text-center">
+        <div className="text-left">
+          <h1 className="px-10 py-10 text-3xl font-bold">Home</h1>
+        </div>
+      </div>
     </main>
   );
 }
