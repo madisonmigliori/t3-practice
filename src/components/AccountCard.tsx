@@ -49,7 +49,7 @@ export default function AccountCard() {
     // <Form {...account}>
     <form>
       <Card>
-        <CardHeader>
+        <CardHeader className="mt-2">
           <CardTitle>Account Settings</CardTitle>
         </CardHeader>
         <CardContent>

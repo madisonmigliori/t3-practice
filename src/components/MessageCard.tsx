@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import MessageItem from "~/components/MessageItem";
 import { Button } from "~/components/ui/button";
 
 import {
@@ -12,19 +13,27 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import { Form } from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
+
+import { SquarePen } from "lucide-react";
+import { ScrollArea } from "~/components/ui/scroll-area";
 
 export default function BuyingCard() {
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Messages</CardTitle>
+      <CardHeader className="flex justify-between">
+        <CardTitle className="mt-2">Messages</CardTitle>
+        <Button variant="ghost">
+          <SquarePen />
+        </Button>
       </CardHeader>
-      <CardContent>
-        <div className="mx-10 grid grid-flow-row-dense grid-cols-2 gap-4"></div>
-      </CardContent>
+      <ScrollArea>
+        <CardContent>
+          <div className="mx-5 grid grid-flow-row-dense gap-4">
+            <MessageItem />
+            <MessageItem />
+          </div>
+        </CardContent>
+      </ScrollArea>
     </Card>
   );
 }

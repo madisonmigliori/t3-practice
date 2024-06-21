@@ -13,9 +13,14 @@ export default function ListingComponent() {
     <div className="m-6">
       <Card>
         <div>
-          <Link href="/listings">
+          <Link href="/listing">
             <Button className="m-5" type="submit">
               Back to Listings
+            </Button>
+          </Link>
+          <Link href="/settings/buying">
+            <Button className="m-5" type="submit">
+              Back to Buying
             </Button>
           </Link>
         </div>

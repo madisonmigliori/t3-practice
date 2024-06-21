@@ -10,7 +10,7 @@ import {
 
 export default function ListingCard() {
   return (
-    <Link href="/listings/card">
+    <Link href="/listing/card">
       <Card>
         <CardHeader className="flex flex-col">
           <CardTitle>Cartwright, Herman, and Murazik</CardTitle>

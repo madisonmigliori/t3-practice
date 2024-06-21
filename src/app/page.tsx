@@ -15,8 +15,6 @@ import { getServerAuthSession } from "~/server/auth";
 import { db } from "~/server/db";
 import { api } from "~/trpc/server";
 
-export const dynamic = "force-dynamic";
-
 export default async function Home() {
   return (
     <main>

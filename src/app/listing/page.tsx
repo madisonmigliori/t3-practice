@@ -1,3 +1,4 @@
+import { Search } from "lucide-react";
 import ListingCard from "~/components/ListingCard";
 
 import {
@@ -16,6 +17,7 @@ import {
   CommandList,
   CommandSeparator,
 } from "~/components/ui/command";
+import { Input } from "~/components/ui/input";
 import {
   Pagination,
   PaginationContent,
@@ -36,9 +38,9 @@ export default function Listing() {
           </div>
         </div>
         <div className="mx-3 my-3 border">
-          <Command>
-            <CommandInput placeholder="Search businesses..." />
-          </Command>
+          <Search>
+            <Input type="search" placeholder="Search businesses..." />
+          </Search>
         </div>
       </div>
       <div className="mx-20 my-10 grid grid-flow-row-dense grid-cols-2 grid-rows-5 gap-4">
