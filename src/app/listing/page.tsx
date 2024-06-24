@@ -1,4 +1,5 @@
 import { Plus } from "lucide-react";
+import Link from "next/link";
 import ListingCard from "~/components/ListingCard";
 import Search from "~/components/Search";
 import { Button } from "~/components/ui/button";
@@ -41,9 +42,11 @@ export default function Listing() {
         </div>
         <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
           <Search placeholder="Search Business..." />
-          <Button variant="outline">
-            <Plus />
-          </Button>
+          <Link href="/listing/addListing">
+            <Button variant="outline">
+              <Plus />
+            </Button>
+          </Link>
         </div>
       </div>
       <div className="mx-20 my-10 grid grid-flow-row-dense grid-cols-2 grid-rows-5 gap-4">

@@ -1,4 +1,5 @@
-import { postRouter } from "~/server/api/routers/post";
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { listingRouter } from "~/server/api/routers/listing";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 
 /**
@@ -7,7 +8,7 @@ import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  post: postRouter,
+  listing: listingRouter,
 });
 
 // export type definition of API

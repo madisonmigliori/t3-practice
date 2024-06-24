@@ -15,16 +15,17 @@ datasource db {
     relationMode = "prisma"
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    createdBy   User   @relation(fields: [createdById], references: [id])
+model Listing {
+    id          Int      @id @default(autoincrement())
+    name        String
+    location    String
+    createdAt   DateTime
+    updatedAt   DateTime
+    askingPrice Int
+    grossRev    Int
+    adjCashFlow Int
+    createdBy   User     @relation(fields: [createdById], references: [id])
     createdById String
-
-    @@index([name])
 }
 
 // Necessary for Next auth
@@ -63,7 +64,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
-    posts         Post[]
+    listings      Listing[]
 }
 
 model VerificationToken {

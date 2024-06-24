@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import Link from "next/link";
 import {
   Card,
@@ -7,8 +9,11 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
+import { api } from "~/trpc/server";
 
 export default function ListingCard() {
+  // const createListing = api.listing.create.useMutation();
+
   return (
     <Link href="/listing/card">
       <Card>
