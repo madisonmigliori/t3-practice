@@ -1,5 +1,7 @@
-import { Search } from "lucide-react";
+import { Plus } from "lucide-react";
 import ListingCard from "~/components/ListingCard";
+import Search from "~/components/Search";
+import { Button } from "~/components/ui/button";
 
 import {
   Card,
@@ -37,10 +39,11 @@ export default function Listing() {
             <h1 className="px-10 py-10 text-3xl font-bold">All Listings</h1>
           </div>
         </div>
-        <div className="mx-3 my-3 border">
-          <Search>
-            <Input type="search" placeholder="Search businesses..." />
-          </Search>
+        <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
+          <Search placeholder="Search Business..." />
+          <Button variant="outline">
+            <Plus />
+          </Button>
         </div>
       </div>
       <div className="mx-20 my-10 grid grid-flow-row-dense grid-cols-2 grid-rows-5 gap-4">

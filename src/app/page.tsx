@@ -18,15 +18,7 @@ import { api } from "~/trpc/server";
 export default async function Home() {
   return (
     <main>
-      <div className="h-700 w-full fill-current">
-        {/* <Image
-          object-fit="cover"
-          width={200}
-          height={200}
-          src="/business.jpg"
-          alt="business-bg"
-        ></Image> */}
-      </div>
+      <div className="h-700 w-full fill-current"></div>
       <div>
         <head>
           <link rel="icon" href="/shopping-icon.png" />

@@ -1,5 +1,5 @@
-// import { NextResponse, NextRequest } from 'next/server'
-// import { authenticate } from 'auth-provider'
+// import { NextResponse, NextRequest } from "next/server";
+// import { authenticate } from "auth-provider";
 
 // export function middleware(request: NextRequest) {
 //   const isAuthenticated = authenticate(request)
