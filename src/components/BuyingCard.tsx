@@ -1,9 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Search } from "lucide-react";
 import { z } from "zod";
 import BuyingItem from "~/components/BuyingItem";
+import Search from "~/components/Search";
 import { Button } from "~/components/ui/button";
 
 import {
@@ -28,10 +28,7 @@ export default function BuyingCard() {
         </div>
         <div className="flex flex-row gap-4">
           <Button variant="outline">Sort</Button>
-          <Search>
-            Search
-            <Input type="text" placeholder="Search..."></Input>
-          </Search>
+          <Search placeholder={""} />
         </div>
       </CardHeader>
       <ScrollArea>

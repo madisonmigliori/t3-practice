@@ -13,7 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import { Form } from "~/components/ui/form";
+import { Form, FormControl, FormField, FormItem } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 
@@ -28,7 +28,7 @@ const accountSchema = z.object({
   mobilePhone: z.string(),
 });
 
-export function AccountForm() {
+export default function AccountCard() {
   const account = useForm<z.infer<typeof accountSchema>>({
     resolver: zodResolver(accountSchema),
     defaultValues: {
@@ -42,83 +42,183 @@ export function AccountForm() {
       mobilePhone: "",
     },
   });
-}
 
-export default function AccountCard() {
+  function onSubmit(values: z.infer<typeof accountSchema>) {
+    console.log(values);
+  }
   return (
-    // <Form {...account}>
-    <form>
-      <Card>
-        <CardHeader className="mt-2">
-          <CardTitle>Account Settings</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="mx-10 grid grid-flow-row-dense grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="first-name">First Name</Label>
-              <Input type="text" id="first-name" placeholder='e.g. "John"' />
+    <Card>
+      <CardHeader className="mt-2">
+        <CardTitle>Account Settings</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Form {...account}>
+          <form onSubmit={account.handleSubmit(onSubmit)}>
+            <div className="mx-10 grid grid-flow-row-dense grid-cols-2 gap-4">
+              <div>
+                <FormField
+                  control={account.control}
+                  name={"firstName"}
+                  render={({ field }) => (
+                    <FormItem>
+                      <Label htmlFor="first-name">First Name*</Label>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          id="first-name"
+                          {...field}
+                          placeholder='e.g. "John"'
+                          required
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div>
+                <FormField
+                  control={account.control}
+                  name={"lastName"}
+                  render={({ field }) => (
+                    <FormItem>
+                      <Label htmlFor="last-name">Last Name*</Label>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          id="last-name"
+                          placeholder='e.g. "Doe"'
+                          {...field}
+                          required
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div>
+                <FormField
+                  control={account.control}
+                  name={"email"}
+                  render={({ field }) => (
+                    <FormItem>
+                      <Label htmlFor="email">Email*</Label>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          id="email"
+                          placeholder="e.g johndoe@email.com "
+                          {...field}
+                          required
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div>
+                <FormField
+                  control={account.control}
+                  name={"title"}
+                  render={({ field }) => (
+                    <FormItem>
+                      <Label htmlFor="title">Title</Label>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          id="title"
+                          placeholder='e.g. "CEO", "CTO", "Software Engineer" '
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div>
+                <FormField
+                  control={account.control}
+                  name={"companyName"}
+                  render={({ field }) => (
+                    <FormItem>
+                      <Label htmlFor="company-name">Company Name</Label>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          id="company-name"
+                          placeholder='e.g. "Google", "Facebook", "Microsoft" '
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div>
+                <FormField
+                  control={account.control}
+                  name={"officePhone"}
+                  render={({ field }) => (
+                    <FormItem>
+                      <Label htmlFor="office-phone">Office Phone</Label>
+                      <FormControl>
+                        <Input
+                          type="tel"
+                          id="office-phone"
+                          placeholder="e.g. (123) 456-7890 "
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div>
+                <FormField
+                  control={account.control}
+                  name={"homePhone"}
+                  render={({ field }) => (
+                    <FormItem>
+                      <Label htmlFor="home-phone">Home Phone</Label>
+                      <FormControl>
+                        <Input
+                          type="tel"
+                          id="home-phone"
+                          placeholder="e.g. (123) 456-7890 "
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div>
+                <FormField
+                  control={account.control}
+                  name={"mobilePhone"}
+                  render={({ field }) => (
+                    <FormItem>
+                      <Label htmlFor="mobile-phone">Mobile Phone</Label>
+                      <FormControl>
+                        <Input
+                          type="tel"
+                          id="mobile-phone"
+                          placeholder="e.g. (123) 456-7890 "
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
             </div>
-            <div>
-              <Label htmlFor="last-name">Last Name</Label>
-              <Input type="text" id="last-name" placeholder='e.g. "Doe"' />
-            </div>
-            <div>
-              <Label htmlFor="email">Email</Label>
-              <Input
-                type="email"
-                id="email"
-                placeholder="e.g johndoe@email.com "
-              />
-            </div>
-            <div>
-              <Label htmlFor="title">Title</Label>
-              <Input
-                type="text"
-                id="title"
-                placeholder='e.g. "CEO", "CTO", "Software Engineer" '
-              />
-            </div>
-            <div>
-              <Label htmlFor="company-name">Company Name</Label>
-              <Input
-                type="text"
-                id="company-name"
-                placeholder='e.g. "Google", "Facebook", "Microsoft" '
-              />
-            </div>
-            <div>
-              <Label htmlFor="office-phone">Office Phone</Label>
-              <Input
-                type="tel"
-                id="office-phone"
-                placeholder="e.g. (123) 456-7890 "
-              />
-            </div>
-            <div>
-              <Label htmlFor="home-phone">Home Phone</Label>
-              <Input
-                type="tel"
-                id="home-phone"
-                placeholder="e.g. (123) 456-7890 "
-              />
-            </div>
-            <div>
-              <Label htmlFor="mobile-phone">Mobile Phone</Label>
-              <Input
-                type="tel"
-                id="mobile-phone"
-                placeholder="e.g. (123) 456-7890 "
-              />
-            </div>
-            <div className="flex flex-row">
-              <Button className="basis-1/8" type="submit">
-                Submit
-              </Button>
-            </div>
+          </form>
+        </Form>
+        <div className="mx-10 my-5 flex grid grid-flow-row-dense grid-cols-2">
+          <div className="basis-1/8">
+            <Button type="submit">Submit</Button>
           </div>
-        </CardContent>
-      </Card>
-    </form>
-    // </Form>
+        </div>
+      </CardContent>
+    </Card>
   );
 }

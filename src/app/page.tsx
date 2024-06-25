@@ -34,11 +34,11 @@ export default async function Home() {
   );
 }
 
-async function CrudShowcase() {
-  const session = await getServerAuthSession();
-  if (!session?.user) return null;
+// async function CrudShowcase() {
+//   const session = await getServerAuthSession();
+//   if (!session?.user) return null;
 
-  const latestPost = await api.post.getLatest();
+//   const latestPost = await api.listing.getLatest();
 
-  return <div></div>;
-}
+//   return <div></div>;
+// }

@@ -13,9 +13,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body className={`flex flex-col bg-slate-100`}>
+      <body className={`flex w-full flex-col bg-slate-100`}>
         <NavBar />
-        {children}
+        <TRPCReactProvider> {children} </TRPCReactProvider>
       </body>
     </html>
   );

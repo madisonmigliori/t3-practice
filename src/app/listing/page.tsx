@@ -1,9 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+import { type Listing } from "@prisma/client";
+import { List } from "@radix-ui/react-tabs";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import ListingCard from "~/components/ListingCard";
 import Search from "~/components/Search";
 import { Button } from "~/components/ui/button";
+import { db } from "~/server/db";
 
+import { useState } from "react";
+import ListingPagination from "~/components/ListingPagination";
 import {
   Card,
   CardContent,
@@ -31,7 +38,15 @@ import {
   PaginationPrevious,
 } from "~/components/ui/pagination";
 
-export default function Listing() {
+// const [listings, setListings] = useState<Listing[]>([]);
+
+async function getListings() {
+  const listings = await db.listing.findMany();
+  return listings;
+}
+export default async function Listing() {
+  const listings = await getListings();
+
   return (
     <div>
       <div className="mx-10 grid grid-flow-row-dense grid-cols-2 gap-4">
@@ -50,33 +65,12 @@ export default function Listing() {
         </div>
       </div>
       <div className="mx-20 my-10 grid grid-flow-row-dense grid-cols-2 grid-rows-5 gap-4">
-        <ListingCard />
-        <ListingCard />
-        <ListingCard />
-        <ListingCard />
-        <ListingCard />
-        <ListingCard />
-        <ListingCard />
-        <ListingCard />
-        <ListingCard />
-        <ListingCard />
+        {listings.map((listing) => (
+          <ListingCard key={listing.id} listing={listing} />
+        ))}
       </div>
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious href="#" />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#">1</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext href="#" />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+
+      {/* <ListingPagination /> */}
     </div>
   );
 }
