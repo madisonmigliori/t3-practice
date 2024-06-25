@@ -39,15 +39,15 @@ export default function ListingCard({ listing }: ListingCardProps) {
           <div className="columns-3">
             <div>
               <p>{listing.askingPrice}</p>
-              <p>Asking Price</p>
+              <p className="font-semibold">Asking Price</p>
             </div>
             <div>
               <p>{listing.grossRev}</p>
-              <p>Gross Revenue</p>
+              <p className="font-semibold">Gross Revenue</p>
             </div>
             <div>
               <p>{listing.adjCashFlow}</p>
-              <p>Adjusted Cash Flow</p>
+              <p className="font-semibold">Adjusted Cash Flow</p>
             </div>
           </div>
         </CardContent>

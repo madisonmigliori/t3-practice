@@ -10,7 +10,6 @@ import { Button } from "~/components/ui/button";
 import { db } from "~/server/db";
 
 import { useState } from "react";
-import ListingPagination from "~/components/ListingPagination";
 import {
   Card,
   CardContent,

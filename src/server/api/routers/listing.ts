@@ -21,7 +21,7 @@ export const listingRouter = createTRPCRouter({
   //     cursor: z.object({id: z.string(), createdAt: z.date()}).optional(), })).query(async ({input: {limit = 10, cursor}}))
   //   }),
 
-  create: protectedProcedure
+  create: publicProcedure
     .input(
       z.object({
         name: z.string().min(1),
@@ -31,19 +31,24 @@ export const listingRouter = createTRPCRouter({
         adjCashFlow: z.number(),
       }),
     )
-    .mutation(
-      async ({
-        input: { name, location, askingPrice, grossRev, adjCashFlow },
-        ctx,
-      }) => {
-        const listing = await prisma.listing.create({
-          data: { name, location, askingPrice, grossRev, adjCashFlow },
-        });
-        return listing;
-      },
-    ),
+    .mutation(async ({ input, ctx }) => {
+      return ctx.db.listing.create({
+        data: {
+          name: input.name,
+          location: input.location,
+          askingPrice: input.askingPrice,
+          grossRev: input.grossRev,
+          adjCashFlow: input.adjCashFlow,
+        },
+      });
+    }),
 });
 
+getLatest: publicProcedure.query(({ ctx }) => {
+  return ctx.db.listing.findFirst({
+    orderBy: { id: "desc" },
+  });
+});
 //   getSecretMessage: protectedProcedure.query(() => {
 //     return "you can now see this secret message!";
 //   }),

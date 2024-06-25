@@ -13,7 +13,13 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import { Form, FormControl, FormField, FormItem } from "~/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 
@@ -61,7 +67,7 @@ export default function AccountCard() {
                   name={"firstName"}
                   render={({ field }) => (
                     <FormItem>
-                      <Label htmlFor="first-name">First Name*</Label>
+                      <FormLabel htmlFor="first-name">First Name*</FormLabel>
                       <FormControl>
                         <Input
                           type="text"

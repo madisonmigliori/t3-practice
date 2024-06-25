@@ -1,7 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm, useFormState } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "~/components/ui/button";
 
@@ -13,19 +17,33 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import { Form, FormControl, FormField, FormItem } from "~/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import { api } from "~/trpc/server";
 
 const addListingSchema = z.object({
-  name: z.string(),
-  location: z.string(),
-  askingPrice: z.number(),
-  grossRev: z.number(),
-  adjCashFlow: z.number(),
+  name: z.string().min(1, "Business name is required"),
+  location: z.string().min(1, "Location is required"),
+  askingPrice: z.number().min(0).optional(),
+  grossRev: z.number().min(0).optional(),
+  adjCashFlow: z.number().min(0).optional(),
 });
 
 export default function AddListingCard() {
+  const router = useRouter();
+  const [name, setName] = useState("");
+  const [location, setLocation] = useState("");
+  const [askingPrice, setAskingPrice] = useState("");
+  const [grossRev, setGrossRev] = useState("");
+  const [adjCashFlow, setAdjCashFlow] = useState("");
+
   const addListing = useForm<z.infer<typeof addListingSchema>>({
     resolver: zodResolver(addListingSchema),
     defaultValues: {
@@ -37,9 +55,9 @@ export default function AddListingCard() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof addListingSchema>) {
+  const onSubmit = (values: z.infer<typeof addListingSchema>) => {
     console.log(values);
-  }
+  };
   return (
     <Card>
       <CardHeader className="mt-2">
@@ -53,76 +71,80 @@ export default function AddListingCard() {
                 <FormField
                   control={addListing.control}
                   name={"name"}
-                  render={({ field }) => (
-                    <FormItem>
-                      <Label htmlFor="name">Name*</Label>
-                      <FormControl>
-                        <Input type="text" id="name" {...field} required />
-                      </FormControl>
-                    </FormItem>
-                  )}
+                  render={({ field }) => {
+                    return (
+                      <FormItem>
+                        <FormLabel>Name*</FormLabel>
+                        <FormControl>
+                          <Input type="text" {...field} autoComplete="off" />
+                        </FormControl>
+                      </FormItem>
+                    );
+                  }}
                 />
               </div>
               <div>
                 <FormField
                   control={addListing.control}
                   name={"location"}
-                  render={({ field }) => (
-                    <FormItem>
-                      <Label htmlFor="location">Location*</Label>
-                      <FormControl>
-                        <Input type="text" id="location" {...field} required />
-                      </FormControl>
-                    </FormItem>
-                  )}
+                  render={({ field }) => {
+                    return (
+                      <FormItem>
+                        <FormLabel>Location*</FormLabel>
+                        <FormControl>
+                          <Input type="text" autoComplete="on" {...field} />
+                        </FormControl>
+                      </FormItem>
+                    );
+                  }}
                 />
               </div>
               <div>
                 <FormField
                   control={addListing.control}
                   name={"askingPrice"}
-                  render={({ field }) => (
-                    <FormItem>
-                      <Label htmlFor="askingPrice">Asking Price</Label>
-                      <FormControl>
-                        <Input type="number" id="asking-price" {...field} />
-                      </FormControl>
-                    </FormItem>
-                  )}
+                  render={({ field }) => {
+                    return (
+                      <FormItem>
+                        <FormLabel>Asking Price</FormLabel>
+                        <FormControl>
+                          <Input type="number" {...field} autoComplete="off" />
+                        </FormControl>
+                      </FormItem>
+                    );
+                  }}
                 />
               </div>
               <div>
                 <FormField
                   control={addListing.control}
                   name={"grossRev"}
-                  render={({ field }) => (
-                    <FormItem>
-                      <Label htmlFor="grossRev">Gross Revenue</Label>
-                      <FormControl>
-                        <Input type="number" id="gross-rev" {...field} />
-                      </FormControl>
-                    </FormItem>
-                  )}
+                  render={({ field }) => {
+                    return (
+                      <FormItem>
+                        <FormLabel>Gross Revenue</FormLabel>
+                        <FormControl>
+                          <Input type="number" {...field} autoComplete="off" />
+                        </FormControl>
+                      </FormItem>
+                    );
+                  }}
                 />
               </div>
               <div>
                 <FormField
                   control={addListing.control}
                   name={"adjCashFlow"}
-                  render={({ field }) => (
-                    <FormItem>
-                      <Label htmlFor="adjustedCashFlow">
-                        Adjusted Cash Flow
-                      </Label>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          id="adjusted-cashflow"
-                          {...field}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
+                  render={({ field }) => {
+                    return (
+                      <FormItem>
+                        <FormLabel>Adjusted Cash Flow</FormLabel>
+                        <FormControl>
+                          <Input type="number" autoComplete="off" {...field} />
+                        </FormControl>
+                      </FormItem>
+                    );
+                  }}
                 />
               </div>
             </div>
