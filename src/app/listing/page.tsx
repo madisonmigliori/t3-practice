@@ -9,39 +9,11 @@ import Search from "~/components/Search";
 import { Button } from "~/components/ui/button";
 import { db } from "~/server/db";
 
-import { useState } from "react";
-import ListingComponent from "~/app/listing/[id]/page";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-} from "~/components/ui/command";
-import { Input } from "~/components/ui/input";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "~/components/ui/pagination";
 import { getServerAuthSession } from "~/server/auth";
 
 // const [listings, setListings] = useState<Listing[]>([]);
 
-async function getListings() {
+export async function getListings() {
   const listings = await db.listing.findMany();
   return listings;
 }
@@ -57,7 +29,7 @@ export default async function Listing() {
             <h1 className="px-10 py-10 text-3xl font-bold">All Listings</h1>
           </div>
         </div>
-        <div className="mr-10 mt-4 flex items-center justify-between gap-2 md:mt-8">
+        <div className="mr-10 mt-4 flex items-center justify-between gap-4 pr-10 ">
           <Search placeholder="Search Business..." />
 
           {session && (
@@ -71,14 +43,19 @@ export default async function Listing() {
           )}
         </div>
       </div>
-      <div className="mx-20 my-10 grid grid-flow-row-dense grid-cols-2 grid-rows-5 gap-4">
-        {listings.map((listing) => (
-          <>
-            <ListingCard key={listing.id} listing={listing} />
-          </>
-        ))}
+      <div className="mx-10">
+        {(await getListings()) ? (
+          <div className="mx-20  grid grid-flow-row-dense grid-cols-2 grid-rows-5 gap-4">
+            {listings.map((listing) => (
+              <>
+                <ListingCard key={listing.id} listing={listing} />
+              </>
+            ))}{" "}
+          </div>
+        ) : (
+          "No Listings Yet"
+        )}
       </div>
-
       {/* <ListingPagination /> */}
     </div>
   );

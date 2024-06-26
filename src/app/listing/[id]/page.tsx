@@ -1,4 +1,5 @@
 import type { Listing } from "@prisma/client";
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "~/components/ui/button";
@@ -20,29 +21,25 @@ export default async function ListingComponent({
   const getListing = await api.listing.getListing({ id });
 
   return (
-    <div className="m-6">
-      <div>
+    <div>
+      <Button variant="secondary" className="m-6">
         <Link href="/listing">
-          <Button className="m-5" type="submit">
-            Back to Listings
-          </Button>
+          {" "}
+          <ArrowLeft />
         </Link>
-        <Link href="/settings/buying">
-          <Button className="m-5" type="submit">
-            Back to Buying
-          </Button>
-        </Link>
+      </Button>
+      <div className="mx-10">
+        {getListing ? (
+          <Card>
+            <CardHeader className="flex flex-col">
+              <CardTitle>{getListing.name}</CardTitle>
+              <CardDescription>{getListing.location}</CardDescription>
+            </CardHeader>
+          </Card>
+        ) : (
+          "No Listings Found :("
+        )}
       </div>
-      {getListing ? (
-        <Card>
-          <CardHeader className="flex flex-col">
-            <CardTitle>{getListing.name}</CardTitle>
-            <CardDescription>{getListing.location}</CardDescription>
-          </CardHeader>
-        </Card>
-      ) : (
-        "No Listing Found :("
-      )}
     </div>
   );
 }

@@ -48,18 +48,30 @@ export const listingRouter = createTRPCRouter({
           askingPrice: input.askingPrice,
           grossRev: input.grossRev,
           adjCashFlow: input.adjCashFlow,
+          // createdBy: { connect: { id: ctx.session?.user.id } },
         },
       });
     }),
 
-  getLatest: publicProcedure.query(({ ctx }) => {
+  getSelling: publicProcedure.query(({ ctx }) => {
     return ctx.db.listing.findFirst({
       orderBy: { id: "desc" },
+      // where: { createdBy: { id: ctx.session?.user.id } },
     });
   }),
-});
 
-//   getSecretMessage: protectedProcedure.query(() => {
-//     return "you can now see this secret message!";
-//   }),
-// });
+  deleteListing: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.db.listing.delete({
+        where: {
+          // createdBy: { id: ctx.session.user.id },
+          id: Number(input.id),
+        },
+      });
+    }),
+
+  getSecretMessage: protectedProcedure.query(() => {
+    return "you can now see this secret message!";
+  }),
+});

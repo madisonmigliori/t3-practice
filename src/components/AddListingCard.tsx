@@ -12,6 +12,7 @@ import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/react";
 
 import { error } from "console";
+import Link from "next/link";
 import {
   Card,
   CardContent,
@@ -121,9 +122,9 @@ export default function AddListingCard() {
                         <FormLabel>Asking Price</FormLabel>
                         <FormControl>
                           <Input
+                            prefix={"$ "}
                             type="number"
                             {...field}
-                            autoComplete="off"
                             min={0}
                           />
                         </FormControl>
@@ -142,9 +143,9 @@ export default function AddListingCard() {
                         <FormLabel>Gross Revenue</FormLabel>
                         <FormControl>
                           <Input
+                            prefix={"$ "}
                             type="number"
                             {...field}
-                            autoComplete="off"
                             min={0}
                           />
                         </FormControl>
@@ -164,7 +165,7 @@ export default function AddListingCard() {
                         <FormControl>
                           <Input
                             type="number"
-                            autoComplete="off"
+                            prefix={"$ "}
                             {...field}
                             min={0}
                           />
