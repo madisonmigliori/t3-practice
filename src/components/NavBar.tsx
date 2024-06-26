@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-"use client";
 
 import { Session } from "inspector";
 import { SessionProvider, useSession } from "next-auth/react";
@@ -31,7 +30,9 @@ import {
 } from "~/components/ui/dropdown-menu";
 import { getServerAuthSession } from "~/server/auth";
 
-export default function NavBar() {
+export default async function NavBar() {
+  const session = await getServerAuthSession();
+
   return (
     <nav className="flex w-full items-center justify-between border-b-2 bg-white px-10 py-4">
       <div className="items-left flex gap-10">
@@ -55,9 +56,7 @@ export default function NavBar() {
         <Avatar>
           <DropdownMenu>
             <DropdownMenuTrigger>
-              {session && (
-                <AvatarImage src={session.user.image?.toString()} />
-              )}
+              {session && <AvatarImage src={session.user.image?.toString()} />}
               <AvatarFallback>MM</AvatarFallback>
             </DropdownMenuTrigger>
             <DropdownMenuContent>

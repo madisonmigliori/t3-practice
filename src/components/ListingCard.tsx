@@ -3,6 +3,7 @@
 
 import { type Listing } from "@prisma/client";
 import Link from "next/link";
+import { NextResponse } from "next/server";
 import type {
   AwaitedReactNode,
   JSXElementConstructor,
@@ -19,17 +20,16 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 import { listingRouter } from "~/server/api/routers/listing";
+import { db } from "~/server/db";
 import { api } from "~/trpc/server";
 
 interface ListingCardProps {
   listing: Listing;
 }
 
-export default function ListingCard({ listing }: ListingCardProps) {
-  //const createListing = api.listing.create.useMutation();
-
+export default async function ListingCard({ listing }: ListingCardProps) {
   return (
-    <Link href="/listing/card">
+    <Link href={`/listing/${listing.id}`}>
       <Card>
         <CardHeader className="flex flex-col">
           <CardTitle>{listing.name}</CardTitle>

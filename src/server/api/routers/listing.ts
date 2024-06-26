@@ -20,6 +20,15 @@ export const listingRouter = createTRPCRouter({
   //     limit: z.number().optional(),
   //     cursor: z.object({id: z.string(), createdAt: z.date()}).optional(), })).query(async ({input: {limit = 10, cursor}}))
   //   }),
+  getListing: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.db.listing.findUnique({
+        where: {
+          id: Number(input.id),
+        },
+      });
+    }),
 
   create: publicProcedure
     .input(
@@ -42,13 +51,14 @@ export const listingRouter = createTRPCRouter({
         },
       });
     }),
+
+  getLatest: publicProcedure.query(({ ctx }) => {
+    return ctx.db.listing.findFirst({
+      orderBy: { id: "desc" },
+    });
+  }),
 });
 
-getLatest: publicProcedure.query(({ ctx }) => {
-  return ctx.db.listing.findFirst({
-    orderBy: { id: "desc" },
-  });
-});
 //   getSecretMessage: protectedProcedure.query(() => {
 //     return "you can now see this secret message!";
 //   }),

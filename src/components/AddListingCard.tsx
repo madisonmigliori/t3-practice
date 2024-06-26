@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
@@ -8,7 +9,9 @@ import { useState } from "react";
 import { useForm, useFormState } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "~/components/ui/button";
+import { api } from "~/trpc/react";
 
+import { error } from "console";
 import {
   Card,
   CardContent,
@@ -26,23 +29,17 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { api } from "~/trpc/server";
 
 const addListingSchema = z.object({
   name: z.string().min(1, "Business name is required"),
   location: z.string().min(1, "Location is required"),
-  askingPrice: z.number().min(0).optional(),
-  grossRev: z.number().min(0).optional(),
-  adjCashFlow: z.number().min(0).optional(),
+  askingPrice: z.coerce.number().min(0),
+  grossRev: z.coerce.number().min(0),
+  adjCashFlow: z.coerce.number().min(0),
 });
 
 export default function AddListingCard() {
   const router = useRouter();
-  const [name, setName] = useState("");
-  const [location, setLocation] = useState("");
-  const [askingPrice, setAskingPrice] = useState("");
-  const [grossRev, setGrossRev] = useState("");
-  const [adjCashFlow, setAdjCashFlow] = useState("");
 
   const addListing = useForm<z.infer<typeof addListingSchema>>({
     resolver: zodResolver(addListingSchema),
@@ -55,9 +52,24 @@ export default function AddListingCard() {
     },
   });
 
+  const createListing = api.listing.create.useMutation({
+    onSuccess: () => {
+      router.refresh();
+      addListing.reset();
+    },
+  });
+
   const onSubmit = (values: z.infer<typeof addListingSchema>) => {
     console.log(values);
+    createListing.mutate({
+      name: values.name,
+      location: values.location,
+      askingPrice: values.askingPrice,
+      grossRev: values.grossRev,
+      adjCashFlow: values.adjCashFlow,
+    });
   };
+  console.log(addListing.formState.errors);
   return (
     <Card>
       <CardHeader className="mt-2">
@@ -108,7 +120,12 @@ export default function AddListingCard() {
                       <FormItem>
                         <FormLabel>Asking Price</FormLabel>
                         <FormControl>
-                          <Input type="number" {...field} autoComplete="off" />
+                          <Input
+                            type="number"
+                            {...field}
+                            autoComplete="off"
+                            min={0}
+                          />
                         </FormControl>
                       </FormItem>
                     );
@@ -124,7 +141,12 @@ export default function AddListingCard() {
                       <FormItem>
                         <FormLabel>Gross Revenue</FormLabel>
                         <FormControl>
-                          <Input type="number" {...field} autoComplete="off" />
+                          <Input
+                            type="number"
+                            {...field}
+                            autoComplete="off"
+                            min={0}
+                          />
                         </FormControl>
                       </FormItem>
                     );
@@ -140,21 +162,26 @@ export default function AddListingCard() {
                       <FormItem>
                         <FormLabel>Adjusted Cash Flow</FormLabel>
                         <FormControl>
-                          <Input type="number" autoComplete="off" {...field} />
+                          <Input
+                            type="number"
+                            autoComplete="off"
+                            {...field}
+                            min={0}
+                          />
                         </FormControl>
                       </FormItem>
                     );
                   }}
                 />
               </div>
+              <div className="mx-10 my-5 grid grid-flow-row-dense grid-cols-2">
+                <div className="basis-1/8">
+                  <Button type="submit">Submit</Button>
+                </div>
+              </div>
             </div>
           </form>
         </Form>
-        <div className="mx-10 my-5 flex grid grid-flow-row-dense grid-cols-2">
-          <div className="basis-1/8">
-            <Button type="submit">Submit</Button>
-          </div>
-        </div>
       </CardContent>
     </Card>
   );

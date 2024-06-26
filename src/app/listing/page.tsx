@@ -10,6 +10,7 @@ import { Button } from "~/components/ui/button";
 import { db } from "~/server/db";
 
 import { useState } from "react";
+import ListingComponent from "~/app/listing/[id]/page";
 import {
   Card,
   CardContent,
@@ -65,7 +66,9 @@ export default async function Listing() {
       </div>
       <div className="mx-20 my-10 grid grid-flow-row-dense grid-cols-2 grid-rows-5 gap-4">
         {listings.map((listing) => (
-          <ListingCard key={listing.id} listing={listing} />
+          <>
+            <ListingCard key={listing.id} listing={listing} />
+          </>
         ))}
       </div>
 

@@ -5,7 +5,6 @@ import redirects from "~/app/redirects/redirects.json";
 export default function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
   const currentUser = request.cookies.get("currentUser")?.value;
-  // const isAuthenticated = authenticate(request);
 
   // if (isAuthenticated) {
   //   return NextResponse.next();
@@ -15,9 +14,9 @@ export default function middleware(request: NextRequest) {
     url.pathname = "/listing";
     return NextResponse.redirect(url);
   }
-  // if (currentUser && !request.nextUrl.pathname.startsWith("/login")) {
-  //   return Response.redirect(new URL("/login", request.url));
-  // }
+  if (currentUser && !request.nextUrl.pathname.startsWith("/login")) {
+    return Response.redirect(new URL("/login", request.url));
+  }
 
   // if (!currentUser && !request.nextUrl.pathname.startsWith("/login")) {
   //   return Response.redirect(new URL("/login", request.url));

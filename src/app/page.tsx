@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Component, Fullscreen, LogIn } from "lucide-react";
-import { SessionProvider, useSession } from "next-auth/react";
 import { type GetServerSideProps } from "next";
+import { SessionProvider, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -17,13 +17,6 @@ import {
 import { getServerAuthSession } from "~/server/auth";
 import { db } from "~/server/db";
 import { api } from "~/trpc/server";
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const session = await getServerAuthSession(ctx);
-  return {
-    props: { session },
-  };
-};
 
 export default async function Home() {
   const User = () => {
