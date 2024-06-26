@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-import { Session } from "inspector";
 import { SessionProvider, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,6 +9,7 @@ import { permanentRedirect, redirect, useRouter } from "next/navigation";
 import { any } from "zod";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
+
 import {
   Dialog,
   DialogClose,
@@ -49,48 +49,59 @@ export default async function NavBar() {
           </Link>
         </div>
         <Link href="/listing">Listings</Link>
-        <Link href="/settings/account">Settings</Link>
+        {session && <Link href="/settings/account">Settings</Link>}
       </div>
 
       <div className="items-left flex">
-        <Avatar>
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              {session && <AvatarImage src={session.user.image?.toString()} />}
-              <AvatarFallback>MM</AvatarFallback>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <Link href="/settings/account">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>{" "}
-              </Link>
-              <DropdownMenuSeparator />
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="ghost">Log out</Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-md">
-                  <DialogHeader>
-                    <DialogTitle>Log out</DialogTitle>
-                    <DialogDescription>
-                      Are you sure you want to log out?
-                    </DialogDescription>
-                  </DialogHeader>
+        {!session && (
+          <>
+            <Button>
+              <Link href="/api/auth/signin">Login</Link>
+            </Button>
+          </>
+        )}
+        {session && (
+          <Avatar>
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                {session && (
+                  <AvatarImage src={session.user.image?.toString()} />
+                )}
+                <AvatarFallback>MM</AvatarFallback>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <Link href="/settings/account">
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>{" "}
+                </Link>
+                <DropdownMenuSeparator />
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="ghost">Log out</Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Log out</DialogTitle>
+                      <DialogDescription>
+                        Are you sure you want to log out?
+                      </DialogDescription>
+                    </DialogHeader>
 
-                  <DialogFooter className="sm:justify-between">
-                    <DialogClose asChild>
-                      <Button type="button" variant="secondary">
-                        Close
+                    <DialogFooter className="sm:justify-between">
+                      <DialogClose asChild>
+                        <Button type="button" variant="secondary">
+                          Close
+                        </Button>
+                      </DialogClose>
+                      <Button type="button" variant="destructive">
+                        <Link href="/api/auth/signout">Log out</Link>
                       </Button>
-                    </DialogClose>
-                    <Button type="button" variant="destructive">
-                      Log out
-                    </Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </Avatar>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </Avatar>
+        )}
       </div>
     </nav>
   );

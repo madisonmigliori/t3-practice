@@ -37,6 +37,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "~/components/ui/pagination";
+import { getServerAuthSession } from "~/server/auth";
 
 // const [listings, setListings] = useState<Listing[]>([]);
 
@@ -46,6 +47,7 @@ async function getListings() {
 }
 export default async function Listing() {
   const listings = await getListings();
+  const session = await getServerAuthSession();
 
   return (
     <div>
@@ -55,13 +57,18 @@ export default async function Listing() {
             <h1 className="px-10 py-10 text-3xl font-bold">All Listings</h1>
           </div>
         </div>
-        <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
+        <div className="mr-10 mt-4 flex items-center justify-between gap-2 md:mt-8">
           <Search placeholder="Search Business..." />
-          <Link href="/listing/addListing">
-            <Button variant="outline">
-              <Plus />
-            </Button>
-          </Link>
+
+          {session && (
+            <>
+              <Link href="/listing/addListing">
+                <Button variant="outline">
+                  <Plus />
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
       </div>
       <div className="mx-20 my-10 grid grid-flow-row-dense grid-cols-2 grid-rows-5 gap-4">
