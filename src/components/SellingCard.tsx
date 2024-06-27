@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
+"use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { Listing } from "@prisma/client";
 import type { Key } from "react";
@@ -20,7 +21,7 @@ import { Label } from "~/components/ui/label";
 import { db } from "~/server/db";
 import { api } from "~/trpc/react";
 
-export default async function SellingCard() {
+export default function SellingCard() {
   const sellings = api.listing.getSelling.useQuery();
 
   return (

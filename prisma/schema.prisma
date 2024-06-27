@@ -16,20 +16,35 @@ datasource db {
 }
 
 model Listing {
-    id          Int    @id @default(autoincrement())
+    id          Int     @id @default(autoincrement())
     name        String
     location    String
     askingPrice Float?
     grossRev    Float?
     adjCashFlow Float?
+    userId      String?
 
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now()) @updatedAt
 
-    User   User?   @relation(fields: [userId], references: [id])
-    userId String?
+    User User? @relation(fields: [userId], references: [id])
+
+    likes Like[]
 
     @@index([name])
+    @@index([userId])
+}
+
+model Like {
+    userId    String
+    listingId Int
+
+    user    User    @relation(fields: [userId], references: [id])
+    listing Listing @relation(fields: [listingId], references: [id])
+
+    @@id([userId, listingId])
+    @@index([userId])
+    @@index([listingId])
 }
 
 // Necessary for Next auth
@@ -75,6 +90,7 @@ model User {
     accounts Account[]
     sessions Session[]
     listings Listing[]
+    like     Like[]
 }
 
 model VerificationToken {

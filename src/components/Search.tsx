@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
+"use client";
 
 import { api } from "~/trpc/react";
 
@@ -16,15 +17,12 @@ import {
   FormLabel,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import { db } from "~/server/db";
 
 const searchSchema = z.object({
   entry: z.string().min(1),
 });
 
 export default function Search({ placeholder }: { placeholder: string }) {
-  const router = useRouter();
-
   const searchBar = useForm<z.infer<typeof searchSchema>>({
     resolver: zodResolver(searchSchema),
     defaultValues: {
@@ -32,20 +30,10 @@ export default function Search({ placeholder }: { placeholder: string }) {
     },
   });
 
-  const listing = ctx.db.listing.getListing();
-
-  const search = api.listing.searchListing.useQuery({
-    listing: searchBar.watch(),
-  });
+  // const search = api.listing.searchListing.useQuery();
 
   const onSubmit = (values: z.infer<typeof searchSchema>) => {
-    search.data.find({
-      name: values.entry,
-      location: values.entry,
-      askingPrice: values.entry,
-      grossRev: values.entry,
-      adjCashFlow: values.entry,
-    });
+    // search.data.filter(values.entry);
   };
 
   return (

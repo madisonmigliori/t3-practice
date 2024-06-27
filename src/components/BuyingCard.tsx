@@ -1,5 +1,3 @@
-
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import BuyingItem from "~/components/BuyingItem";
@@ -29,24 +27,16 @@ export default async function BuyingCard() {
         <div className="mt-2">
           <CardTitle>Buying</CardTitle>
         </div>
-        <div className="flex flex-row gap-4">
+        <div className="flex gap-4 align-middle">
           <Button variant="outline">Sort</Button>
           <Search placeholder={""} />
         </div>
       </CardHeader>
       <ScrollArea>
         <CardContent>
-          {(await getListings()) ? (
-            <div className=" grid grid-flow-row-dense gap-4">
-              {listings.map((listing) => (
-                <>
-                  <BuyingItem key={listing.id} listing={listing} />
-                </>
-              ))}{" "}
-            </div>
-          ) : (
-            "No Listings Yet :("
-          )}
+          <div className=" grid grid-flow-row-dense gap-4">
+            <BuyingItem />
+          </div>
         </CardContent>
       </ScrollArea>
     </Card>

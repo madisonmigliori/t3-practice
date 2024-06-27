@@ -9,7 +9,6 @@ import Search from "~/components/Search";
 import { Button } from "~/components/ui/button";
 import { db } from "~/server/db";
 
-import router, { useRouter } from "next/router";
 import { getServerAuthSession } from "~/server/auth";
 
 // const [listings, setListings] = useState<Listing[]>([]);
@@ -19,7 +18,6 @@ export async function getListings() {
   return listings;
 }
 export default async function Listing() {
-  const router = useRouter();
   const listings = await getListings();
   const session = await getServerAuthSession();
 
@@ -31,8 +29,8 @@ export default async function Listing() {
             <h1 className="px-10 py-10 text-3xl font-bold">All Listings</h1>
           </div>
         </div>
-        <div className="mr-10 mt-4 flex items-center justify-between gap-4 pr-10 ">
-          <Search placeholder="Search Business..." />
+        <div className="mr-10 mt-4 flex items-center gap-4 pr-10 ">
+          <Search placeholder="Search.." />
 
           {session && (
             <>

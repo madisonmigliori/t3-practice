@@ -5,9 +5,8 @@
 
 import { Prisma, PrismaClient } from "@prisma/client";
 import { User } from "lucide-react";
-import { z } from "zod";
 
-const prisma = new PrismaClient();
+import { z } from "zod";
 
 import {
   createTRPCRouter,
@@ -16,13 +15,8 @@ import {
 } from "~/server/api/trpc";
 
 export const listingRouter = createTRPCRouter({
-  // displayListings: publicProcedure.input(
-  //   z.object({
-  //     limit: z.number().optional(),
-  //     cursor: z.object({id: z.string(), createdAt: z.date()}).optional(), })).query(async ({input: {limit = 10, cursor}}))
-  //   }),
   getListing: publicProcedure
-    .input(z.object({ id: z.string() }))
+    .input(z.object({ id: z.number() }))
     .query(({ ctx, input }) => {
       return ctx.db.listing.findUnique({
         where: {
@@ -49,15 +43,15 @@ export const listingRouter = createTRPCRouter({
           askingPrice: input.askingPrice,
           grossRev: input.grossRev,
           adjCashFlow: input.adjCashFlow,
-          // createdBy: { connect: { id: ctx.session?.user.id } },
+          userId: ctx.session?.user.id,
         },
       });
     }),
 
-  getSelling: publicProcedure.query(({ ctx }) => {
+  getSelling: protectedProcedure.query(({ ctx }) => {
     return ctx.db.listing.findMany({
       orderBy: { id: "desc" },
-      where: { User: { id: ctx.session?.user.id } },
+      where: { User: { id: ctx.session.user.id } },
     });
   }),
 
@@ -88,17 +82,23 @@ export const listingRouter = createTRPCRouter({
     }),
 
   deleteListing: protectedProcedure
-    .input(z.object({ id: z.string() }))
-    .query(({ ctx, input }) => {
+    .input(z.object({ id: z.number() }))
+    .mutation(({ ctx, input }) => {
       return ctx.db.listing.delete({
         where: {
-          // createdBy: { id: ctx.session.user.id },
+          User: { id: ctx.session.user.id },
           id: Number(input.id),
         },
       });
     }),
 
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
-  }),
+  likeListing: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ input: { id }, ctx }) => {
+      const like = ctx.db.like.create({
+        data: { listingId: Number(id), userId: ctx.session.user.id },
+      });
+
+      return like;
+    }),
 });

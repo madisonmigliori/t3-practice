@@ -55,7 +55,6 @@ export default function AddListingCard() {
 
   const createListing = api.listing.create.useMutation({
     onSuccess: () => {
-      router.refresh();
       router.push("/");
       addListing.reset();
     },
