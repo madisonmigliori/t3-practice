@@ -1,4 +1,4 @@
-"use client";
+
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -18,8 +18,11 @@ import { Form } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { ScrollArea } from "~/components/ui/scroll-area";
+import { getServerAuthSession } from "~/server/auth";
 
-export default function BuyingCard() {
+export default async function BuyingCard() {
+  const session = await getServerAuthSession();
+
   return (
     <Card>
       <CardHeader className="flex justify-between">
@@ -33,10 +36,17 @@ export default function BuyingCard() {
       </CardHeader>
       <ScrollArea>
         <CardContent>
-          <div className=" grid grid-flow-row-dense gap-4">
-            <BuyingItem />
-            <BuyingItem />
-          </div>
+          {(await getListings()) ? (
+            <div className=" grid grid-flow-row-dense gap-4">
+              {listings.map((listing) => (
+                <>
+                  <BuyingItem key={listing.id} listing={listing} />
+                </>
+              ))}{" "}
+            </div>
+          ) : (
+            "No Listings Yet :("
+          )}
         </CardContent>
       </ScrollArea>
     </Card>

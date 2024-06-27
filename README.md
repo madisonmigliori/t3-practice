@@ -11,4 +11,7 @@
 - [x] Create Settings Card Components
 - [x] Create Profile
 - [x] Attach database to UI
-- [ ] Add Authenication / closeish
+- [x] Add Authenication
+- [ ] Buying @Relation
+- [ ] Selling Page
+

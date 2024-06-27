@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
 import { Prisma, PrismaClient } from "@prisma/client";
+import { User } from "lucide-react";
 import { z } from "zod";
 
 const prisma = new PrismaClient();
@@ -54,11 +55,37 @@ export const listingRouter = createTRPCRouter({
     }),
 
   getSelling: publicProcedure.query(({ ctx }) => {
-    return ctx.db.listing.findFirst({
+    return ctx.db.listing.findMany({
       orderBy: { id: "desc" },
-      // where: { createdBy: { id: ctx.session?.user.id } },
+      where: { User: { id: ctx.session?.user.id } },
     });
   }),
+
+  searchListing: publicProcedure
+    .input(
+      z.object({
+        name: z.string(),
+        location: z.string(),
+        askingPrice: z.number(),
+        grossRev: z.number(),
+        adjCashFlow: z.number(),
+      }),
+    )
+    .query(({ ctx, input }) => {
+      return ctx.db.listing.findMany({
+        where: {
+          OR: [
+            {
+              name: input.name,
+              location: input.location,
+              askingPrice: input.askingPrice,
+              grossRev: input.grossRev,
+              adjCashFlow: input.adjCashFlow,
+            },
+          ],
+        },
+      });
+    }),
 
   deleteListing: protectedProcedure
     .input(z.object({ id: z.string() }))

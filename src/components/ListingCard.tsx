@@ -3,25 +3,14 @@
 
 import { type Listing } from "@prisma/client";
 import Link from "next/link";
-import { NextResponse } from "next/server";
-import type {
-  AwaitedReactNode,
-  JSXElementConstructor,
-  ReactElement,
-  ReactNode,
-  ReactPortal,
-} from "react";
+
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import { listingRouter } from "~/server/api/routers/listing";
-import { db } from "~/server/db";
-import { api } from "~/trpc/server";
 
 interface ListingCardProps {
   listing: Listing;

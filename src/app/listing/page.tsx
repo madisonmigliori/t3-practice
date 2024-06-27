@@ -9,6 +9,7 @@ import Search from "~/components/Search";
 import { Button } from "~/components/ui/button";
 import { db } from "~/server/db";
 
+import router, { useRouter } from "next/router";
 import { getServerAuthSession } from "~/server/auth";
 
 // const [listings, setListings] = useState<Listing[]>([]);
@@ -18,6 +19,7 @@ export async function getListings() {
   return listings;
 }
 export default async function Listing() {
+  const router = useRouter();
   const listings = await getListings();
   const session = await getServerAuthSession();
 

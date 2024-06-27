@@ -1,3 +1,4 @@
+import type { Listing } from "@prisma/client";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { Copy, Pencil, Trash } from "lucide-react";
 import Link from "next/link";
@@ -22,16 +23,18 @@ import {
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 
-export default function SellingItem() {
+interface SellingItemProps {
+  selling: Listing;
+}
+
+export default function SellingItem({ selling }: SellingItemProps) {
   return (
     <div>
       <Card>
         <CardHeader className="flex justify-between">
           <div className="flex flex-col">
-            <CardTitle className="my-2">
-              Cartwright, Herman, and Murazik
-            </CardTitle>
-            <CardDescription>Lillieshire, North Carolina</CardDescription>
+            <CardTitle className="my-2">{selling.name}</CardTitle>
+            <CardDescription>{selling.location}</CardDescription>
           </div>
           <div className="flex flex-row gap-4">
             <Button variant="ghost">
@@ -68,15 +71,15 @@ export default function SellingItem() {
         <CardContent>
           <div className="columns-3">
             <div>
-              <p>$8,703,01705</p>
+              <p>{selling.askingPrice}</p>
               <p className="font-semibold">Asking Price</p>
             </div>
             <div>
-              <p>$8,703,01705</p>
+              <p>{selling.grossRev}</p>
               <p className="font-semibold">Gross Revenue</p>
             </div>
             <div>
-              <p>$8,703,01705</p>
+              <p>{selling.adjCashFlow}</p>
               <p className="font-semibold">Adjusted Cash Flow</p>
             </div>
           </div>
