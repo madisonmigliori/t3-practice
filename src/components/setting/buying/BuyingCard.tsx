@@ -1,7 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import BuyingItem from "~/components/BuyingItem";
-import Search from "~/components/Search";
+import Search from "~/components/misc/Search";
+
+import BuyingItem from "~/components/setting/buying/BuyingItem";
 import { Button } from "~/components/ui/button";
 
 import {

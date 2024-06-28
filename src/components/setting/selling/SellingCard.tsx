@@ -4,7 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { Listing } from "@prisma/client";
 import type { Key } from "react";
 import { z } from "zod";
-import SellingItem from "~/components/SellingItem";
+import SellingItem from "~/components/setting/selling/SellingItem";
+
 import { Button } from "~/components/ui/button";
 
 import {

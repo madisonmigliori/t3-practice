@@ -3,7 +3,7 @@ import "~/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 
 import { SessionProvider } from "next-auth/react";
-import NavBar from "~/components/NavBar";
+import NavBar from "~/components/misc/NavBar";
 import { Pagination } from "~/components/ui/pagination";
 import { TRPCReactProvider } from "~/trpc/react";
 

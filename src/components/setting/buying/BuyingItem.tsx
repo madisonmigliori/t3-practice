@@ -1,7 +1,7 @@
 import { Heart } from "lucide-react";
 import Link from "next/link";
-import HeartIcon from "~/components/HeartIcon";
-import ListingCard from "~/components/ListingCard";
+import HeartIcon from "~/components/misc/HeartIcon";
+
 import { Button } from "~/components/ui/button";
 
 import {

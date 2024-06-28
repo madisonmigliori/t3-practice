@@ -1,4 +1,4 @@
-import SellingCard from "~/components/SellingCard";
+import SellingCard from "~/components/setting/selling/SellingCard";
 
 export default function Selling() {
   return (

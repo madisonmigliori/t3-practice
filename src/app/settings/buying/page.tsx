@@ -1,4 +1,4 @@
-import BuyingCard from "~/components/BuyingCard";
+import BuyingCard from "~/components/setting/buying/BuyingCard";
 
 export default function Buying() {
   return (

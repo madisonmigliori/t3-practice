@@ -1,4 +1,4 @@
-import { NotificationsCard } from "~/components/NotificationsCard";
+import { NotificationsCard } from "~/components/setting/notifications/NotificationsCard";
 
 export default function Notifications() {
   return (

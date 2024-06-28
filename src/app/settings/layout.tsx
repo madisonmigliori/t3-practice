@@ -1,5 +1,5 @@
 import React from "react";
-import SettingsNavBar from "~/components/SettingsNavBar";
+import SettingsNavBar from "~/components/misc/SettingsNavBar";
 
 export default function SettingsLayout({
   children,

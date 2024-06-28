@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import MessageItem from "~/components/MessageItem";
+import MessageItem from "~/components/setting/message/MessageItem";
 import { Button } from "~/components/ui/button";
 
 import {

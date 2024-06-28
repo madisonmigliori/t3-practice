@@ -4,11 +4,12 @@ import { type Listing } from "@prisma/client";
 import { List } from "@radix-ui/react-tabs";
 import { Plus } from "lucide-react";
 import Link from "next/link";
-import ListingCard from "~/components/ListingCard";
-import Search from "~/components/Search";
+
 import { Button } from "~/components/ui/button";
 import { db } from "~/server/db";
 
+import ListingCard from "~/components/listings/ListingCard";
+import Search from "~/components/misc/Search";
 import { getServerAuthSession } from "~/server/auth";
 
 // const [listings, setListings] = useState<Listing[]>([]);
