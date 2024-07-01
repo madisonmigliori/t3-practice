@@ -24,6 +24,10 @@ export default async function ListingComponent({
   const id = Number(params.id);
   const getListing = await api.listing.getListing({ id });
 
+  function handleDelete(id: number): void {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <div>
       <Button variant="secondary" className="m-6">

@@ -1,32 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { Component, Fullscreen, LogIn } from "lucide-react";
-import { type GetServerSideProps } from "next";
-import { SessionProvider, useSession } from "next-auth/react";
-import Image from "next/image";
-import Link from "next/link";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "~/components/ui/pagination";
-
-import { getServerAuthSession } from "~/server/auth";
-import { db } from "~/server/db";
-import { api } from "~/trpc/server";
+import { LogIn } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 export default async function Home() {
-  const User = () => {
-    const { data: session } = useSession();
+  // const User = () => {
+  //   const { data: session } = useSession();
 
-    if (!session) {
-      // Handle unauthenticated state, e.g. render a SignIn component
-      return <LogIn />;
-    }
-  };
+  //   if (!session) {
+  //     // Handle unauthenticated state, e.g. render a SignIn component
+  //     return <LogIn />;
+  //   }
+  // };
+
   return (
     <main>
       <div className="column-1 items-center px-5 text-center">

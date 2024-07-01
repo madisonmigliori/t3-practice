@@ -31,6 +31,8 @@ const addListingSchema = z.object({
 
 export default function AddListingCard() {
   const router = useRouter();
+  const utils = api.useUtils();
+  const listings = api.listing.getSelling.useQuery();
 
   const addListing = useForm<z.infer<typeof addListingSchema>>({
     resolver: zodResolver(addListingSchema),
@@ -44,14 +46,15 @@ export default function AddListingCard() {
   });
 
   const createListing = api.listing.create.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
+      //this is not working :?
+      await utils.listing.invalidate();
       router.push("/");
-      addListing.reset();
+      router.refresh();
     },
   });
 
-  const onSubmit = (values: z.infer<typeof addListingSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof addListingSchema>) => {
     createListing.mutate({
       name: values.name,
       location: values.location,
@@ -59,7 +62,10 @@ export default function AddListingCard() {
       grossRev: values.grossRev,
       adjCashFlow: values.adjCashFlow,
     });
+
+    addListing.reset();
   };
+
   console.log(addListing.formState.errors);
   return (
     <Card>

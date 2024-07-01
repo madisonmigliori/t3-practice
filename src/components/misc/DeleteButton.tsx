@@ -1,6 +1,7 @@
 "use client";
 
-import type { Listing } from "@prisma/client";
+import { Trash } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 import React from "react";
 
@@ -9,29 +10,30 @@ import { api } from "~/trpc/react";
 
 //if deleted on [id] page it should push the router to home but if deleted on settings it should just pop the listing from the stack ask steven how to create the conditional
 
-export default function DeleteButton({ id }: { id: Number }) {
+export default function DeleteButton({ id }: { id: number }) {
   const utils = api.useUtils();
+  const router = useRouter();
 
   const deleteListing = api.listing.deleteListing.useMutation({
-    onSuccess: () => {
-      void utils.listing.getListing.invalidate();
+    onSuccess: async () => {
+      await utils.listing.invalidate();
     },
   });
 
-  const handleDelete = (id: Number) => {
-    deleteListing.mutate({ id: Number(id) });
+  const handleDelete = (id: number) => {
+    deleteListing.mutate({ id });
+    router.push("/");
+    router.refresh();
   };
 
   return (
     <div>
-      \{" "}
       <Button
-        asChild
         onClick={() => handleDelete(id)}
         type="button"
-        variant="destructive"
+        className={`hover ? variant="ghost" : variant:"outline"`}
       >
-        Delete
+        <Trash />
       </Button>
     </div>
   );
