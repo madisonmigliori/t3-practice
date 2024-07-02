@@ -9,6 +9,12 @@ import { permanentRedirect, redirect, useRouter } from "next/navigation";
 import { any } from "zod";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
 
 import {
   Dialog,

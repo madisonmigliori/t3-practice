@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { type Listing } from "@prisma/client";
-import { List } from "@radix-ui/react-tabs";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 
@@ -11,13 +10,12 @@ import { db } from "~/server/db";
 import ListingCard from "~/components/listings/ListingCard";
 import Search from "~/components/misc/Search";
 import { getServerAuthSession } from "~/server/auth";
-import { api } from "~/trpc/server";
 
 // const [listings, setListings] = useState<Listing[]>([]);
 
 export default async function Listing() {
   const session = await getServerAuthSession();
-  const listings = await api.listing.getSelling();
+  const listings = await db.listing.findMany();
   const listingSize = listings.length;
 
   return (

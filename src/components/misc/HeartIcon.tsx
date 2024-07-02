@@ -1,16 +1,31 @@
 "use client";
 import { Heart } from "lucide-react";
+import { utils } from "prettier/doc.js";
 import React, { useState } from "react";
 import { Button } from "~/components/ui/button";
+import { api } from "~/trpc/react";
 
-export default function HeartIcon() {
-  const [isLiked, setIsLiked] = useState(false);
+export default function HeartIcon( {id }: { id: number }) {
+  const utils = api.useUtils();
+
+  const like = api.listing.likeListing.useMutation({
+    onSuccess: async () => {
+      await utils.listing.invalidate();
+    },
+  });
+  const unlike = api.listing.unlikeListing.useMutation({
+    onSuccess: async () => {
+      await utils.listing.invalidate();
+    },
+  });
+
+  const isLiked = api.listing.isLiked.useQuery({ id });
 
   const handleLike = () => {
     if (isLiked) {
-      setIsLiked(false);
+      unlike.mutate({ id });
     } else {
-      setIsLiked(true);
+      like.mutate({ id });
     }
   };
   return (

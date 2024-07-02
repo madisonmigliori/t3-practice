@@ -51,6 +51,12 @@ export const listingRouter = createTRPCRouter({
     });
   }),
 
+  createdBy: protectedProcedure.query(({ ctx }) => {
+    return ctx.db.listing.findMany({
+      where: { User: { id: ctx.session.user.id } },
+    });
+  }),
+
   searchListing: publicProcedure
     .input(
       z.object({
@@ -137,6 +143,20 @@ export const listingRouter = createTRPCRouter({
       return like;
     }),
 
+  unlikeListing: protectedProcedure
+    .input(z.object({ id: z.number() }))
+    .mutation(async ({ input, ctx }) => {
+      const like = ctx.db.like.delete({
+        where: {
+          userId_listingId: {
+            listingId: Number(input.id),
+            userId: ctx.session.user.id,
+          },
+        },
+      });
+      return like;
+    }),
+
   isLiked: protectedProcedure
     .input(z.object({ id: z.number() }))
     .query(({ input, ctx }) => {
@@ -153,6 +173,25 @@ export const listingRouter = createTRPCRouter({
         return true;
       } else {
         return false;
+      }
+    }),
+
+  isLikedList: protectedProcedure
+    .input(z.object({ id: z.number() }))
+    .query(({ input, ctx }) => {
+      const liked = ctx.db.like.findMany({
+        where: {
+          userId: ctx.session.user.id,
+          listingId: Number(input.id),
+        },
+      });
+      if (liked !== null) {
+        const likedList = ctx.db.listing.findUnique({
+          where: {
+            id: Number(input.id),
+          },
+        });
+        return likedList;
       }
     }),
 });

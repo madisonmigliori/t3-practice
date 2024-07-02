@@ -38,8 +38,6 @@ const accountSchema = z.object({
   mobilePhone: z.string(),
 });
 
-const utils = api.useUtils();
-
 export default function AccountCard() {
   const account = useForm<z.infer<typeof accountSchema>>({
     resolver: zodResolver(accountSchema),
@@ -55,14 +53,14 @@ export default function AccountCard() {
     },
   });
 
-  const user = api.user.update.useMutation({
-    onSuccess: () => {
+  const userInfo = api.user.update.useMutation({
+    onSuccess: async () => {
       console.log("Success");
     },
   });
 
   const onSubmit = async (values: z.infer<typeof accountSchema>) => {
-    user.mutate({
+    userInfo.mutate({
       firstName: values.firstName,
       lastName: values.lastName,
       email: values.email,
@@ -239,12 +237,12 @@ export default function AccountCard() {
               </div>
             </div>
           </form>
-        </Form>
-        <div className="mx-10 my-5 flex grid grid-flow-row-dense grid-cols-2">
-          <div className="basis-1/8">
-            <Button type="submit">Submit</Button>
+          <div className="mx-10 my-5 grid grid-flow-row-dense grid-cols-2">
+            <div className="basis-1/8">
+              <Button type="submit">Submit</Button>
+            </div>
           </div>
-        </div>
+        </Form>
       </CardContent>
     </Card>
   );

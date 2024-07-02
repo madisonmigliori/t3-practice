@@ -1,11 +1,11 @@
 import type { Listing } from "@prisma/client";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Pencil } from "lucide-react";
 import Link from "next/link";
 
 import DeleteButton from "~/components/misc/DeleteButton";
 import HeartIcon from "~/components/misc/HeartIcon";
 
-import { Button } from "~/components/ui/button";
+import { Button, buttonVariants } from "~/components/ui/button";
 import {
   Card,
   CardContent,
@@ -13,6 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
+import { cn } from "~/lib/utils";
 
 import { api } from "~/trpc/server";
 
@@ -23,6 +24,7 @@ export default async function ListingComponent({
 }) {
   const id = Number(params.id);
   const getListing = await api.listing.getListing({ id });
+  const createdbyUser = await api.listing.createdBy();
 
   const formatPrice = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -46,8 +48,19 @@ export default async function ListingComponent({
                 <CardDescription>{getListing.location}</CardDescription>
               </div>
               <div>
-                <HeartIcon />
-                <DeleteButton id={getListing.id} />
+                {!createdbyUser && <HeartIcon id={getListing.id} />}
+
+                {createdbyUser && (
+                  <>
+                    <DeleteButton id={getListing.id} />
+                    <Link
+                      href={`/listing/${getListing.id}/editListing`}
+                      className={cn(buttonVariants({ variant: "ghost" }))}
+                    >
+                      <Pencil />
+                    </Link>{" "}
+                  </>
+                )}
               </div>
             </CardHeader>
             <CardContent>

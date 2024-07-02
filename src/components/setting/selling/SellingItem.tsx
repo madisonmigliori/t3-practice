@@ -34,7 +34,6 @@ interface SellingItemProps {
 }
 
 export default function SellingItem({ selling }: SellingItemProps) {
-  const router = useRouter();
   const utils = api.useUtils();
 
   const deleteListing = api.listing.deleteListing.useMutation();
