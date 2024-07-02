@@ -6,7 +6,7 @@ import { Pencil, Trash } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Button } from "~/components/ui/button";
+import { Button, buttonVariants } from "~/components/ui/button";
 
 import {
   Card,
@@ -26,6 +26,7 @@ import {
 } from "~/components/ui/dialog";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import { cn } from "~/lib/utils";
 import { api } from "~/trpc/react";
 
 interface SellingItemProps {
@@ -43,6 +44,11 @@ export default function SellingItem({ selling }: SellingItemProps) {
     await utils.listing.invalidate();
   };
 
+  const formatPrice = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+
   return (
     <div>
       <Card>
@@ -54,9 +60,12 @@ export default function SellingItem({ selling }: SellingItemProps) {
             </Link>
           </div>
           <div className="flex flex-row gap-4">
-            <Button variant="ghost">
+            <Link
+              href={`/listing/${selling.id}/editListing`}
+              className={cn(buttonVariants({ variant: "ghost" }))}
+            >
               <Pencil />
-            </Button>
+            </Link>
             <Dialog>
               <DialogTrigger asChild>
                 <Button variant="ghost">
@@ -92,15 +101,15 @@ export default function SellingItem({ selling }: SellingItemProps) {
         <CardContent>
           <div className="columns-3">
             <div>
-              <p>{selling.askingPrice}</p>
+              <p>{formatPrice.format(Number(selling.askingPrice))}</p>
               <p className="font-semibold">Asking Price</p>
             </div>
             <div>
-              <p>{selling.grossRev}</p>
+              <p>{formatPrice.format(Number(selling.grossRev))}</p>
               <p className="font-semibold">Gross Revenue</p>
             </div>
             <div>
-              <p>{selling.adjCashFlow}</p>
+              <p>{formatPrice.format(Number(selling.adjCashFlow))}</p>
               <p className="font-semibold">Adjusted Cash Flow</p>
             </div>
           </div>

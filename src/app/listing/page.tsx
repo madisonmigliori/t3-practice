@@ -47,7 +47,7 @@ export default async function Listing() {
       <div className="mx-10">
         {listingSize !== 0 ? (
           <div className="mx-20  grid grid-flow-row-dense grid-cols-2 grid-rows-5 gap-4">
-            {listings.map((listing) => (
+            {listings.map((listing: Listing) => (
               <>
                 <ListingCard key={listing.id} listing={listing} />
               </>

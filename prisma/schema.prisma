@@ -81,6 +81,7 @@ model User {
     firstName     String    @default("First Name")
     lastName      String    @default("Last Name")
     email         String    @unique
+    title         String?
     mobilePhone   String?
     officePhone   String?
     homePhone     String?

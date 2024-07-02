@@ -24,9 +24,10 @@ export default async function ListingComponent({
   const id = Number(params.id);
   const getListing = await api.listing.getListing({ id });
 
-  function handleDelete(id: number): void {
-    throw new Error("Function not implemented.");
-  }
+  const formatPrice = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
 
   return (
     <div>
@@ -52,15 +53,15 @@ export default async function ListingComponent({
             <CardContent>
               <div className="columns-3">
                 <div>
-                  <p>{getListing.askingPrice}</p>
+                  <p>{formatPrice.format(Number(getListing.askingPrice))}</p>
                   <p className="font-semibold">Asking Price</p>
                 </div>
                 <div>
-                  <p>{getListing.grossRev}</p>
+                  <p>{formatPrice.format(Number(getListing.grossRev))}</p>
                   <p className="font-semibold">Gross Revenue</p>
                 </div>
                 <div>
-                  <p>{getListing.adjCashFlow}</p>
+                  <p>{formatPrice.format(Number(getListing.adjCashFlow))}</p>
                   <p className="font-semibold">Adjusted Cash Flow</p>
                 </div>
               </div>

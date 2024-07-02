@@ -3,11 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-import { Prisma, PrismaClient } from "@prisma/client";
-import { User } from "lucide-react";
-
 import { z } from "zod";
-
 import {
   createTRPCRouter,
   protectedProcedure,
@@ -81,6 +77,33 @@ export const listingRouter = createTRPCRouter({
       });
     }),
 
+  update: protectedProcedure
+    .input(
+      z.object({
+        id: z.number(),
+        name: z.string(),
+        location: z.string(),
+        askingPrice: z.number(),
+        grossRev: z.number(),
+        adjCashFlow: z.number(),
+      }),
+    )
+    .mutation(async ({ input, ctx }) => {
+      const updateListing = ctx.db.listing.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          name: input.name,
+          location: input.name,
+          askingPrice: input.askingPrice,
+          grossRev: input.grossRev,
+          adjCashFlow: input.adjCashFlow,
+        },
+      });
+      return updateListing;
+    }),
+
   deleteListing: protectedProcedure
     .input(z.object({ id: z.number() }))
     .mutation(({ ctx, input }) => {
@@ -93,12 +116,43 @@ export const listingRouter = createTRPCRouter({
     }),
 
   likeListing: protectedProcedure
-    .input(z.object({ id: z.string() }))
-    .mutation(async ({ input: { id }, ctx }) => {
-      const like = ctx.db.like.create({
-        data: { listingId: Number(id), userId: ctx.session.user.id },
+    .input(z.object({ id: z.number() }))
+    .mutation(async ({ input, ctx }) => {
+      const like = ctx.db.like.upsert({
+        where: {
+          userId_listingId: {
+            listingId: Number(input.id),
+            userId: ctx.session.user.id,
+          },
+        },
+        create: {
+          userId: ctx.session.user.id,
+          listingId: Number(input.id),
+        },
+        update: {
+          listingId: Number(input.id),
+          userId: ctx.session.user.id,
+        },
+      });
+      return like;
+    }),
+
+  isLiked: protectedProcedure
+    .input(z.object({ id: z.number() }))
+    .query(({ input, ctx }) => {
+      const isLiked = ctx.db.like.findUnique({
+        where: {
+          userId_listingId: {
+            userId: ctx.session.user.id,
+            listingId: Number(input.id),
+          },
+        },
       });
 
-      return like;
+      if (isLiked == null) {
+        return true;
+      } else {
+        return false;
+      }
     }),
 });

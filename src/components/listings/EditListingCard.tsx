@@ -21,7 +21,7 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 
-const addListingSchema = z.object({
+const editListingSchema = z.object({
   name: z.string().min(1, "Business name is required"),
   location: z.string().min(1, "Location is required"),
   askingPrice: z.coerce.number().min(0),
@@ -29,55 +29,56 @@ const addListingSchema = z.object({
   adjCashFlow: z.coerce.number().min(0),
 });
 
-export default function AddListingCard() {
+export default function EditListingCard({ id }: { id: number }) {
   const router = useRouter();
   const utils = api.useUtils();
-  const listings = api.listing.getSelling.useQuery();
 
-  const addListing = useForm<z.infer<typeof addListingSchema>>({
-    resolver: zodResolver(addListingSchema),
+  const listing = api.listing.getListing.useQuery({ id });
+
+  const editListing = useForm<z.infer<typeof editListingSchema>>({
+    resolver: zodResolver(editListingSchema),
     defaultValues: {
-      name: "",
-      location: "",
-      askingPrice: 0,
-      grossRev: 0,
-      adjCashFlow: 0,
+      name: listing?.data?.name,
+      location: listing?.data?.location,
+      askingPrice: listing?.data?.askingPrice ?? undefined,
+      grossRev: listing?.data?.grossRev ?? undefined,
+      adjCashFlow: listing?.data?.adjCashFlow ?? undefined,
     },
   });
 
-  const createListing = api.listing.create.useMutation({
+  console.log("listing", undefined);
+
+  const updateListing = api.listing.update.useMutation({
     onSuccess: async () => {
       await utils.listing.invalidate();
-      router.push("/");
+      router.back();
       router.refresh();
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof addListingSchema>) => {
-    createListing.mutate({
+  const onSubmit = async (values: z.infer<typeof editListingSchema>) => {
+    updateListing.mutate({
       name: values.name,
       location: values.location,
       askingPrice: values.askingPrice,
       grossRev: values.grossRev,
       adjCashFlow: values.adjCashFlow,
+      id: id,
     });
-
-    addListing.reset();
   };
 
-  console.log(addListing.formState.errors);
   return (
     <Card>
       <CardHeader className="mt-2">
-        <CardTitle>Add Listing</CardTitle>
+        <CardTitle>Edit Listing</CardTitle>
       </CardHeader>
       <CardContent>
-        <Form {...addListing}>
-          <form onSubmit={addListing.handleSubmit(onSubmit)}>
+        <Form {...editListing}>
+          <form onSubmit={editListing.handleSubmit(onSubmit)}>
             <div className="mx-10 grid grid-flow-row-dense grid-cols-2 gap-4">
               <div>
                 <FormField
-                  control={addListing.control}
+                  control={editListing.control}
                   name={"name"}
                   render={({ field }) => {
                     return (
@@ -93,7 +94,7 @@ export default function AddListingCard() {
               </div>
               <div>
                 <FormField
-                  control={addListing.control}
+                  control={editListing.control}
                   name={"location"}
                   render={({ field }) => {
                     return (
@@ -109,19 +110,14 @@ export default function AddListingCard() {
               </div>
               <div>
                 <FormField
-                  control={addListing.control}
+                  control={editListing.control}
                   name={"askingPrice"}
                   render={({ field }) => {
                     return (
                       <FormItem>
                         <FormLabel>Asking Price</FormLabel>
                         <FormControl>
-                          <Input
-                            prefix={"$ "}
-                            type="number"
-                            {...field}
-                            min={0}
-                          />
+                          <Input type="number" {...field} min={0} />
                         </FormControl>
                       </FormItem>
                     );
@@ -130,19 +126,14 @@ export default function AddListingCard() {
               </div>
               <div>
                 <FormField
-                  control={addListing.control}
+                  control={editListing.control}
                   name={"grossRev"}
                   render={({ field }) => {
                     return (
                       <FormItem>
                         <FormLabel>Gross Revenue</FormLabel>
                         <FormControl>
-                          <Input
-                            prefix={"$ "}
-                            type="number"
-                            {...field}
-                            min={0}
-                          />
+                          <Input type="number" {...field} min={0} />
                         </FormControl>
                       </FormItem>
                     );
@@ -151,19 +142,14 @@ export default function AddListingCard() {
               </div>
               <div>
                 <FormField
-                  control={addListing.control}
+                  control={editListing.control}
                   name={"adjCashFlow"}
                   render={({ field }) => {
                     return (
                       <FormItem>
                         <FormLabel>Adjusted Cash Flow</FormLabel>
                         <FormControl>
-                          <Input
-                            type="number"
-                            prefix={"$ "}
-                            {...field}
-                            min={0}
-                          />
+                          <Input type="number" {...field} min={0} />
                         </FormControl>
                       </FormItem>
                     );

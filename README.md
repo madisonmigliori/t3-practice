@@ -12,11 +12,11 @@
 - [x] Create Profile
 - [x] Attach database to UI
 - [x] Add Authenication
-- [ ] Buying @Relation
+- [x] Buying @Relation
 - [x] Selling Page
-- [ ] Fix Delete Button
-- [ ] Allow the account to be edit or fill in fields (upsert)
+- [x] Fix Delete Button
+- [ ] Allow the account to be edit or fill in fields (upsert) //Close?
+- [ ] Liked Button
 - [ ] Allow to change profile photo
-- [ ] Create Filters on Listing
 - [ ] Create a Login Page with more authentication providers
 - [ ] Create Meta Tags for each route

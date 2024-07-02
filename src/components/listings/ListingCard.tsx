@@ -17,6 +17,11 @@ interface ListingCardProps {
 }
 
 export default async function ListingCard({ listing }: ListingCardProps) {
+  const formatPrice = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+
   return (
     <Link href={`/listing/${listing.id}`}>
       <Card>
@@ -27,15 +32,15 @@ export default async function ListingCard({ listing }: ListingCardProps) {
         <CardContent>
           <div className="columns-3">
             <div>
-              <p>{listing.askingPrice}</p>
+              <p>{formatPrice.format(Number(listing.askingPrice))}</p>
               <p className="font-semibold">Asking Price</p>
             </div>
             <div>
-              <p>{listing.grossRev}</p>
+              <p>{formatPrice.format(Number(listing.grossRev))}</p>
               <p className="font-semibold">Gross Revenue</p>
             </div>
             <div>
-              <p>{listing.adjCashFlow}</p>
+              <p>{formatPrice.format(Number(listing.adjCashFlow))}</p>
               <p className="font-semibold">Adjusted Cash Flow</p>
             </div>
           </div>

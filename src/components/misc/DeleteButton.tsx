@@ -17,13 +17,13 @@ export default function DeleteButton({ id }: { id: number }) {
   const deleteListing = api.listing.deleteListing.useMutation({
     onSuccess: async () => {
       await utils.listing.invalidate();
+      router.refresh();
     },
   });
 
   const handleDelete = (id: number) => {
     deleteListing.mutate({ id });
     router.push("/");
-    router.refresh();
   };
 
   return (

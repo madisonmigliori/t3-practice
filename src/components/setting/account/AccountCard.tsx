@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import router from "next/router";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import addListing from "~/app/listing/addListing/page";
 import { Button } from "~/components/ui/button";
 
 import {
@@ -22,6 +25,7 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import { api } from "~/trpc/react";
 
 const accountSchema = z.object({
   firstName: z.string(),
@@ -33,6 +37,8 @@ const accountSchema = z.object({
   homePhone: z.string(),
   mobilePhone: z.string(),
 });
+
+const utils = api.useUtils();
 
 export default function AccountCard() {
   const account = useForm<z.infer<typeof accountSchema>>({
@@ -49,9 +55,24 @@ export default function AccountCard() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof accountSchema>) {
-    console.log(values);
-  }
+  const user = api.user.update.useMutation({
+    onSuccess: () => {
+      console.log("Success");
+    },
+  });
+
+  const onSubmit = async (values: z.infer<typeof accountSchema>) => {
+    user.mutate({
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email,
+      title: values.title,
+      officePhone: values.officePhone,
+      homePhone: values.homePhone,
+      mobilePhone: values.mobilePhone,
+    });
+  };
+
   return (
     <Card>
       <CardHeader className="mt-2">
