@@ -183,29 +183,20 @@ export const listingRouter = createTRPCRouter({
         },
       });
 
-      if (isLiked == null) {
+      if (isLiked !== null) {
         return true;
       } else {
         return false;
       }
     }),
 
-  isLikedList: protectedProcedure
-    .input(z.object({ id: z.number() }))
-    .query(({ input, ctx }) => {
-      const liked = ctx.db.like.findMany({
-        where: {
-          userId: ctx.session.user.id,
-          listingId: Number(input.id),
-        },
-      });
-      if (liked !== null) {
-        const likedList = ctx.db.listing.findUnique({
-          where: {
-            id: Number(input.id),
-          },
-        });
-        return likedList;
-      }
-    }),
+  isLikedList: protectedProcedure.query(({ ctx }) => {
+    const likes = ctx.db.like.findMany({
+      where: { userId: ctx.session.user.id },
+      include: {
+        listing: true,
+      },
+    });
+    return likes;
+  }),
 });

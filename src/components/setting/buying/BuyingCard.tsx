@@ -2,9 +2,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 "use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
-import { number, z } from "zod";
+import { any, number, z } from "zod";
 import Search from "~/components/misc/Search";
 
 import BuyingItem from "~/components/setting/buying/BuyingItem";
@@ -19,19 +18,16 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import { Form } from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
+
+import { User } from "lucide-react";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { getServerAuthSession } from "~/server/auth";
+import { db } from "~/server/db";
 import { api } from "~/trpc/react";
 
 export default function BuyingCard({ id }: { id: number }) {
-  const likeListings = api.listing.isLikedList.useQuery({ id });
-  const listingIds = Object.entries(likeListings);
-
-  const listingsList = api.listing.getListing.useQuery({ id: listingIds.id });
-  const listings = Object.values(listingsList);
+  const listings = api.listing.isLikedList.useQuery();
+  console.log("listings", listings);
 
   return (
     <Card>
@@ -46,8 +42,8 @@ export default function BuyingCard({ id }: { id: number }) {
       <ScrollArea>
         <CardContent>
           <div className=" grid grid-flow-row-dense gap-4">
-            {listings.map((listing: Listing) => (
-              <BuyingItem key={listing.id} buying={listing} />
+            {listings.data?.map((listing) => (
+              <BuyingItem key={listing.listing.id} buying={listing.listing} />
             ))}
           </div>
         </CardContent>

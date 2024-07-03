@@ -91,7 +91,7 @@ model User {
     accounts Account[]
     sessions Session[]
     listings Listing[]
-    like     Like[]
+    likes    Like[]
 }
 
 model VerificationToken {

@@ -6,8 +6,7 @@ export default function Buying({ params }: { params: { id: number } }) {
 
   return (
     <div>
-      <BuyingCard id ={id}
-      />
+      <BuyingCard id={id} />
     </div>
   );
 }

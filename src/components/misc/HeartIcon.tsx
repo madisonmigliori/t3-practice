@@ -20,7 +20,7 @@ export default function HeartIcon({ id }: { id: number }) {
     },
   });
 
-  // const isLiked = api.listing.isLiked.useQuery({id});
+  const showHeart = api.listing.isLiked.useQuery({ id });
 
   const handleLike = () => {
     if (isLiked) {
@@ -34,7 +34,7 @@ export default function HeartIcon({ id }: { id: number }) {
   return (
     <div>
       <Button variant="ghost" onClick={() => handleLike()}>
-        {isLiked ? <Heart fill="true" /> : <Heart />}
+        {isLiked && showHeart ? <Heart fill="true" /> : <Heart />}
       </Button>
     </div>
   );

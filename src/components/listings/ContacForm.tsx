@@ -9,19 +9,19 @@ import addListing from "~/app/listing/addListing/page";
 import { Button } from "~/components/ui/button";
 
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
 } from "~/components/ui/card";
 import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
@@ -32,8 +32,7 @@ const contactSchema = z.object({
   lastName: z.string(),
   email: z.string(),
   mobilePhone: z.string().optional(),
-  message: z.string().optional();
-
+  message: z.string().optional(),
 });
 
 export default function ContactForm() {
@@ -131,9 +130,7 @@ export default function ContactForm() {
                   )}
                 />
               </div>
-             
-           
-            
+
               <div>
                 <FormField
                   control={contact.control}
