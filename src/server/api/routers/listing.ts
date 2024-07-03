@@ -174,7 +174,7 @@ export const listingRouter = createTRPCRouter({
   isLiked: protectedProcedure
     .input(z.object({ id: z.number() }))
     .query(({ input, ctx }) => {
-      const isLiked = ctx.db.like.findUnique({
+      return ctx.db.like.findUnique({
         where: {
           userId_listingId: {
             userId: ctx.session.user.id,
@@ -182,21 +182,15 @@ export const listingRouter = createTRPCRouter({
           },
         },
       });
-
-      if (isLiked !== null) {
-        return true;
-      } else {
-        return false;
-      }
     }),
 
-  isLikedList: protectedProcedure.query(({ ctx }) => {
-    const likes = ctx.db.like.findMany({
+  isLikedList: protectedProcedure.query(async ({ ctx }) => {
+    const likes = await ctx.db.like.findMany({
       where: { userId: ctx.session.user.id },
       include: {
         listing: true,
       },
     });
-    return likes;
+    return likes.map((like) => like.listing);
   }),
 });

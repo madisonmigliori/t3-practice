@@ -6,7 +6,7 @@ import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/react";
 
 export default function HeartIcon({ id }: { id: number }) {
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(true);
   const utils = api.useUtils();
 
   const like = api.listing.likeListing.useMutation({
@@ -34,7 +34,7 @@ export default function HeartIcon({ id }: { id: number }) {
   return (
     <div>
       <Button variant="ghost" onClick={() => handleLike()}>
-        {isLiked && showHeart ? <Heart fill="true" /> : <Heart />}
+        {showHeart.data === null ? <Heart /> : <Heart fill="true" />}
       </Button>
     </div>
   );

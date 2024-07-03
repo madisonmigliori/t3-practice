@@ -16,10 +16,13 @@
 - [x] Selling Page
 - [x] Fix Delete Button
 - [ ] Allow the account to be edit or fill in fields (upsert) //Close?
-- [ ] Liked Button
+- [x] Liked Button
 - [ ] Allow to change profile photo
 - [ ] Update listing page (individual) + IMG + Description + other attributes
 - [ ] Create Contact Form
 - [ ] Allow Messaging
+- [ ] Define Notifications
+- [ ] Seed File
 - [ ] Create a Login Page with more authentication providers (github/linkedin)
 - [ ] Create Meta Tags for each route
+- [ ] Add State to Listing: DRAFT, INACTIVE, ACTIVE, SOLD, PENDING

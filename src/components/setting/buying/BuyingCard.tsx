@@ -43,7 +43,7 @@ export default function BuyingCard({ id }: { id: number }) {
         <CardContent>
           <div className=" grid grid-flow-row-dense gap-4">
             {listings.data?.map((listing) => (
-              <BuyingItem key={listing.listing.id} buying={listing.listing} />
+              <BuyingItem key={listing.id} buying={listing} />
             ))}
           </div>
         </CardContent>
