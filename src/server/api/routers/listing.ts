@@ -11,12 +11,26 @@ import {
 } from "~/server/api/trpc";
 
 export const listingRouter = createTRPCRouter({
+  //Single Listing
   getListing: publicProcedure
     .input(z.object({ id: z.number() }))
     .query(({ ctx, input }) => {
       return ctx.db.listing.findUnique({
         where: {
-          id: Number(input.id),
+          id: input.id,
+        },
+      });
+    }),
+
+  //Mutiple Listings
+  getListingsById: publicProcedure
+    .input(z.object({ id: z.array(z.number()) }))
+    .query(({ ctx, input }) => {
+      return ctx.db.listing.findMany({
+        where: {
+          id: {
+            in: input.id,
+          },
         },
       });
     }),

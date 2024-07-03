@@ -48,7 +48,7 @@ export default async function ListingComponent({
                 <CardDescription>{getListing.location}</CardDescription>
               </div>
               <div>
-                {!createdbyUser && <HeartIcon id={getListing.id} />}
+                {createdbyUser && <HeartIcon id={getListing.id} />}
 
                 {createdbyUser && (
                   <>

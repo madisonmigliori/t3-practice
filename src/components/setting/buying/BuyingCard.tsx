@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 "use client";
 
@@ -26,8 +28,10 @@ import { api } from "~/trpc/react";
 
 export default function BuyingCard({ id }: { id: number }) {
   const likeListings = api.listing.isLikedList.useQuery({ id });
-  const listings = api.listing.getListing.useQuery({ id });
-  console.log("listing", listings);
+  const listingIds = Object.entries(likeListings);
+
+  const listingsList = api.listing.getListing.useQuery({ id: listingIds.id });
+  const listings = Object.values(listingsList);
 
   return (
     <Card>
@@ -42,7 +46,7 @@ export default function BuyingCard({ id }: { id: number }) {
       <ScrollArea>
         <CardContent>
           <div className=" grid grid-flow-row-dense gap-4">
-            {listings.data?.map((listing: Listing) => (
+            {listings.map((listing: Listing) => (
               <BuyingItem key={listing.id} buying={listing} />
             ))}
           </div>

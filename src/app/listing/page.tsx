@@ -9,6 +9,12 @@ import { db } from "~/server/db";
 
 import ListingCard from "~/components/listings/ListingCard";
 import Search from "~/components/misc/Search";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
 import { getServerAuthSession } from "~/server/auth";
 
 // const [listings, setListings] = useState<Listing[]>([]);
@@ -31,20 +37,29 @@ export default async function Listing() {
             {listingSize !== 0 && <Search placeholder="Search.." />}
 
             {session && (
-              <>
-                <Link href="/listing/addListing">
-                  <Button variant="outline">
-                    <Plus />
-                  </Button>
-                </Link>
-              </>
+              <div>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Link href="/listing/addListing">
+                        <Button variant="outline">
+                          <Plus />
+                        </Button>
+                      </Link>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Add Listing</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
             )}
           </div>
         </div>
       </div>
       <div className="mx-10">
         {listingSize !== 0 ? (
-          <div className="mx-20  grid grid-flow-row-dense grid-cols-2 grid-rows-5 gap-4">
+          <div className="mx-10  grid grid-flow-row-dense gap-2">
             {listings.map((listing: Listing) => (
               <>
                 <ListingCard key={listing.id} listing={listing} />

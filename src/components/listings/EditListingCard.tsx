@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
+//TODO: Does not allow decimal values, or allow for one field to update
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -51,8 +52,8 @@ export default function EditListingCard({ id }: { id: number }) {
   const updateListing = api.listing.update.useMutation({
     onSuccess: async () => {
       await utils.listing.invalidate();
-      router.back();
       router.refresh();
+      router.back();
     },
   });
 

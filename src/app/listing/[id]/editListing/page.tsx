@@ -16,7 +16,7 @@ export default async function EditListing({
   return (
     <div>
       <Button variant="secondary" className="m-6">
-        <Link href="/listing">
+        <Link href={`/listing/${getListing?.id}`}>
           {" "}
           <ArrowLeft />
         </Link>

@@ -5,7 +5,8 @@ import React, { useState } from "react";
 import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/react";
 
-export default function HeartIcon( {id }: { id: number }) {
+export default function HeartIcon({ id }: { id: number }) {
+  const [isLiked, setIsLiked] = useState(false);
   const utils = api.useUtils();
 
   const like = api.listing.likeListing.useMutation({
@@ -19,13 +20,15 @@ export default function HeartIcon( {id }: { id: number }) {
     },
   });
 
-  const isLiked = api.listing.isLiked.useQuery({ id });
+  // const isLiked = api.listing.isLiked.useQuery({id});
 
   const handleLike = () => {
     if (isLiked) {
       unlike.mutate({ id });
+      setIsLiked(false);
     } else {
       like.mutate({ id });
+      setIsLiked(true);
     }
   };
   return (
