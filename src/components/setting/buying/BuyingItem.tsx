@@ -32,7 +32,7 @@ export default function BuyingItem({ buying }: BuyingItemProps) {
             <CardTitle className="my-2">{buying.name}</CardTitle>
             <CardDescription>{buying.location} </CardDescription>
           </div>
-          <HeartIcon id={buying.id} />
+          <HeartIcon id={buying.id} liked={buying.liked} />
         </CardHeader>
         <CardContent>
           <div className="columns-3">

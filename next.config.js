@@ -6,7 +6,10 @@ await import("./src/env.js");
 
 /** @type {import("next").NextConfig} */
 const config = {
-  images: { domains: ["cdn.discord.app.com"] },
+  images: {
+    domains: ["cdn.discord.app.com"],
+    // ["cdn.github.app.com"]
+  },
 };
 
 export default config;

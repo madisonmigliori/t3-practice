@@ -3,12 +3,35 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
+import type { Listing, Prisma } from "@prisma/client";
+import type { Session } from "next-auth";
 import { z } from "zod";
+import { Input } from "~/components/ui/input";
 import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
+
+// const createListingWhereClause = (
+//   input: Listing
+//   ctx: {
+//     session: Session | null;
+//   }
+// ) => {
+//   const where: Prisma.ListingWhereInput = {
+//     name: {
+//       search: input.query
+//         ?.split(' ')
+//         .filter((x) => x.length > 0)
+//         .join(' <-> '),
+//     }
+//   }
+
+//   // console.log('Where clause', JSON.stringify(where, null, 2));
+
+//   return where;
+// }
 
 export const listingRouter = createTRPCRouter({
   //Single Listing
@@ -54,6 +77,7 @@ export const listingRouter = createTRPCRouter({
           grossRev: input.grossRev,
           adjCashFlow: input.adjCashFlow,
           userId: ctx.session?.user.id,
+          liked: false,
         },
       });
     }),
@@ -71,31 +95,22 @@ export const listingRouter = createTRPCRouter({
     });
   }),
 
-  searchListing: publicProcedure
-    .input(
-      z.object({
-        name: z.string(),
-        location: z.string(),
-        askingPrice: z.number(),
-        grossRev: z.number(),
-        adjCashFlow: z.number(),
-      }),
-    )
-    .query(({ ctx, input }) => {
-      return ctx.db.listing.findMany({
-        where: {
-          OR: [
-            {
-              name: input.name,
-              location: input.location,
-              askingPrice: input.askingPrice,
-              grossRev: input.grossRev,
-              adjCashFlow: input.adjCashFlow,
-            },
-          ],
-        },
-      });
-    }),
+  // searchListing: publicProcedure
+  //   .query(({ ctx, input }) => {
+  //     return ctx.db.listing.findMany({
+  //       where: {
+  //         OR: [
+  //            {
+  //             name: true
+  //             location: true,
+  //             askingPrice: true,
+  //             grossRev: true,
+  //             adjCashFlow: true,
+  //           },
+  //         ],
+  //       },
+  //     });
+  //   }),
 
   update: protectedProcedure
     .input(

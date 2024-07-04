@@ -15,7 +15,7 @@
 - [x] Buying @Relation
 - [x] Selling Page
 - [x] Fix Delete Button
-- [ ] Allow the account to be edit or fill in fields (upsert) //Close?
+- [x] Allow the account to be edit or fill in fields
 - [x] Liked Button
 - [ ] Allow to change profile photo
 - [ ] Update listing page (individual) + IMG + Description + other attributes

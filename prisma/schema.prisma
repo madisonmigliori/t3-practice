@@ -23,6 +23,7 @@ model Listing {
     grossRev    Float?
     adjCashFlow Float?
     userId      String?
+    liked       Boolean
 
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now()) @updatedAt

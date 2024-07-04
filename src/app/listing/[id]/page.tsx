@@ -14,6 +14,7 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 import { cn } from "~/lib/utils";
+import { getServerAuthSession } from "~/server/auth";
 
 import { api } from "~/trpc/server";
 
@@ -24,12 +25,15 @@ export default async function ListingComponent({
 }) {
   const id = Number(params.id);
   const getListing = await api.listing.getListing({ id });
-  const createdbyUser = await api.listing.createdBy();
+  const createdBy = await api.user.createdBy();
+  const me = await api.user.me();
 
   const formatPrice = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
   });
+
+  // const whoCreated = createdBy !== me?.id ? false: true;
 
   return (
     <div>
@@ -48,9 +52,9 @@ export default async function ListingComponent({
                 <CardDescription>{getListing.location}</CardDescription>
               </div>
               <div>
-                {createdbyUser && <HeartIcon id={getListing.id} />}
+                {me && <HeartIcon id={getListing.id} />}
 
-                {createdbyUser && (
+                {!me && (
                   <>
                     <DeleteButton id={getListing.id} />
                     <Link

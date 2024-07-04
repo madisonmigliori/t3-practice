@@ -6,7 +6,8 @@ import { api } from "~/trpc/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "@radix-ui/react-dropdown-menu";
-import { useRouter } from "next/router";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -23,6 +24,12 @@ const searchSchema = z.object({
 });
 
 export default function Search({ placeholder }: { placeholder: string }) {
+  const searchParams = useSearchParams();
+
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const router = useRouter();
+  const pathname = usePathname();
+
   const searchBar = useForm<z.infer<typeof searchSchema>>({
     resolver: zodResolver(searchSchema),
     defaultValues: {
@@ -30,10 +37,23 @@ export default function Search({ placeholder }: { placeholder: string }) {
     },
   });
 
-  // const search = api.listing.searchListing.useQuery();
+  type SearchBarType = z.infer<typeof searchSchema>;
 
-  const onSubmit = (values: z.infer<typeof searchSchema>) => {
-    // search.data.filter(values.entry);
+  // const searching = api.listing.searchListing.useQuery(entry);
+
+  const onSubmit = (formData: SearchBarType) => {
+    //   const params = new URLSearchParams(searchParams);
+    //   if (formData.entry == '') {
+    //     console.log('Form data q is empty');
+    //     params.delete('query');
+    //   } else if (formData.entry) {
+    //     params.set('query', formData.entry);
+    //   }
+    //   params.set('page', '1');
+    //   router.push(pathname + '?' + params.toString());
+    // },
+    //   const encodedSearchQuery = encodeURI(searchQuery);
+    //   router.push(`/search?q=${encodedSearchQuery}`);
   };
 
   return (

@@ -56,6 +56,7 @@ export default function AccountCard() {
   const userInfo = api.user.update.useMutation({
     onSuccess: async () => {
       console.log("Success");
+      // router.refresh();
     },
   });
 
@@ -236,12 +237,13 @@ export default function AccountCard() {
                 />
               </div>
             </div>
-          </form>
-          <div className="mx-10 my-5 grid grid-flow-row-dense grid-cols-2">
-            <div className="basis-1/8">
-              <Button type="submit">Submit</Button>
+
+            <div className="mx-10 my-5 grid grid-flow-row-dense grid-cols-2">
+              <div className="basis-1/8">
+                <Button type="submit">Submit</Button>
+              </div>
             </div>
-          </div>
+          </form>
         </Form>
       </CardContent>
     </Card>

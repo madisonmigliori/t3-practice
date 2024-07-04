@@ -27,7 +27,6 @@ export const userRouter = createTRPCRouter({
           id: ctx.session.user.id,
         },
         data: {
-          name: `${input.firstName} ${input.lastName}`,
           firstName: input.firstName,
           lastName: input.lastName,
           email: input.email,
@@ -47,5 +46,15 @@ export const userRouter = createTRPCRouter({
     });
 
     return user;
+  }),
+
+  createdBy: protectedProcedure.query(async ({ ctx }) => {
+    const author = await ctx.db.user.findMany({
+      where: { id: ctx.session.user.id },
+      include: {
+        listings: true,
+      },
+    });
+    return author.map((author) => author.id);
   }),
 });
