@@ -72,13 +72,13 @@ export default function AddListingCard() {
       inventory: 0,
       rent: 0,
       est: new Date(),
-      description: "",
-      realEstate: "",
-      buildingSf: "",
+      description: "N/A",
+      realEstate: "N/A",
+      buildingSf: "N/A",
       leaseExp: new Date(),
       employees: 0,
-      facilities: "",
-      reasonForSelling: "",
+      facilities: "N/A",
+      reasonForSelling: "N/A",
       franchise: false,
       img: "",
     },
@@ -346,7 +346,7 @@ export default function AddListingCard() {
                       <FormItem>
                         <FormLabel>Description</FormLabel>
                         <FormControl>
-                          <Textarea />
+                          <Textarea {...field} />
                         </FormControl>
                       </FormItem>
                     );
