@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import addListing from "~/app/listing/addListing/page";
 import { Button } from "~/components/ui/button";
+import { Textarea } from "~/components/ui/textarea";
 
 import {
   Card,
@@ -160,7 +161,9 @@ export default function ContactForm() {
                     <FormItem>
                       <Label>Optional Message</Label>
                       <FormControl>
-                        <Input type="text-area" {...field} />
+                        {/* <Input type="text-area" {...field}> */}
+                        <Textarea placeholder="Type your message here." />
+                        {/* </Input> */}
                       </FormControl>
                     </FormItem>
                   )}

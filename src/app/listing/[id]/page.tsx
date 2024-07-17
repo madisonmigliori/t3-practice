@@ -48,9 +48,14 @@ export default async function ListingComponent({
         {getListing ? (
           <Card>
             <CardHeader className="flex justify-between">
-              <div className="flex flex-col">
-                <CardTitle>{getListing.name}</CardTitle>
-                <CardDescription>{getListing.location}</CardDescription>
+              <div className="flex flex-col gap-2">
+                <CardTitle>
+                  <h1 className="text-wrap text-4xl">{getListing.name}</h1>
+                </CardTitle>
+                <CardDescription>
+                  {" "}
+                  <h2 className="text-xl">{getListing.location}</h2>
+                </CardDescription>
               </div>
               <div>
                 {me && <HeartIcon id={getListing.id} />}
@@ -81,85 +86,63 @@ export default async function ListingComponent({
             </div>
             <CardContent>
               <div>
-                <div>
-                  <div className="flex flex-row flex-wrap justify-between px-10 pb-5 text-3xl">
-                    <div className="text-blue-800">
-                      <tr>
-                        <td className="font-semibold">Asking Price: </td>
-                        <td>
-                          {" "}
-                          {formatPrice.format(Number(getListing.askingPrice))}
-                        </td>
-                      </tr>
-                    </div>
-
+                <div className="mt-4 grid grid-flow-row-dense grid-cols-2 justify-between gap-x-10 px-10 pb-5 text-3xl">
+                  <div className="text-blue-800">
                     <tr>
-                      <td className=" font-semibold">Cash Flow: </td>
+                      <td className="font-semibold">Asking Price: </td>
                       <td>
                         {" "}
-                        {formatPrice.format(Number(getListing.adjCashFlow))}
+                        {formatPrice.format(Number(getListing.askingPrice))}
                       </td>
                     </tr>
                   </div>
-                  <hr className="dotted"></hr>
-                  <div className="flex flex-wrap justify-between px-10 py-5">
-                    <div>
-                      <tr>
-                        <td className=" font-semibold">Gross Revenue: </td>
-                        <td>
-                          {" "}
-                          {formatPrice.format(Number(getListing.grossRev))}
-                        </td>
-                      </tr>
-                    </div>{" "}
-                    <div>
-                      <tr>
-                        <td className=" font-semibold">EBITDA: </td>
-                        <td>
-                          {" "}
-                          {formatPrice.format(Number(getListing.adjCashFlow))}
-                        </td>
-                      </tr>
-                    </div>{" "}
-                    <div>
-                      <tr>
-                        <td className=" font-semibold">FF&E: </td>
-                        <td>
-                          {" "}
-                          {formatPrice.format(Number(getListing.adjCashFlow))}
-                        </td>
-                      </tr>
-                    </div>{" "}
-                    <div>
-                      <tr>
-                        <td className=" font-semibold">Inventory: </td>
-                        <td>
-                          {" "}
-                          {formatPrice.format(Number(getListing.adjCashFlow))}
-                        </td>
-                      </tr>
-                    </div>{" "}
-                    <div>
-                      <tr>
-                        <td className=" font-semibold">Rent: </td>
-                        <td>
-                          {" "}
-                          {formatPrice.format(Number(getListing.adjCashFlow))}
-                        </td>
-                      </tr>
-                    </div>{" "}
-                    <div>
-                      <tr>
-                        <td className=" font-semibold">Established: </td>
-                        <td>
-                          {" "}
-                          {formatPrice.format(Number(getListing.adjCashFlow))}
-                        </td>
-                      </tr>
-                    </div>
+
+                  <tr>
+                    <td className=" font-semibold">Cash Flow: </td>
+                    <td>
+                      {" "}
+                      {formatPrice.format(Number(getListing.adjCashFlow))}
+                    </td>
+                  </tr>
+                </div>
+                <hr className="dotted"></hr>
+                <div className="mt-4 px-10 pb-5">
+                  <div className=" grid grid-flow-row-dense grid-cols-2 justify-between gap-x-10">
+                    <tr>
+                      <td className=" font-semibold">Gross Revenue: </td>
+                      <td>{formatPrice.format(Number(getListing.grossRev))}</td>
+                    </tr>
+
+                    <tr>
+                      <td className=" font-semibold">EBITDA: </td>
+                      <td>{formatPrice.format(Number(getListing.ebita))}</td>
+                    </tr>
+
+                    <tr>
+                      <td className=" font-semibold">FF&E: </td>
+                      <td>{formatPrice.format(Number(getListing.ffe))}</td>
+                    </tr>
+
+                    <tr>
+                      <td className=" font-semibold">Inventory: </td>
+                      <td>
+                        {" "}
+                        {formatPrice.format(Number(getListing.inventory))}
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td className=" font-semibold">Rent: </td>
+                      <td> {formatPrice.format(Number(getListing.rent))}</td>
+                    </tr>
+                    <tr>
+                      <td className=" font-semibold">Established: </td>
+                      <td> {getListing?.location}</td>
+                    </tr>
                   </div>
                 </div>
               </div>
+
               <hr></hr>
               <div>
                 <div className=" px-10 py-5">
@@ -167,57 +150,62 @@ export default async function ListingComponent({
                     {" "}
                     Business Description
                   </h1>
-                  <div>description</div>
+                  <div>{getListing.description}</div>
                 </div>
                 <hr></hr>
-                <div className=" px-10 py-5">
-                  <h1 className=" text-2xl font-semibold">
+                <div className="py-5">
+                  <h1 className=" px-10 text-2xl font-semibold">
                     {" "}
                     Detail Information{" "}
                   </h1>
-                  <div className="mt-4">
-                    <tr>
-                      <td className="font-semibold">Location: </td>
-                      <td>{getListing?.location}</td>
-                    </tr>
-                    <tr>
-                      <td className="font-semibold">Inventory: </td>
-                      <td> {getListing?.location}</td>
-                    </tr>
-                    <tr>
-                      <td className="font-semibold">Real Estate:</td>
-                      <td> {getListing?.location}</td>
-                    </tr>
-                    <tr>
-                      <td className="font-semibold">Building Square Feet:</td>
-                      <td> {getListing?.location}</td>
-                    </tr>
-                    <tr>
-                      <td className="font-semibold">Leas Expiration: </td>
-                      <td> {getListing?.location}</td>
-                    </tr>
-                    <tr>
-                      <td className="font-semibold">Employees:</td>
-                      <td> {getListing?.location}</td>
-                    </tr>
-                    <tr>
-                      <td className="font-semibold">
-                        Furniture, Fixture & Equipment (FF&E):
-                      </td>
-                      <td> {getListing?.location}</td>
-                    </tr>
-                    <tr>
-                      <td className="font-semibold">Facilities:</td>
-                      <td> {getListing?.location}</td>
-                    </tr>
-                    <tr>
-                      <td className="font-semibold">Reason for Selling:</td>
-                      <td> {getListing?.location}</td>
-                    </tr>
-                    <tr>
-                      <td className="font-semibold">Franchise:</td>
-                      <td> {getListing?.location}</td>
-                    </tr>
+                  <div className="mt-4 justify-between px-10 pb-5">
+                    <div className=" grid grid-flow-row-dense grid-cols-2 gap-x-10 ">
+                      <tr>
+                        <td className="font-semibold">Location: </td>
+                        <td>{getListing?.location}</td>
+                      </tr>
+                      <tr>
+                        <td className="font-semibold">Inventory: </td>
+                        <td>
+                          {" "}
+                          {formatPrice.format(Number(getListing.inventory))}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="font-semibold">Real Estate:</td>
+                        <td> {getListing?.realEstate}</td>
+                      </tr>
+                      <tr>
+                        <td className="font-semibold">Building Square Feet:</td>
+                        <td> {getListing?.buildingSf}</td>
+                      </tr>
+                      <tr>
+                        <td className="font-semibold">Lease Expiration: </td>
+                        <td> {getListing?.location}</td>
+                      </tr>
+                      <tr>
+                        <td className="font-semibold">Employees:</td>
+                        <td> {getListing?.employees}</td>
+                      </tr>
+                      <tr>
+                        <td className="font-semibold">
+                          Furniture, Fixture & Equipment (FF&E):
+                        </td>
+                        <td> {formatPrice.format(Number(getListing.ffe))}</td>
+                      </tr>
+                      <tr>
+                        <td className="font-semibold">Facilities:</td>
+                        <td> {getListing?.facilities}</td>
+                      </tr>
+                      <tr>
+                        <td className="font-semibold">Reason for Selling:</td>
+                        <td> {getListing?.reasonForSelling}</td>
+                      </tr>
+                      <tr>
+                        <td className="font-semibold">Franchise:</td>
+                        <td> {getListing?.franchise}</td>
+                      </tr>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -228,7 +216,7 @@ export default async function ListingComponent({
                     {" "}
                     Business Location
                   </h1>
-                  <div>description</div>
+                  <div>{getListing.location}</div>
                 </div>
               </div>
             </CardContent>

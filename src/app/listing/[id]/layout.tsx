@@ -1,5 +1,6 @@
 import React from "react";
 import ContactForm from "~/components/listings/ContacForm";
+import { ScrollArea } from "~/components/ui/scroll-area";
 
 export default function ListingLayout({
   children,

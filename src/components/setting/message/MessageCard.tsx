@@ -23,13 +23,14 @@ import { SquarePen } from "lucide-react";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { ScrollArea } from "~/components/ui/scroll-area";
+import { Textarea } from "~/components/ui/textarea";
 
 export default function BuyingCard() {
   return (
     <Card>
       <CardHeader className="flex justify-between">
         <CardTitle className="mt-2">Messages</CardTitle>
-        <Popover className="w-full">
+        <Popover>
           <PopoverTrigger asChild>
             <Button variant="ghost">
               <SquarePen />
@@ -43,21 +44,26 @@ export default function BuyingCard() {
               <div className="space-y-2">
                 <h4 className="font-medium leading-none">New Message</h4>
               </div>
-              <div className="grid grid-flow-col gap-2">
-                <div className=" gap-4">
+              <div>
+                <div className="row row-auto">
                   <Label htmlFor="recipient">
                     To:
-                    <Input
-                      id="recipient"
-                      type="text"
-                      className="col-span-2 h-8"
-                    />
+                    <div className=" m-2">
+                      <Input
+                        id="recipient"
+                        type="text"
+                        className="col-span-2 h-8"
+                      />
+                    </div>
                   </Label>
                 </div>
-
-                <div className="grid grid-flow-row  items-center gap-4">
+                <div className="mb-2 mt-5 grid grid-flow-col items-center">
                   <Label htmlFor="message">{}</Label>
-                  <Input type="text" id="message" className="col-span-2 h-8" />
+
+                  <div className="grid w-full gap-2">
+                    <Textarea placeholder="Type your message here." />
+                    <Button>Send message</Button>
+                  </div>
                 </div>
               </div>
             </div>
