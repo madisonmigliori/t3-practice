@@ -1,0 +1,15 @@
+-- AlterTable
+ALTER TABLE "Listing" ADD COLUMN     "buildingSf" TEXT,
+ADD COLUMN     "description" TEXT,
+ADD COLUMN     "ebita" DOUBLE PRECISION,
+ADD COLUMN     "employees" INTEGER,
+ADD COLUMN     "est" TIMESTAMP(3),
+ADD COLUMN     "facilities" TEXT,
+ADD COLUMN     "ffe" DOUBLE PRECISION,
+ADD COLUMN     "franchise" BOOLEAN,
+ADD COLUMN     "img" TEXT,
+ADD COLUMN     "inventory" DOUBLE PRECISION,
+ADD COLUMN     "leaseExp" TIMESTAMP(3),
+ADD COLUMN     "realEstate" TEXT,
+ADD COLUMN     "reasonForSelling" TEXT,
+ADD COLUMN     "rent" DOUBLE PRECISION;

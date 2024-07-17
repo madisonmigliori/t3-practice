@@ -95,22 +95,20 @@ export const listingRouter = createTRPCRouter({
     });
   }),
 
-  // searchListing: publicProcedure
-  //   .query(({ ctx, input }) => {
-  //     return ctx.db.listing.findMany({
-  //       where: {
-  //         OR: [
-  //            {
-  //             name: true
-  //             location: true,
-  //             askingPrice: true,
-  //             grossRev: true,
-  //             adjCashFlow: true,
-  //           },
-  //         ],
-  //       },
-  //     });
-  //   }),
+  searchListing: publicProcedure
+    .input(z.object({ text: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.db.listing.findMany({
+        where: {
+          name: {
+            search: input.text,
+          },
+          location: {
+            search: input.text,
+          },
+        },
+      });
+    }),
 
   update: protectedProcedure
     .input(

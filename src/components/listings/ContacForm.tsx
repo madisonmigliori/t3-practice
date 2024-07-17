@@ -43,6 +43,7 @@ export default function ContactForm() {
       lastName: "",
       email: "",
       mobilePhone: "",
+      message: "",
     },
   });
 
@@ -58,18 +59,19 @@ export default function ContactForm() {
       lastName: values.lastName,
       email: values.email,
       mobilePhone: values.mobilePhone,
+      message: values.message,
     });
   };
 
   return (
     <Card>
       <CardHeader className="mt-2">
-        <CardTitle>Account Settings</CardTitle>
+        <CardTitle>Contact</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...contact}>
           <form onSubmit={contact.handleSubmit(onSubmit)}>
-            <div className="mx-10 grid grid-flow-row-dense grid-cols-2 gap-4">
+            <div className="mx-10 grid grid-flow-row-dense grid-cols-1 gap-4">
               <div>
                 <FormField
                   control={contact.control}
@@ -145,6 +147,20 @@ export default function ContactForm() {
                           placeholder="e.g. (123) 456-7890 "
                           {...field}
                         />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div>
+                <FormField
+                  control={contact.control}
+                  name={"message"}
+                  render={({ field }) => (
+                    <FormItem>
+                      <Label>Optional Message</Label>
+                      <FormControl>
+                        <Input type="text-area" {...field} />
                       </FormControl>
                     </FormItem>
                   )}

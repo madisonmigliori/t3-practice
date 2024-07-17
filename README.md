@@ -26,3 +26,4 @@
 - [ ] Create a Login Page with more authentication providers (github/linkedin)
 - [ ] Create Meta Tags for each route
 - [ ] Add State to Listing: DRAFT, INACTIVE, ACTIVE, SOLD, PENDING
+- [ ] Handle Error Handling with Forms and Listings

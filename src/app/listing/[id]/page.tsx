@@ -1,5 +1,6 @@
 import type { Listing } from "@prisma/client";
 import { ArrowLeft, Pencil } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 import DeleteButton from "~/components/misc/DeleteButton";
@@ -67,19 +68,167 @@ export default async function ListingComponent({
                 )}
               </div>
             </CardHeader>
+            <div className="mb-10 flex max-h-max max-w-max justify-center object-cover">
+              <Image
+                src="/business.jpg"
+                width={500}
+                height={500}
+                style={{ width: "100%", height: "auto" }}
+                layout="responsive"
+                alt={""}
+                objectFit="cover"
+              ></Image>
+            </div>
             <CardContent>
-              <div className="columns-3">
+              <div>
                 <div>
-                  <p>{formatPrice.format(Number(getListing.askingPrice))}</p>
-                  <p className="font-semibold">Asking Price</p>
+                  <div className="flex flex-row flex-wrap justify-between px-10 pb-5 text-3xl">
+                    <div className="text-blue-800">
+                      <tr>
+                        <td className="font-semibold">Asking Price: </td>
+                        <td>
+                          {" "}
+                          {formatPrice.format(Number(getListing.askingPrice))}
+                        </td>
+                      </tr>
+                    </div>
+
+                    <tr>
+                      <td className=" font-semibold">Cash Flow: </td>
+                      <td>
+                        {" "}
+                        {formatPrice.format(Number(getListing.adjCashFlow))}
+                      </td>
+                    </tr>
+                  </div>
+                  <hr className="dotted"></hr>
+                  <div className="flex flex-wrap justify-between px-10 py-5">
+                    <div>
+                      <tr>
+                        <td className=" font-semibold">Gross Revenue: </td>
+                        <td>
+                          {" "}
+                          {formatPrice.format(Number(getListing.grossRev))}
+                        </td>
+                      </tr>
+                    </div>{" "}
+                    <div>
+                      <tr>
+                        <td className=" font-semibold">EBITDA: </td>
+                        <td>
+                          {" "}
+                          {formatPrice.format(Number(getListing.adjCashFlow))}
+                        </td>
+                      </tr>
+                    </div>{" "}
+                    <div>
+                      <tr>
+                        <td className=" font-semibold">FF&E: </td>
+                        <td>
+                          {" "}
+                          {formatPrice.format(Number(getListing.adjCashFlow))}
+                        </td>
+                      </tr>
+                    </div>{" "}
+                    <div>
+                      <tr>
+                        <td className=" font-semibold">Inventory: </td>
+                        <td>
+                          {" "}
+                          {formatPrice.format(Number(getListing.adjCashFlow))}
+                        </td>
+                      </tr>
+                    </div>{" "}
+                    <div>
+                      <tr>
+                        <td className=" font-semibold">Rent: </td>
+                        <td>
+                          {" "}
+                          {formatPrice.format(Number(getListing.adjCashFlow))}
+                        </td>
+                      </tr>
+                    </div>{" "}
+                    <div>
+                      <tr>
+                        <td className=" font-semibold">Established: </td>
+                        <td>
+                          {" "}
+                          {formatPrice.format(Number(getListing.adjCashFlow))}
+                        </td>
+                      </tr>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <p>{formatPrice.format(Number(getListing.grossRev))}</p>
-                  <p className="font-semibold">Gross Revenue</p>
+              </div>
+              <hr></hr>
+              <div>
+                <div className=" px-10 py-5">
+                  <h1 className=" text-2xl font-semibold">
+                    {" "}
+                    Business Description
+                  </h1>
+                  <div>description</div>
                 </div>
-                <div>
-                  <p>{formatPrice.format(Number(getListing.adjCashFlow))}</p>
-                  <p className="font-semibold">Adjusted Cash Flow</p>
+                <hr></hr>
+                <div className=" px-10 py-5">
+                  <h1 className=" text-2xl font-semibold">
+                    {" "}
+                    Detail Information{" "}
+                  </h1>
+                  <div className="mt-4">
+                    <tr>
+                      <td className="font-semibold">Location: </td>
+                      <td>{getListing?.location}</td>
+                    </tr>
+                    <tr>
+                      <td className="font-semibold">Inventory: </td>
+                      <td> {getListing?.location}</td>
+                    </tr>
+                    <tr>
+                      <td className="font-semibold">Real Estate:</td>
+                      <td> {getListing?.location}</td>
+                    </tr>
+                    <tr>
+                      <td className="font-semibold">Building Square Feet:</td>
+                      <td> {getListing?.location}</td>
+                    </tr>
+                    <tr>
+                      <td className="font-semibold">Leas Expiration: </td>
+                      <td> {getListing?.location}</td>
+                    </tr>
+                    <tr>
+                      <td className="font-semibold">Employees:</td>
+                      <td> {getListing?.location}</td>
+                    </tr>
+                    <tr>
+                      <td className="font-semibold">
+                        Furniture, Fixture & Equipment (FF&E):
+                      </td>
+                      <td> {getListing?.location}</td>
+                    </tr>
+                    <tr>
+                      <td className="font-semibold">Facilities:</td>
+                      <td> {getListing?.location}</td>
+                    </tr>
+                    <tr>
+                      <td className="font-semibold">Reason for Selling:</td>
+                      <td> {getListing?.location}</td>
+                    </tr>
+                    <tr>
+                      <td className="font-semibold">Franchise:</td>
+                      <td> {getListing?.location}</td>
+                    </tr>
+                  </div>
+                </div>
+              </div>
+              <hr></hr>
+              <div>
+                <div className=" px-10 py-5">
+                  <h1 className=" text-2xl font-semibold">
+                    {" "}
+                    Business Location
+                  </h1>
+                  <div>description</div>
                 </div>
               </div>
             </CardContent>

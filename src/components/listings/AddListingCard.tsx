@@ -170,7 +170,7 @@ export default function AddListingCard() {
                   }}
                 />
               </div>
-              <div className="mx-10 my-5 grid grid-flow-row-dense grid-cols-2">
+              <div className="grid-flow- mx-10 my-5 grid grid-cols-2">
                 <div className="basis-1/8">
                   <Button type="submit">Submit</Button>
                 </div>

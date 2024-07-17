@@ -39,21 +39,22 @@ export default function Search({ placeholder }: { placeholder: string }) {
 
   type SearchBarType = z.infer<typeof searchSchema>;
 
-  // const searching = api.listing.searchListing.useQuery(entry);
+  const searching = api.listing.searchListing.useQuery({
+    onSuccess: (formData: SearchBarType) => {
+      const params = new URLSearchParams(searchParams);
+      if (formData.entry == "") {
+        params.delete("query");
+      } else if (formData.entry) {
+        params.set("query", formData.entry);
+      }
+      const encodedSearchQuery = encodeURI(formData.entry);
+      router.push(`/search?q=${encodedSearchQuery}`);
+      router.push(pathname + "?" + params.toString());
+    },
+  });
 
   const onSubmit = (formData: SearchBarType) => {
-    //   const params = new URLSearchParams(searchParams);
-    //   if (formData.entry == '') {
-    //     console.log('Form data q is empty');
-    //     params.delete('query');
-    //   } else if (formData.entry) {
-    //     params.set('query', formData.entry);
-    //   }
-    //   params.set('page', '1');
-    //   router.push(pathname + '?' + params.toString());
-    // },
-    //   const encodedSearchQuery = encodeURI(searchQuery);
-    //   router.push(`/search?q=${encodedSearchQuery}`);
+    searching, quer;
   };
 
   return (

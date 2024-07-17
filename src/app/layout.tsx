@@ -3,6 +3,7 @@ import "~/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 
 import { SessionProvider } from "next-auth/react";
+import Footer from "~/components/misc/Footer";
 import NavBar from "~/components/misc/NavBar";
 import { Pagination } from "~/components/ui/pagination";
 import { TRPCReactProvider } from "~/trpc/react";
@@ -24,6 +25,9 @@ export default function RootLayout({
         <NavBar />
         <TRPCReactProvider> {children} </TRPCReactProvider>
       </body>
+      <footer>
+        <Footer />
+      </footer>
     </html>
   );
 }

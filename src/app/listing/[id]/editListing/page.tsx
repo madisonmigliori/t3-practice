@@ -1,7 +1,10 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import Router from "next/navigation";
+import { useRouter } from "next/router";
 import React from "react";
 import EditListingCard from "~/components/listings/EditListingCard";
+import BackButton from "~/components/misc/BackButton";
 import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/server";
 
@@ -15,12 +18,7 @@ export default async function EditListing({
 
   return (
     <div>
-      <Button variant="secondary" className="m-6">
-        <Link href={`/listing/${getListing?.id}`}>
-          {" "}
-          <ArrowLeft />
-        </Link>
-      </Button>
+      <BackButton />
       <div className="mx-10">
         {getListing ? (
           <EditListingCard id={getListing.id} />
