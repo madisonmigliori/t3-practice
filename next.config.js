@@ -9,6 +9,12 @@ const config = {
   images: {
     domains: ["cdn.discord.app.com"],
     // ["cdn.github.app.com"]
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
+    ],
   },
 };
 

@@ -18,8 +18,8 @@
 - [x] Allow the account to be edit or fill in fields
 - [x] Liked Button
 - [ ] Allow to change profile photo
-- [ ] Update listing page (individual) + IMG + Description + other attributes
-- [ ] Create Contact Form
+- [x] Update listing page (individual) + IMG + Description + other attributes
+- [x] Create Contact Form
 - [ ] Allow Messaging
 - [ ] Define Notifications
 - [ ] Seed File
@@ -27,3 +27,5 @@
 - [ ] Create Meta Tags for each route
 - [ ] Add State to Listing: DRAFT, INACTIVE, ACTIVE, SOLD, PENDING
 - [ ] Handle Error Handling with Forms and Listings
+- [ ] Cloudinary Set-up
+- [ ] Formating Phone numbers

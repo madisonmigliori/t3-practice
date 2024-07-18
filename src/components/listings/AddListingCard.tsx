@@ -4,6 +4,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { CldUploadWidget } from "next-cloudinary";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
@@ -128,6 +129,34 @@ export default function AddListingCard() {
         <Form {...addListing}>
           <form onSubmit={addListing.handleSubmit(onSubmit)}>
             <div className="mx-10 grid grid-flow-row-dense grid-cols-2 gap-4">
+              <div>
+                <FormField
+                  control={addListing.control}
+                  name={"img"}
+                  render={({ field }) => {
+                    return (
+                      <FormItem>
+                        <FormLabel>Business Images*</FormLabel>
+                        <FormControl>
+                          <CldUploadWidget signatureEndpoint="/api/sign-cloudinary-params/route.ts">
+                            {({ open }) => {
+                              return (
+                                <button onClick={() => open()}>
+                                  <Input
+                                    type="file"
+                                    {...field}
+                                    autoComplete="off"
+                                  />
+                                </button>
+                              );
+                            }}
+                          </CldUploadWidget>
+                        </FormControl>
+                      </FormItem>
+                    );
+                  }}
+                />
+              </div>
               <div>
                 <FormField
                   control={addListing.control}

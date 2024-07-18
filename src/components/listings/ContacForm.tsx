@@ -67,7 +67,7 @@ export default function ContactForm() {
   return (
     <Card>
       <CardHeader className="mt-2">
-        <CardTitle>Contact</CardTitle>
+        <CardTitle>Contact Seller</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...contact}>
@@ -88,6 +88,7 @@ export default function ContactForm() {
                           placeholder='e.g. "John"'
                           required
                         />
+                        
                       </FormControl>
                     </FormItem>
                   )}
@@ -162,7 +163,10 @@ export default function ContactForm() {
                       <Label>Optional Message</Label>
                       <FormControl>
                         {/* <Input type="text-area" {...field}> */}
-                        <Textarea placeholder="Type your message here." />
+                        <Textarea
+                          placeholder="Type your message here."
+                          {...field}
+                        />
                         {/* </Input> */}
                       </FormControl>
                     </FormItem>

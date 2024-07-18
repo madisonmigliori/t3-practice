@@ -19,15 +19,20 @@ import { getServerAuthSession } from "~/server/auth";
 
 import { api } from "~/trpc/server";
 
-export default async function ListingComponent({
-  params,
-}: {
-  params: { id: number };
-}) {
+export default async function ListingComponent(
+  {
+    params,
+  }: {
+    params: { id: number };
+  },
+  request: Request,
+) {
   const id = Number(params.id);
   const getListing = await api.listing.getListing({ id });
   const createdBy = await api.user.createdBy();
   const me = await api.user.me();
+  const url = new URL(request.url);
+  const listingImg = url.searchParams.get(`${getListing?.img}`);
 
   const formatPrice = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -75,7 +80,7 @@ export default async function ListingComponent({
             </CardHeader>
             <div className="mb-10 flex max-h-max max-w-max justify-center object-cover">
               <Image
-                src="/business.jpg"
+                src="/${listingImg}"
                 width={500}
                 height={500}
                 style={{ width: "100%", height: "auto" }}
