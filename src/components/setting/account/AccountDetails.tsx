@@ -1,32 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import parsePhoneNumber from "libphonenumber-js";
 import { Pencil } from "lucide-react";
 import Link from "next/link";
-import router from "next/router";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import addListing from "~/app/listing/addListing/page";
-import { Button, buttonVariants } from "~/components/ui/button";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
+import { buttonVariants } from "~/components/ui/button";
+
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+
 import { Label } from "~/components/ui/label";
 import { cn } from "~/lib/utils";
 import { api } from "~/trpc/react";

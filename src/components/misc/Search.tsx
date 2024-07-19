@@ -54,7 +54,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
   });
 
   const onSubmit = (formData: SearchBarType) => {
-    searching, quer;
+    searching.searching;
   };
 
   return (

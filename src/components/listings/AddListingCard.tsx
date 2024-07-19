@@ -7,7 +7,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CldUploadWidget } from "next-cloudinary";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { NumericFormat } from "react-number-format";
 import { z } from "zod";
 import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/react";
@@ -31,6 +30,7 @@ import {
   PopoverTrigger,
 } from "~/components/ui/popover";
 import { Textarea } from "~/components/ui/textarea";
+import { toast } from "~/components/ui/use-toast";
 import { cn } from "~/lib/utils";
 
 const addListingSchema = z.object({
@@ -90,6 +90,17 @@ export default function AddListingCard() {
       await utils.listing.invalidate();
       router.push("/");
       router.refresh();
+      toast({
+        title: "New Listing Added",
+      });
+    },
+
+    onError: async () => {
+      toast({
+        variant: "destructive",
+        title: "Error: Failed to add new listing",
+        description: "Please fill out all required fields correctly.",
+      });
     },
   });
 

@@ -1,4 +1,3 @@
-import type { Listing } from "@prisma/client";
 import { ArrowLeft, Pencil } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,24 +14,18 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 import { cn } from "~/lib/utils";
-import { getServerAuthSession } from "~/server/auth";
 
 import { api } from "~/trpc/server";
 
-export default async function ListingComponent(
-  {
-    params,
-  }: {
-    params: { id: number };
-  },
-  request: Request,
-) {
+export default async function ListingComponent({
+  params,
+}: {
+  params: { id: number };
+}) {
   const id = Number(params.id);
   const getListing = await api.listing.getListing({ id });
   const createdBy = await api.user.createdBy();
   const me = await api.user.me();
-  const url = new URL(request.url);
-  const listingImg = url.searchParams.get(`${getListing?.img}`);
 
   const formatPrice = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -54,12 +47,11 @@ export default async function ListingComponent(
           <Card>
             <CardHeader className="flex justify-between">
               <div className="flex flex-col gap-2">
-                <CardTitle>
-                  <h1 className="text-wrap text-4xl">{getListing.name}</h1>
+                <CardTitle className="text-wrap text-4xl">
+                  {getListing.name}
                 </CardTitle>
-                <CardDescription>
-                  {" "}
-                  <h2 className="text-xl">{getListing.location}</h2>
+                <CardDescription className="text-xl">
+                  {getListing.location}
                 </CardDescription>
               </div>
               <div>
@@ -78,17 +70,22 @@ export default async function ListingComponent(
                 )}
               </div>
             </CardHeader>
-            <div className="mb-10 flex max-h-max max-w-max justify-center object-cover">
-              <Image
-                src="/${listingImg}"
-                width={500}
-                height={500}
-                style={{ width: "100%", height: "auto" }}
-                layout="responsive"
-                alt={""}
-                objectFit="cover"
-              ></Image>
+            <div className="relative">
+              <div className=" mb-10 flex max-h-max max-w-max justify-center object-fill">
+                <Image
+                  className="absolute"
+                  src={getListing.img ? getListing.img : "/business.jpg"}
+                  layout="fill"
+                  // width={100}
+                  // height={100}
+                  // style={{ width: "100%", height: "auto" }}
+                  alt={""}
+                  quality={100}
+                  objectFit="cover"
+                ></Image>
+              </div>
             </div>
+
             <CardContent>
               <div>
                 <div className="mt-4 grid grid-flow-row-dense grid-cols-2 justify-between gap-x-10 px-10 pb-5 text-3xl">

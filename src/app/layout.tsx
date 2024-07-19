@@ -7,6 +7,7 @@ import Footer from "~/components/misc/Footer";
 import NavBar from "~/components/misc/NavBar";
 import { Pagination } from "~/components/ui/pagination";
 import { TRPCReactProvider } from "~/trpc/react";
+import { Toaster } from "~/components/ui/toaster";
 
 export const metadata = {
   title: "T3 Practice",
@@ -26,10 +27,9 @@ export default function RootLayout({
         <div className="pb-[2.5rem]">
           <TRPCReactProvider> {children} </TRPCReactProvider>
         </div>
-      </body>
-      <footer>
+        <Toaster />
         <Footer />
-      </footer>
+      </body>
     </html>
   );
 }

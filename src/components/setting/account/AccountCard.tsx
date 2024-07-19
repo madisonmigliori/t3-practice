@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import addListing from "~/app/listing/addListing/page";
 import { Button } from "~/components/ui/button";
+import { toast, useToast } from "~/components/ui/use-toast";
 
 import {
   Card,
@@ -56,7 +57,17 @@ export default function AccountCard() {
   const userInfo = api.user.update.useMutation({
     onSuccess: async () => {
       console.log("Success");
-      // router.refresh();
+      toast({
+        title: "Account Details Updated!",
+      });
+    },
+
+    onError: async () => {
+      toast({
+        variant: "destructive",
+        title: "Error: Failed to Update Account Details",
+        description: "Please fill out all required fields correctly.",
+      });
     },
   });
 

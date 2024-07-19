@@ -6,17 +6,9 @@ import { useRouter } from "next/navigation";
 
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import addListing from "~/app/listing/addListing/page";
 import { Button } from "~/components/ui/button";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import {
   Form,
   FormControl,
@@ -26,6 +18,7 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import { toast } from "~/components/ui/use-toast";
 import { api } from "~/trpc/react";
 
 const accountSchema = z.object({
@@ -49,10 +42,10 @@ export default function EditAccount() {
       firstName: me.data?.firstName,
       lastName: me.data?.lastName,
       email: me.data?.email,
-      title: me.data?.title,
-      officePhone: me.data?.officePhone,
-      homePhone: me.data?.homePhone,
-      mobilePhone: me.data?.mobilePhone,
+      title: me.data?.title ?? "",
+      officePhone: me.data?.officePhone ?? "",
+      homePhone: me.data?.homePhone ?? "",
+      mobilePhone: me.data?.mobilePhone ?? "",
     },
   });
 
@@ -60,6 +53,17 @@ export default function EditAccount() {
     onSuccess: async () => {
       console.log("Success");
       router.push("/settings/account");
+      toast({
+        title: "Account Details Updated!",
+      });
+    },
+
+    onError: async () => {
+      toast({
+        variant: "destructive",
+        title: "Error: Failed to Update Account Details",
+        description: "Please fill out all required fields correctly.",
+      });
     },
   });
 
@@ -69,8 +73,8 @@ export default function EditAccount() {
       lastName: values.lastName,
       email: values.email,
       title: values.title,
-      officePhone: values.officePhone,
-      homePhone: values.homePhone,
+      officePhone: values.officePhone ?? "",
+      homePhone: values.homePhone ?? "",
       mobilePhone: values.mobilePhone,
     });
   };

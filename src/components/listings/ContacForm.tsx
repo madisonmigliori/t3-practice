@@ -59,7 +59,9 @@ export default function ContactForm() {
       firstName: values.firstName,
       lastName: values.lastName,
       email: values.email,
-      mobilePhone: values.mobilePhone,
+      mobilePhone: values.mobilePhone ?? "",
+      homePhone: values.mobilePhone ?? "",
+      officePhone: values.mobilePhone ?? "",
       message: values.message,
     });
   };
@@ -88,7 +90,6 @@ export default function ContactForm() {
                           placeholder='e.g. "John"'
                           required
                         />
-                        
                       </FormControl>
                     </FormItem>
                   )}

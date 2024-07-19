@@ -21,6 +21,7 @@ import {
   FormLabel,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
+import { toast } from "~/components/ui/use-toast";
 
 const editListingSchema = z.object({
   name: z.string().min(1, "Business name is required"),
@@ -54,6 +55,18 @@ export default function EditListingCard({ id }: { id: number }) {
       await utils.listing.invalidate();
       router.refresh();
       router.back();
+
+      toast({
+        title: "Listing Details Updated!",
+      });
+    },
+
+    onError: async () => {
+      toast({
+        variant: "destructive",
+        title: "Error: Failed to Update Listing Details",
+        description: "Please fill out all required fields correctly.",
+      });
     },
   });
 
