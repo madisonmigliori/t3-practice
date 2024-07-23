@@ -24,7 +24,6 @@ export default async function ListingComponent({
 }) {
   const id = Number(params.id);
   const getListing = await api.listing.getListing({ id });
-  const createdBy = await api.user.createdBy();
   const me = await api.user.me();
 
   const formatPrice = new Intl.NumberFormat("en-US", {

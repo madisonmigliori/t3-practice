@@ -16,6 +16,8 @@ datasource db {
     relationMode = "prisma"
 }
 
+//change IMG to File[]
+
 model Listing {
     id               Int       @id @default(autoincrement())
     img              String?
@@ -94,8 +96,8 @@ model Session {
 model User {
     id            String    @id @default(cuid())
     name          String
-    firstName     String    @default("First Name")
-    lastName      String    @default("Last Name")
+    firstName     String    @default("John")
+    lastName      String    @default("Smith")
     email         String    @unique
     title         String?
     mobilePhone   String?
@@ -108,6 +110,43 @@ model User {
     sessions Session[]
     listings Listing[]
     likes    Like[]
+    messages Message[]
+
+    messageId String?
+}
+
+model File {
+    id    String @id @default(cuid())
+    input String
+
+    Message Message[]
+}
+
+model Message {
+    id        String   @id @default(cuid())
+    parentId  String?
+    userId    String
+    topicId   String
+    message   String
+    files     File[]
+    createdAt DateTime @default(now())
+
+    users User @relation(fields: [userId], references: [id])
+
+    parent   Message?  @relation("parent", fields: [parentId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+    children Message[] @relation("parent")
+    Topic    Topic     @relation(fields: [topicId], references: [id])
+
+    @@index([userId])
+    @@index([parentId])
+    @@index([topicId])
+}
+
+model Topic {
+    id      String    @id @default(cuid())
+    userId  String
+    title   String
+    message Message[]
 }
 
 model VerificationToken {

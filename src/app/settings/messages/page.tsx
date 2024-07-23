@@ -1,9 +1,9 @@
-import MessageCard from "~/components/setting/message/MessageCard";
+import MessageBoardLayout from "~/components/setting/message/MessageBoardLayout";
 
 export default function Message() {
   return (
     <div>
-      <MessageCard />
+      <MessageBoardLayout />
     </div>
   );
 }

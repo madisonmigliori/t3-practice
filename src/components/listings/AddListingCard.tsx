@@ -58,7 +58,6 @@ const addListingSchema = z.object({
 export default function AddListingCard() {
   const router = useRouter();
   const utils = api.useUtils();
-  const listings = api.listing.getSelling.useQuery();
 
   const addListing = useForm<z.infer<typeof addListingSchema>>({
     resolver: zodResolver(addListingSchema),
@@ -90,6 +89,7 @@ export default function AddListingCard() {
       await utils.listing.invalidate();
       router.push("/");
       router.refresh();
+      addListing.reset();
       toast({
         title: "New Listing Added",
       });
@@ -126,8 +126,6 @@ export default function AddListingCard() {
       franchise: values.franchise,
       img: values.img,
     });
-
-    addListing.reset();
   };
 
   console.log(addListing.formState.errors);

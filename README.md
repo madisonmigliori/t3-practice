@@ -22,10 +22,11 @@
 - [x] Create Contact Form
 - [ ] Allow Messaging
 - [ ] Define Notifications
-- [ ] Seed File
+- [ ] Seed File, Fix Prisma Delete All to Restart Data when reseeding
 - [ ] Create a Login Page with more authentication providers (github/linkedin)
 - [ ] Create Meta Tags for each route
 - [ ] Add State to Listing: DRAFT, INACTIVE, ACTIVE, SOLD, PENDING
 - [ ] Handle Error Handling with Forms and Listings
 - [ ] Cloudinary Set-up
 - [ ] Formating Phone numbers
+- [ ] Fixed footer
