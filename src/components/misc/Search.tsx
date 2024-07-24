@@ -28,7 +28,6 @@ export default function Search({ placeholder }: { placeholder: string }) {
 
   const [searchQuery, setSearchQuery] = useState<string>("");
   const router = useRouter();
-  const pathname = usePathname();
 
   const searchBar = useForm<z.infer<typeof searchSchema>>({
     resolver: zodResolver(searchSchema),
@@ -39,7 +38,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
 
   type SearchBarType = z.infer<typeof searchSchema>;
 
-  const searching = api.listing.searchListing.useQuery({ searchQuery });
+  const searching = api.listing.searchListing.useQuery({ text: searchQuery });
 
   const onSubmit = (formData: SearchBarType) => {
     const params = new URLSearchParams(searchParams);

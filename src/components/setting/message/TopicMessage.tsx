@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import type { Topic } from "@prisma/client";
+
 import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -10,12 +11,16 @@ import { Textarea } from "~/components/ui/textarea";
 import { toast } from "~/components/ui/use-toast";
 import { api } from "~/trpc/react";
 
+interface TopicItemsProps {
+  id: string;
+  parentId: string;
+}
+
 const messageSchema = z.object({
   message: z.string().min(1, "Message is required"),
 });
 
-export default function TopicMessage() {
-  const router = useRouter();
+export default function TopicMessage({ id, parentId }: TopicItemsProps) {
   const utils = api.useUtils();
 
   const addMessage = useForm<z.infer<typeof messageSchema>>({
@@ -27,7 +32,7 @@ export default function TopicMessage() {
 
   const createMessage = api.message.create.useMutation({
     onSuccess: async () => {
-      await utils.listing.invalidate();
+      await utils.message.invalidate();
       toast({
         title: "New Message Added",
       });
@@ -46,7 +51,8 @@ export default function TopicMessage() {
   const onSubmit = async (values: z.infer<typeof messageSchema>) => {
     createMessage.mutate({
       message: values.message,
-      topicId: "sssss",
+      topicId: id,
+      parentId: parentId,
     });
   };
 

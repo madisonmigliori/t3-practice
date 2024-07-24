@@ -118,17 +118,14 @@ model User {
 model File {
     id    String @id @default(cuid())
     input String
-
-    Message Message[]
 }
 
 model Message {
     id        String   @id @default(cuid())
-    parentId  String?
+    parentId  String
     userId    String
     topicId   String
     message   String
-    files     File[]
     createdAt DateTime @default(now())
 
     users User @relation(fields: [userId], references: [id])
@@ -145,7 +142,7 @@ model Message {
 model Topic {
     id      String    @id @default(cuid())
     userId  String
-    title   String
+    title   String    @unique @default("Topic Name 1")
     message Message[]
 }
 

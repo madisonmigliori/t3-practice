@@ -15,7 +15,7 @@ export default function SettingsNavBar() {
             <Link href="/settings/selling">Selling</Link>
           </div>
           <div>
-            <Link href="/settings/messages">Messages</Link>
+            <Link href="/settings/messages/General">Messages</Link>
           </div>
           <div>
             <Link href="/settings/notifications">Notifications</Link>

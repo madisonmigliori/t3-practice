@@ -47,15 +47,4 @@ export const userRouter = createTRPCRouter({
 
     return user;
   }),
-
-  createdByMessage: protectedProcedure.query(async ({ ctx }) => {
-    const author = await ctx.db.user.findMany({
-      where: { id: ctx.session.user.id },
-      include: {
-        messages: true,
-      },
-    });
-    return author.map((author) => author.id);
-  }),
-  
 });

@@ -1,3 +1,4 @@
+"use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -14,8 +15,7 @@ const topicSchema = z.object({
   title: z.string(),
 });
 
-export default function AddMessage() {
-  const router = useRouter();
+export default function AddTopic() {
   const utils = api.useUtils();
 
   const addTopic = useForm<z.infer<typeof topicSchema>>({
@@ -27,7 +27,7 @@ export default function AddMessage() {
 
   const createTopic = api.message.createTopic.useMutation({
     onSuccess: async () => {
-      await utils.listing.invalidate();
+      await utils.message.invalidate();
       toast({
         title: "New Topic Added",
       });
@@ -67,10 +67,6 @@ export default function AddMessage() {
                 );
               }}
             />
-          </div>
-
-          <div className="my-5 flex justify-end">
-            <div>{/* <Button type="submit">Post Message</Button> */}</div>
           </div>
         </form>
       </Form>

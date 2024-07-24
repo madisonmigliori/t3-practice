@@ -19,7 +19,7 @@ export const messageRouter = createTRPCRouter({
       z.object({
         message: z.string(),
         topicId: z.string(),
-        parentId: z.string().optional(),
+        parentId: z.string(),
       }),
     )
     .mutation(({ input, ctx }) => {
@@ -47,26 +47,53 @@ export const messageRouter = createTRPCRouter({
     }),
 
   getManyTopics: publicProcedure.query(({ ctx }) => {
-    return ctx.db.topic.findMany({});
+    return ctx.db.topic.findMany();
   }),
 
   getSingleTopic: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
-      return ctx.db.topic.findUnique({
+      const topic = ctx.db.topic.findUnique({
         where: {
           id: input.id,
         },
       });
+      return topic;
     }),
 
-  // createdBy: protectedProcedure.query(async ({ ctx }) => {
-  //   const author = await ctx.db.user.findMany({
-  //     where: { id: ctx.session.user.id },
-  //     include: {
-  //       messages: true,
-  //     },
-  //   });
-  //   return author.map((author) => author.id);
-  // }),
+  getTopicMessages: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const topicMsgs = await ctx.db.topic.findUnique({
+        where: { id: input.id },
+        include: {
+          message: true,
+        },
+      });
+      return topicMsgs;
+    }),
+
+  createdByMessage: protectedProcedure
+    .input(z.object({ messageId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const author = await ctx.db.message.findUnique({
+        where: { id: input.messageId },
+        include: {
+          users: true,
+        },
+      });
+      return author;
+    }),
+
+  getComments: protectedProcedure
+    .input(z.object({ parentId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const comments = await ctx.db.message.findMany({
+        where: { parentId: input.parentId },
+        include: {
+          children: true,
+        },
+      });
+      return comments;
+    }),
 });
