@@ -50,6 +50,19 @@ export const messageRouter = createTRPCRouter({
     return ctx.db.topic.findMany();
   }),
 
+  getManyMsg: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(({ input, ctx }) => {
+      return ctx.db.message.findMany({
+        where: {
+          topicId: input.id,
+        },
+        include: {
+          topic: input.id === "" ? false : true,
+        },
+      });
+    }),
+
   getSingleTopic: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
@@ -61,7 +74,21 @@ export const messageRouter = createTRPCRouter({
       return topic;
     }),
 
-  getTopicMessages: protectedProcedure
+  searchTopic: publicProcedure
+    .input(z.object({ title: z.string() }))
+    .query(({ ctx, input }) => {
+      const searchTopic = ctx.db.topic.findMany({
+        where: {
+          title: input.title,
+        },
+        include: {
+          message: true,
+        },
+      });
+      return searchTopic;
+    }),
+
+  getTopicMessages: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
       const topicMsgs = await ctx.db.topic.findUnique({
@@ -90,9 +117,6 @@ export const messageRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const comments = await ctx.db.message.findMany({
         where: { parentId: input.parentId },
-        include: {
-          children: true,
-        },
       });
       return comments;
     }),

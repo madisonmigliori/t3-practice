@@ -124,15 +124,15 @@ model Message {
     id        String   @id @default(cuid())
     parentId  String
     userId    String
-    topicId   String
+    topicId   String?
     message   String
     createdAt DateTime @default(now())
 
     users User @relation(fields: [userId], references: [id])
 
-    parent   Message?  @relation("parent", fields: [parentId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+    parent   Message   @relation("parent", fields: [parentId], references: [id], onDelete: Restrict, onUpdate: Restrict)
     children Message[] @relation("parent")
-    Topic    Topic     @relation(fields: [topicId], references: [id])
+    topic    Topic?    @relation(fields: [topicId], references: [id])
 
     @@index([userId])
     @@index([parentId])
@@ -142,7 +142,7 @@ model Message {
 model Topic {
     id      String    @id @default(cuid())
     userId  String
-    title   String    @unique @default("Topic Name 1")
+    title   String
     message Message[]
 }
 

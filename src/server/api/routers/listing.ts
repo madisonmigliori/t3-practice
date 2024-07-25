@@ -129,11 +129,11 @@ export const listingRouter = createTRPCRouter({
       return ctx.db.listing.findMany({
         where: {
           name: {
-            search: input.text,
+            search: input.text ?? "",
           },
-          location: {
-            search: input.text,
-          },
+          // location: {
+          //   search: input.text,
+          // },
         },
       });
     }),

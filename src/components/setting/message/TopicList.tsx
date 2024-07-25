@@ -19,13 +19,13 @@ export default function TopicList() {
       <div>
         <div className=" border-b-2 p-2">
           <Link href={`/settings/messages/General`}>
-            <div className="flex flex-row justify-between">
+            <div className="m-3 flex flex-row justify-between">
               <div>General</div> <ChevronRight />
             </div>
           </Link>
         </div>
         {topics.data?.map((topic: Topic) => (
-          <TopicItem key={topic.id} topic={topic} />
+          <TopicItem key={topic.id} topic={topic} id={topic.id} />
         ))}
       </div>
     </div>

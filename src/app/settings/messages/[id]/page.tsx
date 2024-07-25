@@ -12,46 +12,51 @@ import { api } from "~/trpc/react";
 
 export default function TopicSelected({ params }: { params: { id: string } }) {
   //   const topicSelected = await api.message.getSingleTopic({ id });
-  const id = params.id;
+  const id = params.id === "General" ? "" : params.id;
+  const msg = api.message.getManyMsg.useQuery({ id });
+  console.log("msg", msg.data);
 
-  const topicSelected = api.message.getSingleTopic.useQuery({ id });
   const topicMsgs = api.message.getTopicMessages.useQuery({ id });
-  const comments = api.message.getComments.useQuery({});
+  const msgPids = msg.data?.filter((msgPid) => msgPid.parentId === "");
 
   return (
     <div>
-      <div className="m-5">
-        <ScrollArea>
-          <div>
-            <h1 className="text-2xl font-semibold">
-              {topicSelected.data?.title ? topicSelected.data.title : "General"}
-            </h1>
-          </div>
-          <div>
-            <div className="mb-2 mt-5 grid grid-flow-row items-center">
-              <div className="grid w-full gap-2">
-                <TopicMessage
-                  id={
-                    topicSelected.data?.id ? topicSelected.data?.id : "General"
-                  }
-                  parentId=""
-                />
-              </div>
-              <div>
-                {topicMsgs.data?.message.map((topicMsg) => (
-                  <MessageOutline
-                    key={topicMsg.id ? topicMsg.id : "General"}
-                    message={topicMsg.message}
-                    id={topicMsg.id ? topicMsg.id : "General"}
-                    parentId={""}
-                    userId={topicMsg.userId}
-                    topicId={topicSelected.data?.id ?? "General" ?? ""}
-                  />
-                ))}
-              </div>
+      <div>
+        <div>
+          <h1 className="mt-5 text-2xl font-semibold">
+            {id === "" ? "General" : topicMsgs.data?.title}
+          </h1>
+        </div>
+        <div>
+          <div className=" mt-5 grid grid-flow-row items-center">
+            <div className="grid w-full gap-2">
+              <TopicMessage id={topicMsgs.data?.id ?? ""} parentId="" />
+            </div>
+            <div>
+              <ScrollArea className="w-[auto h-[600px] p-5">
+                <>
+                  {" "}
+                  {msgPids ? (
+                    <>
+                      {msgPids?.map((msgPid) => (
+                        <MessageOutline
+                          key={msgPid.id ?? ""}
+                          message={msgPid.message}
+                          id={msgPid.id ?? ""}
+                          parentId={msgPid.parentId}
+                          userId={msgPid.userId}
+                          topicId={topicMsgs.data?.id ?? ""}
+                        />
+                      ))}{" "}
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </>
+              </ScrollArea>
             </div>
           </div>
-        </ScrollArea>
+        </div>
       </div>
     </div>
   );

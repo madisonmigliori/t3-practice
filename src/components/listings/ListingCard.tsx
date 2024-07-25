@@ -17,7 +17,7 @@ interface ListingCardProps {
   listing: Listing;
 }
 
-export default async function ListingCard({ listing }: ListingCardProps) {
+export default function ListingCard({ listing }: ListingCardProps) {
   const formatPrice = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",

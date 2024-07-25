@@ -19,12 +19,13 @@ import {
   FormLabel,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
+import TopicSelected from "~/app/settings/messages/[id]/page";
 
 const searchSchema = z.object({
   entry: z.string().min(1),
 });
 
-export default function Search({ placeholder }: { placeholder: string }) {
+export default function SearchTopics({ placeholder }: { placeholder: string }) {
   const searchParams = useSearchParams();
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -39,14 +40,16 @@ export default function Search({ placeholder }: { placeholder: string }) {
 
   type SearchBarType = z.infer<typeof searchSchema>;
 
-  const searching = api.listing.searchListing.useQuery({ text: searchQuery });
+  const searching = api.message.searchTopic.useQuery({ title: searchQuery });
 
   const onSubmit = (formData: SearchBarType) => {
-    const encodedSearchQuery = encodeURI(formData.entry);
-    router.push(`/search?q=${encodedSearchQuery}`);
+    router.push(`/message/$}`);
     setSearchQuery(formData.entry);
-
-    <SearchPage />;
+    <TopicSelected
+      params={{
+        id: "",
+      }}
+    />;
   };
 
   return (

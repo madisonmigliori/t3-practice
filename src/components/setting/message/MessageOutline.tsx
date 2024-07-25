@@ -2,7 +2,7 @@ import type { Message } from "@prisma/client";
 import { ChevronDown } from "lucide-react";
 import React from "react";
 import { date } from "zod";
-import CommentOutline from "~/components/setting/message/CommentOutline";
+
 import TopicMessage from "~/components/setting/message/TopicMessage";
 import {
   Accordion,
@@ -34,6 +34,7 @@ export default function MessageOutline({
   });
   const comments = api.message.getComments.useQuery({ parentId: id });
   const commentSize = comments.data?.length;
+  const parentID = createdBy.data?.parentId;
 
   const parseDate = createdBy.data?.createdAt
     .toDateString()
@@ -73,7 +74,10 @@ export default function MessageOutline({
             <Accordion type="single" collapsible className="w-full">
               <div className="mt-3 flex flex-row gap-4 text-sm">
                 <AccordionItem value="item-1">
-                  <AccordionTrigger disabled={commentSize === 0}>
+                  <AccordionTrigger
+                    className="mb-2"
+                    disabled={commentSize === 0}
+                  >
                     {commentSize === 1 ? (
                       <>
                         {commentSize} Comment{" "}
@@ -92,16 +96,18 @@ export default function MessageOutline({
                   </AccordionTrigger>
 
                   <AccordionContent>
-                    {comments.data?.map((comment) => (
-                      <MessageOutline
-                        key={comment.id}
-                        id={comment.id}
-                        parentId={comment.parentId ?? ""}
-                        userId={comment.userId}
-                        topicId={createdBy.data?.topicId ?? "General" ?? ""}
-                        message={comment.message}
-                      />
-                    ))}
+                    <div className="border-l-4 border-slate-300 p-10">
+                      {comments.data?.map((comment) => (
+                        <MessageOutline
+                          key={comment.id}
+                          id={comment.id}
+                          parentId={comment.parentId ?? ""}
+                          userId={comment.userId}
+                          topicId={createdBy.data?.topicId ?? "General"}
+                          message={comment.message}
+                        />
+                      ))}
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
 
