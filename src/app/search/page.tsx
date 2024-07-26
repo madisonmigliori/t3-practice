@@ -15,6 +15,8 @@ export default function SearchPage() {
   const search = useSearchParams();
   const searchQuery = search ? search.get("q") : null;
 
+  console.log(searchQuery);
+
   const searching = api.listing.searchListing.useQuery({
     text: searchQuery ?? "",
   });
@@ -27,7 +29,16 @@ export default function SearchPage() {
       <div className="mx-10 grid grid-flow-row-dense grid-cols-2 gap-4">
         <div className="column-1 items-center px-5 text-center">
           <div className="text-left">
-            <h1 className="px-10 py-10 text-3xl font-bold">Search Results</h1>
+            <h1 className="px-10 pt-10 text-3xl font-bold">
+              {searchSize !== 0 ? (
+                <>Search Results for &quot;{searchQuery}&quot;</>
+              ) : (
+                `No Results for "${searchQuery}"`
+              )}
+            </h1>
+            <div className="px-10 py-2 text-xl font-semibold">
+              {searchSize} results
+            </div>
           </div>
         </div>
         <div>
@@ -46,7 +57,7 @@ export default function SearchPage() {
             ))}{" "}
           </div>
         ) : (
-          "No Results :("
+          "Search for a business or location"
         )}
       </div>
     </div>

@@ -21,7 +21,7 @@ export default function AddTopic() {
   const addTopic = useForm<z.infer<typeof topicSchema>>({
     resolver: zodResolver(topicSchema),
     defaultValues: {
-      title: "Topic #1",
+      title: "New Topic",
     },
   });
 
@@ -61,7 +61,11 @@ export default function AddTopic() {
                 return (
                   <FormItem>
                     <FormControl>
-                      <Input type="text" {...field} />
+                      <Input
+                        className=" my-2 flex flex-row justify-between border-none p-3 text-[16px]"
+                        type="text"
+                        {...field}
+                      />
                     </FormControl>
                   </FormItem>
                 );

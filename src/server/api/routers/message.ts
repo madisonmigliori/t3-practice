@@ -47,7 +47,9 @@ export const messageRouter = createTRPCRouter({
     }),
 
   getManyTopics: publicProcedure.query(({ ctx }) => {
-    return ctx.db.topic.findMany();
+    return ctx.db.topic.findMany({
+      orderBy: { id: "desc" },
+    });
   }),
 
   getManyMsg: publicProcedure
@@ -60,6 +62,7 @@ export const messageRouter = createTRPCRouter({
         include: {
           topic: input.id === "" ? false : true,
         },
+        orderBy: { id: "desc" },
       });
     }),
 
@@ -79,10 +82,9 @@ export const messageRouter = createTRPCRouter({
     .query(({ ctx, input }) => {
       const searchTopic = ctx.db.topic.findMany({
         where: {
-          title: input.title,
-        },
-        include: {
-          message: true,
+          title: {
+            search: input.title ?? "",
+          },
         },
       });
       return searchTopic;
@@ -117,7 +119,37 @@ export const messageRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const comments = await ctx.db.message.findMany({
         where: { parentId: input.parentId },
+        orderBy: { id: "desc" },
       });
       return comments;
+    }),
+
+  updateTopic: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        title: z.string(),
+      }),
+    )
+    .mutation(async ({ input, ctx }) => {
+      const updateTopic = ctx.db.topic.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          title: input.title,
+        },
+      });
+      return updateTopic;
+    }),
+
+  deleteTopic: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(({ ctx, input }) => {
+      return ctx.db.topic.delete({
+        where: {
+          id: input.id,
+        },
+      });
     }),
 });

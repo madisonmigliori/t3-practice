@@ -1,9 +1,25 @@
-import { PlusIcon } from "lucide-react";
-import React from "react";
+"use client";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@radix-ui/react-alert-dialog";
+import { ChevronRight, Cross, PlusIcon, ScrollIcon, X } from "lucide-react";
+import Link from "next/link";
+import React, { useState } from "react";
 import SettingsNavBar from "~/components/misc/SettingsNavBar";
-import AddTopic from "~/components/setting/message/AddTopic";
-import SearchTopics from "~/components/setting/message/SearchTopics";
-import TopicList from "~/components/setting/message/TopicList";
+import AddTopic from "~/components/setting/messages/AddTopic";
+import AddTopicButton from "~/components/setting/messages/AddTopicButton";
+import SearchTopics from "~/components/setting/messages/SearchTopics";
+import TopicList from "~/components/setting/messages/TopicList";
+import {
+  AlertDialogFooter,
+  AlertDialogHeader,
+} from "~/components/ui/alert-dialog";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { ScrollArea } from "~/components/ui/scroll-area";
@@ -14,6 +30,9 @@ export default function MessageLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const [add, setAdd] = useState(false);
+ 
+
   return (
     <div>
       <div>
@@ -34,9 +53,23 @@ export default function MessageLayout({
                           <h1 className="text-2xl font-semibold">Topics</h1>
                         </div>
                         <div className=" flex flex-row">
-                          <Button variant="ghost">
-                            <PlusIcon /> New
-                          </Button>
+                          {!add ? (
+                            <Button
+                              variant="ghost"
+                              onClick={() => setAdd(true)}
+                            >
+                              <PlusIcon /> New
+                            </Button>
+                          ) : (
+                            <>
+                              <Button
+                                variant="ghost"
+                                onClick={() => setAdd(false)}
+                              >
+                                <X />
+                              </Button>
+                            </>
+                          )}
                         </div>
                       </div>
                       <div className=" border-b-2 p-2">
@@ -46,9 +79,36 @@ export default function MessageLayout({
                           </div>
                         </div>
                       </div>
+                      <div className=" border-b-2 p-2">
+                        <Link href={`/settings/messages/General`}>
+                          <div className="before:[content] m-3 flex flex-row justify-between">
+                            <div>General</div>{" "}
+                            <ChevronRight className="hover:backdrop-blur-xl" />{" "}
+                          </div>
+                        </Link>
+                      </div>
+                      {add ? (
+                        <>
+                          <div className=" border-b-2 p-2">
+                            <div className="flex flex-row justify-between">
+                              <AddTopic />
+                              <Button
+                                variant="ghost"
+                                className="my-2"
+                                onClick={() => setAdd(false)}
+                              >
+                                <X className=" text-sm" />
+                              </Button>
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        <></>
+                      )}
                       <div>
-                        <TopicList />
-                        <AddTopic />
+                        <ScrollArea className="h-[600px] w-auto">
+                          <TopicList />
+                        </ScrollArea>
                       </div>
                     </div>
 

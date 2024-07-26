@@ -11,6 +11,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { string, z } from "zod";
 import SearchPage from "~/app/search/page";
+import TopicSelected from "~/app/settings/messages/[id]/page";
+
 import {
   Form,
   FormControl,
@@ -19,16 +21,12 @@ import {
   FormLabel,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import TopicSelected from "~/app/settings/messages/[id]/page";
 
 const searchSchema = z.object({
   entry: z.string().min(1),
 });
 
 export default function SearchTopics({ placeholder }: { placeholder: string }) {
-  const searchParams = useSearchParams();
-
-  const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
 
   const searchBar = useForm<z.infer<typeof searchSchema>>({
@@ -40,16 +38,9 @@ export default function SearchTopics({ placeholder }: { placeholder: string }) {
 
   type SearchBarType = z.infer<typeof searchSchema>;
 
-  const searching = api.message.searchTopic.useQuery({ title: searchQuery });
-
   const onSubmit = (formData: SearchBarType) => {
-    router.push(`/message/$}`);
-    setSearchQuery(formData.entry);
-    <TopicSelected
-      params={{
-        id: "",
-      }}
-    />;
+    const encodedSearchQuery = encodeURI(formData.entry);
+    router.push(`/settings/messages/?q=${encodedSearchQuery}`);
   };
 
   return (

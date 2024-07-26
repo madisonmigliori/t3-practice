@@ -26,6 +26,8 @@ export default async function ListingComponent({
   const getListing = await api.listing.getListing({ id });
   const me = await api.user.me();
 
+  const created = me?.id === getListing?.userId;
+
   const formatPrice = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
@@ -54,10 +56,10 @@ export default async function ListingComponent({
                 </CardDescription>
               </div>
               <div>
-                {me && <HeartIcon id={getListing.id} />}
+                {!created && <HeartIcon id={getListing.id} />}
 
-                {!me && (
-                  <>
+                {created && (
+                  <div className="flex flex-row">
                     <DeleteButton id={getListing.id} />
                     <Link
                       href={`/listing/${getListing.id}/editListing`}
@@ -65,7 +67,7 @@ export default async function ListingComponent({
                     >
                       <Pencil />
                     </Link>{" "}
-                  </>
+                  </div>
                 )}
               </div>
             </CardHeader>

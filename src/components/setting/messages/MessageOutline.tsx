@@ -3,7 +3,7 @@ import { ChevronDown } from "lucide-react";
 import React from "react";
 import { date } from "zod";
 
-import TopicMessage from "~/components/setting/message/TopicMessage";
+import TopicMessage from "~/components/setting/messages/TopicMessage";
 import {
   Accordion,
   AccordionContent,
@@ -96,17 +96,21 @@ export default function MessageOutline({
                   </AccordionTrigger>
 
                   <AccordionContent>
-                    <div className="border-l-4 border-slate-300 p-10">
-                      {comments.data?.map((comment) => (
-                        <MessageOutline
-                          key={comment.id}
-                          id={comment.id}
-                          parentId={comment.parentId ?? ""}
-                          userId={comment.userId}
-                          topicId={createdBy.data?.topicId ?? "General"}
-                          message={comment.message}
-                        />
-                      ))}
+                    <div className=" mt-5 grid grid-flow-row items-center">
+                      <div className="grid w-full gap-2">
+                        <div className="grid w-full grid-flow-row border-l-4 border-slate-100 px-10 pt-5">
+                          {comments.data?.map((comment) => (
+                            <MessageOutline
+                              key={comment.id}
+                              id={comment.id}
+                              parentId={comment.parentId ?? ""}
+                              userId={comment.userId}
+                              topicId={createdBy.data?.topicId ?? "General"}
+                              message={comment.message}
+                            />
+                          ))}
+                        </div>
+                      </div>
                     </div>
                   </AccordionContent>
                 </AccordionItem>
