@@ -28,6 +28,7 @@ import { api } from "~/trpc/react";
 export default function BuyingCard({ id }: { id: number }) {
   const listings = api.listing.isLikedList.useQuery();
   console.log("listings", listings);
+  const likeListingCount = listings.data?.length;
 
   return (
     <Card>
@@ -35,17 +36,30 @@ export default function BuyingCard({ id }: { id: number }) {
         <div className="mt-2">
           <CardTitle>Buying</CardTitle>
         </div>
-        <div className="flex gap-4 align-middle">
-          <Search placeholder={""} />
-        </div>
+        {likeListingCount !== 0 ? (
+          <div>
+            <div className="flex gap-4 align-middle">
+              <Search placeholder={""} />
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
       </CardHeader>
       <ScrollArea>
         <CardContent>
-          <div className=" grid grid-flow-row-dense gap-4">
-            {listings.data?.map((listing) => (
-              <BuyingItem key={listing.id} buying={listing} />
-            ))}
-          </div>
+          {likeListingCount !== 0 ? (
+            <div className=" grid grid-flow-row-dense gap-4">
+              {listings.data?.map((listing) => (
+                <BuyingItem key={listing.id} buying={listing} />
+              ))}
+            </div>
+          ) : (
+            <div>
+              There are no listings here yet! Like some listing to add to your
+              buying list.
+            </div>
+          )}
         </CardContent>
       </ScrollArea>
     </Card>

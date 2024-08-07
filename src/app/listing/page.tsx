@@ -28,8 +28,9 @@ export default async function Listing() {
     <div>
       <div className="mx-10 grid grid-flow-row-dense grid-cols-2 gap-4">
         <div className="column-1 items-center px-5 text-center">
-          <div className="text-left">
-            <h1 className="px-10 py-10 text-3xl font-bold">All Listings</h1>
+          <div className="px-10 py-10 text-left ">
+            <h1 className="pb-2 text-3xl font-bold">All Listings</h1>
+            <h2 className="text-lg">Showing {listingSize} listings</h2>
           </div>
         </div>
         <div>
@@ -59,10 +60,12 @@ export default async function Listing() {
       </div>
       <div className="mx-10">
         {listingSize !== 0 ? (
-          <div className="mx-10  grid grid-flow-row-dense gap-2">
+          <div className="mx-10 my-4 grid grid-flow-row-dense gap-2">
             {listings.map((listing: Listing) => (
               <>
-                <ListingCard key={listing.id} listing={listing} />
+                <div className="mx-20 my-2 rounded-lg">
+                  <ListingCard key={listing.id} listing={listing} />
+                </div>
               </>
             ))}{" "}
           </div>

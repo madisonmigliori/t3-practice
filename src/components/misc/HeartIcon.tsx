@@ -40,7 +40,11 @@ export default function HeartIcon(
   };
   return (
     <div>
-      <Button variant="ghost" onClick={() => handleLike()}>
+      <Button
+        variant="ghost"
+        className="hover:bg-transparent"
+        onClick={() => handleLike()}
+      >
         {showHeart.data !== null || liked === true ? (
           <Heart fill="true" />
         ) : (

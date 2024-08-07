@@ -36,7 +36,7 @@ const contactSchema = z.object({
   message: z.string().optional(),
 });
 
-export default function ContactForm() {
+export default function ContactForm({ user }: { user: string }) {
   const contact = useForm<z.infer<typeof contactSchema>>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
@@ -182,6 +182,14 @@ export default function ContactForm() {
             </div>
           </div>
         </Form>
+        {!user ? (
+          <div className="text-sm text-gray-400">Listed by Jane Doe </div>
+        ) : (
+          <>
+            {" "}
+            <div className="text-sm text-gray-400">Listed by {user}</div>
+          </>
+        )}
       </CardContent>
     </Card>
   );

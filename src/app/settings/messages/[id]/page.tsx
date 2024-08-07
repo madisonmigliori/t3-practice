@@ -15,6 +15,7 @@ import { api } from "~/trpc/react";
 
 export default function TopicSelected({ params }: { params: { id: string } }) {
   //   const topicSelected = await api.message.getSingleTopic({ id });
+  // useState
   const id = params.id === "General" ? "" : params.id;
   const msg = api.message.getManyMsg.useQuery({ id });
   const me = api.user.me.useQuery();

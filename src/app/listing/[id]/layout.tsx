@@ -10,10 +10,7 @@ export default function ListingLayout({
   return (
     <div>
       <div className="flex flex-row justify-center">
-        <main className="ml-10 basis-2/3">{children}</main>
-        <div className="mt-20">
-          <ContactForm />
-        </div>
+        <main>{children}</main>
       </div>
     </div>
   );

@@ -42,6 +42,9 @@ export const listingRouter = createTRPCRouter({
         where: {
           id: input.id,
         },
+        include: {
+          User: true,
+        },
       });
     }),
 
