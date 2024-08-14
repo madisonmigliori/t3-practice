@@ -147,19 +147,13 @@ export default function AddListingCard() {
                       <FormItem>
                         <FormLabel>Business Images*</FormLabel>
                         <FormControl>
-                          <CldUploadWidget signatureEndpoint="/api/sign-cloudinary-params/route.ts">
-                            {({ open }) => {
-                              return (
-                                <button onClick={() => open()}>
+                          
                                   <Input
                                     type="file"
                                     {...field}
                                     autoComplete="off"
                                   />
-                                </button>
-                              );
-                            }}
-                          </CldUploadWidget>
+                              
                         </FormControl>
                       </FormItem>
                     );

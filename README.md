@@ -21,7 +21,7 @@
 - [x] Update listing page (individual) + IMG + Description + other attributes
 - [x] Create Contact Form
 - [x] Allow Messaging
-- [ ] Seed File, Fix Prisma Delete All to Restart Data when reseeding
+- [X] Seed File, Fix Prisma Delete All to Restart Data when reseeding
 - [ ] Create a Login Page with more authentication providers (github/linkedin)
 - [ ] Create Meta Tags for each route
 - [ ] Add State to Listing: DRAFT, INACTIVE, ACTIVE, SOLD, PENDING
@@ -30,7 +30,7 @@
 - [ ] Formating Phone numbers
 - [ ] Fixed footer
 - [ ] Fix Like Button
-- [ ] Edit Listing Cards on Home Page
+- [X] Edit Listing Cards on Home Page
 - [ ] Edit [id] listing page (IMG, Date attributes)
 - [x] Edit Buying Page when there are no liked listings
 - [ ] Fix Buying Page Search Engine

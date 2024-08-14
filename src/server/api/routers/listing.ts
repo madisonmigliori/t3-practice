@@ -156,6 +156,21 @@ export const listingRouter = createTRPCRouter({
         askingPrice: z.number(),
         grossRev: z.number(),
         adjCashFlow: z.number(),
+        ebita: z.number(),
+        ffe: z.number(),
+        inventory: z.number(),
+        rent: z.number(),
+        est: z.date(),
+        description: z.string(),
+        realEstate: z.string(),
+        buildingSf: z.string(),
+        leaseExp: z.date(),
+        employees: z.number(),
+        facilities: z.string(),
+        reasonForSelling: z.string(),
+        franchise: z.boolean(),
+        img: z.string(),
+
       }),
     )
     .mutation(async ({ input, ctx }) => {
@@ -169,6 +184,21 @@ export const listingRouter = createTRPCRouter({
           askingPrice: input.askingPrice,
           grossRev: input.grossRev,
           adjCashFlow: input.adjCashFlow,
+          ebita: input.ebita,
+          ffe: input.ffe,
+          inventory: input.inventory,
+          rent: input.rent,
+          est: input.est,
+          description: input.description,
+          realEstate: input.realEstate,
+          buildingSf: input.buildingSf,
+          leaseExp: input.leaseExp,
+          employees: input.employees,
+          facilities: input.facilities,
+          reasonForSelling: input.reasonForSelling,
+          franchise: input.franchise,
+          img: input.img,
+        
         },
       });
       return updateListing;
