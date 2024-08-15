@@ -32,7 +32,7 @@ export default function ListingCard({ listing }: ListingCardProps) {
         <div className="basis-1/4">
           <Image
             width={200}
-            height={600}
+            height={200}
             style={{ width: "100%", height: "auto" }}
             src={listing.img ? listing.img : "/business.jpg"}
             alt={""}
@@ -47,7 +47,7 @@ export default function ListingCard({ listing }: ListingCardProps) {
               <CardDescription>{listing.location}</CardDescription>
             </div>
             <div className="flex flex-row">
-              <HeartIcon id={listing.id} />
+              <HeartIcon id={listing.id} liked={listing.liked} />
               <Link
                 href={`/listing/${listing.id}`}
                 className={cn(buttonVariants({ variant: "outline" }))}

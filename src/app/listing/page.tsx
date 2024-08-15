@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import { db } from "~/server/db";
 
+import type { Metadata } from "next";
 import ListingCard from "~/components/listings/ListingCard";
 import Search from "~/components/misc/Search";
 import {
@@ -18,6 +19,10 @@ import {
 import { getServerAuthSession } from "~/server/auth";
 
 // const [listings, setListings] = useState<Listing[]>([]);
+export const metadata: Metadata = {
+  title: "Search Listings",
+  description: "",
+};
 
 export default async function Listing() {
   const session = await getServerAuthSession();
@@ -33,12 +38,12 @@ export default async function Listing() {
             <h2 className="text-lg">Showing {listingSize} listings</h2>
           </div>
         </div>
-        <div>
-          <div className="mr-10 mt-4 flex items-center gap-4 pr-10 ">
+        <div className="flex justify-end">
+          <div className=" mt-6 flex justify-end ">
             {listingSize !== 0 && <Search placeholder="Search.." />}
 
             {session && (
-              <div>
+              <div className="mt-2 ">
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>

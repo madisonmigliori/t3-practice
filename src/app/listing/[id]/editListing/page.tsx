@@ -1,4 +1,5 @@
 import { ArrowLeft } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import Router from "next/navigation";
 import { useRouter } from "next/router";
@@ -7,6 +8,11 @@ import EditListingCard from "~/components/listings/EditListingCard";
 import BackButton from "~/components/misc/BackButton";
 import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/server";
+
+export const metadata: Metadata = {
+  title: "Edit Listing",
+  description: "",
+};
 
 export default async function EditListing({
   params,
@@ -20,11 +26,13 @@ export default async function EditListing({
     <div>
       <BackButton />
       <div className="mx-10">
-        {getListing ? (
-          <EditListingCard id={getListing.id} />
-        ) : (
-          "Nothing here :/"
-        )}
+        <div className="flex flex-row justify-center">
+          {getListing ? (
+            <EditListingCard id={getListing.id} />
+          ) : (
+            "Nothing here :/"
+          )}
+        </div>
       </div>
     </div>
   );

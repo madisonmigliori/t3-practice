@@ -21,19 +21,28 @@
 - [x] Update listing page (individual) + IMG + Description + other attributes
 - [x] Create Contact Form
 - [x] Allow Messaging
-- [X] Seed File, Fix Prisma Delete All to Restart Data when reseeding
+- [x] Seed File, Fix Prisma Delete All to Restart Data when reseeding
 - [ ] Create a Login Page with more authentication providers (github/linkedin)
-- [ ] Create Meta Tags for each route
+- [x] Create Meta Tags for each route
 - [ ] Add State to Listing: DRAFT, INACTIVE, ACTIVE, SOLD, PENDING
 - [x] Handle Error Handling with Forms and Listings
 - [ ] Cloudinary Set-up
 - [ ] Formating Phone numbers
 - [ ] Fixed footer
-- [ ] Fix Like Button
-- [X] Edit Listing Cards on Home Page
-- [ ] Edit [id] listing page (IMG, Date attributes)
+- [x] Fix Like Button
+- [x] Edit Listing Cards on Home Page
+- [x] Edit [id] listing page (IMG, Date attributes)
 - [x] Edit Buying Page when there are no liked listings
-- [ ] Fix Buying Page Search Engine
-- [ ] Fix Selling Page when there are no listing the user added
-- [ ] Add some delay to allow data can be update
+- [x] Fix Selling Page when there are no listing the user added
+- [ ] Add some delay to allow data to update
 - [ ] Fix comment sizing
+- [ ] change buying to liked listing
+- [ ] create a contact us page
+- [ ] change messageboard to forums
+- [ ] add some usestates to messageboard for when form is added/edited
+- [ ] add the option to delete and edit post
+- [ ] create a chat room to recieve messages about certain listings and who posted it
+- [ ] create a pop up that will direct you to login/sign up if not signed if liked or wanting to contact someone
+- [ ] main page paginations
+- [ ] change Login page styling
+- [ ] make a domain??

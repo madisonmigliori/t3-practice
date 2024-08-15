@@ -34,17 +34,8 @@ export default function BuyingCard({ id }: { id: number }) {
     <Card>
       <CardHeader className="flex justify-between">
         <div className="mt-2">
-          <CardTitle>Buying</CardTitle>
+          <CardTitle>Liked Listings</CardTitle>
         </div>
-        {likeListingCount !== 0 ? (
-          <div>
-            <div className="flex gap-4 align-middle">
-              <Search placeholder={""} />
-            </div>
-          </div>
-        ) : (
-          <></>
-        )}
       </CardHeader>
       <ScrollArea>
         <CardContent>
@@ -57,7 +48,7 @@ export default function BuyingCard({ id }: { id: number }) {
           ) : (
             <div>
               There are no listings here yet! Like some listing to add to your
-              buying list.
+              liked list.
             </div>
           )}
         </CardContent>

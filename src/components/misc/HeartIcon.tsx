@@ -5,12 +5,16 @@ import React, { useState } from "react";
 import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/react";
 
-export default function HeartIcon(
-  { id }: { id: number },
-  { liked }: { liked: boolean },
-) {
-  const [isLiked, setIsLiked] = useState(false);
+interface HeartIconProps {
+  id: number;
+  liked: boolean;
+}
+export default function HeartIcon({ id, liked }: HeartIconProps) {
+  const heart = api.listing.isLiked.useQuery({ id });
+  const showHeart = heart.data !== null ? true : false;
 
+  const [isLiked, setIsLiked] = useState(showHeart);
+  console.log("liked", liked);
   const utils = api.useUtils();
 
   const like = api.listing.likeListing.useMutation({
@@ -24,18 +28,15 @@ export default function HeartIcon(
     },
   });
 
-  const showHeart = api.listing.isLiked.useQuery({ id });
   const handleLike = () => {
     if (isLiked ?? showHeart === null) {
-      liked = false;
       unlike.mutate({ id });
       setIsLiked(false);
-      console.log("showheart", showHeart);
+      liked = false;
     } else {
-      liked = true;
       like.mutate({ id });
       setIsLiked(true);
-      console.log("showheart", showHeart);
+      liked == true;
     }
   };
   return (
@@ -45,11 +46,7 @@ export default function HeartIcon(
         className="hover:bg-transparent"
         onClick={() => handleLike()}
       >
-        {showHeart.data !== null || liked === true ? (
-          <Heart fill="true" />
-        ) : (
-          <Heart />
-        )}
+        {showHeart ? <Heart fill="true" /> : <Heart />}
       </Button>
     </div>
   );

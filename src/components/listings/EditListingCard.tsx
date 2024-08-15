@@ -39,20 +39,23 @@ const editListingSchema = z.object({
   askingPrice: z.coerce.number().optional(),
   grossRev: z.coerce.number().optional(),
   adjCashFlow: z.coerce.number().optional(),
-    ebita: z.coerce.number().optional(),
-    ffe: z.coerce.number().optional(()),
-    inventory: z.coerce.number().optional(),
-    rent: z.coerce.number().optional(),
-    est: z.coerce.string().transform((value) => new Date(value)).optional(),
-    description: z.string().optional(),
-    realEstate: z.string().optional(),
-    buildingSf: z.string().optional(),
-    leaseExp: z.coerce.string().transform((value) => new Date(value)),
-    employees: z.coerce.number(),
-    facilities: z.string(),
-    reasonForSelling: z.string(),
-    franchise: z.boolean(),
-    img: z.string(),
+  ebita: z.coerce.number().optional(),
+  ffe: z.coerce.number().optional(),
+  inventory: z.coerce.number().optional(),
+  rent: z.coerce.number().optional(),
+  est: z.coerce
+    .string()
+    .transform((value) => new Date(value))
+    .optional(),
+  description: z.string().optional(),
+  realEstate: z.string().optional(),
+  buildingSf: z.string().optional(),
+  leaseExp: z.coerce.string().transform((value) => new Date(value)),
+  employees: z.coerce.number(),
+  facilities: z.string(),
+  reasonForSelling: z.string(),
+  franchise: z.boolean(),
+  img: z.string(),
 });
 
 export default function EditListingCard({ id }: { id: number }) {
@@ -83,7 +86,6 @@ export default function EditListingCard({ id }: { id: number }) {
       reasonForSelling: listing?.data?.reasonForSelling ?? undefined,
       franchise: listing?.data?.franchise ?? undefined,
       img: listing?.data?.img ?? undefined,
-
     },
   });
 
@@ -107,22 +109,21 @@ export default function EditListingCard({ id }: { id: number }) {
     },
   });
 
-
   const onSubmit = async (values: z.infer<typeof editListingSchema>) => {
     updateListing.mutate({
-      name: values.name,
-      location: values.location,
-      askingPrice: values.askingPrice,
-      grossRev: values.grossRev,
-      adjCashFlow: values.adjCashFlow,
-      ebita: values.ebita,
-      ffe: values.ffe,
-      inventory: values.inventory,
-      rent: values.rent,
+      name: values.name ?? "",
+      location: values.location ?? "",
+      askingPrice: values.askingPrice ?? 0,
+      grossRev: values.grossRev ?? 0,
+      adjCashFlow: values.adjCashFlow ?? 0,
+      ebita: values.ebita ?? 0,
+      ffe: values.ffe ?? 0,
+      inventory: values.inventory ?? 0,
+      rent: values.rent ?? 0,
       est: values.est,
-      description: values.description,
-      realEstate: values.realEstate,
-      buildingSf: values.buildingSf,
+      description: values.description ?? "",
+      realEstate: values.realEstate ?? "",
+      buildingSf: values.buildingSf ?? "",
       leaseExp: values.leaseExp,
       employees: values.employees,
       facilities: values.facilities,
@@ -131,7 +132,6 @@ export default function EditListingCard({ id }: { id: number }) {
       img: values.img,
     });
   };
-
 
   return (
     <Card>
@@ -151,16 +151,11 @@ export default function EditListingCard({ id }: { id: number }) {
                       <FormItem>
                         <FormLabel>Business Images*</FormLabel>
                         <FormControl>
-                        
-                                  <Input
-                                    type="file"
-                                    {...field}
-                                    autoComplete="off"
-                                  />
-                               
+                          <Input type="file" {...field} autoComplete="off" />
                         </FormControl>
                       </FormItem>
-                    );s
+                    );
+                    s;
                   }}
                 />
               </div>

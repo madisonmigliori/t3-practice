@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import React from "react";
 import SettingsNavBar from "~/components/misc/SettingsNavBar";
+
+export const metadata: Metadata = {
+  title: "Settings",
+  description: "",
+};
 
 export default function SettingsLayout({
   children,

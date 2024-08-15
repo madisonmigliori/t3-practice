@@ -1,7 +1,10 @@
+import { toDate } from "date-fns";
 import { ArrowLeft, Pencil } from "lucide-react";
+import type { Metadata } from "next";
+import { now } from "next-auth/client/_utils";
 import Image from "next/image";
 import Link from "next/link";
-import ContactForm from "~/components/listings/ContacForm";
+import ContactForm from "~/components/listings/ContactForm";
 
 import DeleteButton from "~/components/misc/DeleteButton";
 import HeartIcon from "~/components/misc/HeartIcon";
@@ -19,6 +22,11 @@ import { cn } from "~/lib/utils";
 
 import { api } from "~/trpc/server";
 
+export const metadata: Metadata = {
+  title: "View Listings Details",
+  description: "",
+};
+
 export default async function ListingComponent({
   params,
 }: {
@@ -35,6 +43,7 @@ export default async function ListingComponent({
     currency: "USD",
   });
 
+  const est = getListing?.est;
   // const whoCreated = createdBy !== me?.id ? false: true;
 
   return (
@@ -59,7 +68,9 @@ export default async function ListingComponent({
                   </CardDescription>
                 </div>
                 <div>
-                  {!created && <HeartIcon id={getListing.id} />}
+                  {!created && (
+                    <HeartIcon id={getListing.id} liked={getListing.liked} />
+                  )}
 
                   {created && (
                     <div className="flex flex-row">
@@ -75,79 +86,93 @@ export default async function ListingComponent({
                 </div>
               </CardHeader>
               <div>
-                <div className=" mb-10 flex max-h-max max-w-max justify-center">
-                  <div className="m-w-fit max-h-fit">
-                    <AspectRatio ratio={16 / 9}>
-                      <Image
-                        src={getListing.img ? getListing.img : "/business.jpg"}
-                        width={100}
-                        height={100}
-                        style={{ width: "100%", height: "auto" }}
-                        alt="Image"
-                        className="rounded-md object-cover"
-                      />
-                    </AspectRatio>
+                <div className=" ">
+                  <div className="">
+                    <Image
+                      src={getListing.img ? getListing.img : "/business.jpg"}
+                      width={600}
+                      height={600}
+                      style={{ width: "100%", height: "auto" }}
+                      alt="Image"
+                    />
                   </div>
                 </div>
               </div>
 
               <CardContent>
                 <div>
-                  <div className="mt-4 grid grid-flow-row-dense grid-cols-2 justify-between gap-x-10 px-10 pb-5 text-3xl">
+                  <div className="my-10 grid grid-flow-row-dense grid-cols-2 justify-between gap-x-10 px-10 text-3xl">
                     <div className="text-blue-800">
-                      <tr>
-                        <td className="font-semibold">Asking Price: </td>
-                        <td>
-                          {" "}
+                      <div>
+                        <div>
+                          <span className="font-semibold">Asking Price:</span>
                           {formatPrice.format(Number(getListing.askingPrice))}
-                        </td>
-                      </tr>
+                        </div>
+                      </div>
                     </div>
 
-                    <tr>
-                      <td className=" font-semibold">Cash Flow: </td>
-                      <td>
+                    <div>
+                      <div>
                         {" "}
+                        <span className=" font-semibold">Cash Flow: </span>{" "}
                         {formatPrice.format(Number(getListing.adjCashFlow))}
-                      </td>
-                    </tr>
+                      </div>
+                    </div>
                   </div>
                   <hr className="dotted"></hr>
                   <div className="mt-4 px-10 pb-5">
                     <div className=" grid grid-flow-row-dense grid-cols-2 justify-between gap-x-10">
-                      <tr>
-                        <td className=" font-semibold">Gross Revenue: </td>
-                        <td>
+                      <div>
+                        <div className="pb-2">
+                          <span className="font-semibold">Gross Revenue:</span>
                           {formatPrice.format(Number(getListing.grossRev))}
-                        </td>
-                      </tr>
+                        </div>
+                      </div>
 
-                      <tr>
-                        <td className=" font-semibold">EBITDA: </td>
-                        <td>{formatPrice.format(Number(getListing.ebita))}</td>
-                      </tr>
-
-                      <tr>
-                        <td className=" font-semibold">FF&E: </td>
-                        <td>{formatPrice.format(Number(getListing.ffe))}</td>
-                      </tr>
-
-                      <tr>
-                        <td className=" font-semibold">Inventory: </td>
-                        <td>
+                      <div>
+                        <div className="pb-2">
                           {" "}
-                          {formatPrice.format(Number(getListing.inventory))}
-                        </td>
-                      </tr>
+                          <span className="font-semibold">EBITDA: </span>
+                          {formatPrice.format(Number(getListing.ebita))}
+                        </div>
+                      </div>
 
-                      <tr>
-                        <td className=" font-semibold">Rent: </td>
-                        <td> {formatPrice.format(Number(getListing.rent))}</td>
-                      </tr>
-                      <tr>
-                        <td className=" font-semibold">Established: </td>
-                        <td> {getListing?.location}</td>
-                      </tr>
+                      <div>
+                        <div className="pb-2">
+                          {" "}
+                          <span className="font-semibold">FF&E: </span>{" "}
+                          {formatPrice.format(Number(getListing.ffe))}
+                        </div>
+                      </div>
+
+                      <div>
+                        <div className="pb-2">
+                          {" "}
+                          <span className="font-semibold">Inventory: </span>
+                          {formatPrice.format(Number(getListing.inventory))}
+                        </div>
+                      </div>
+
+                      <div>
+                        <div className="pb-2">
+                          {" "}
+                          <span className="font-semibold">Rent: </span>
+                          {formatPrice.format(Number(getListing.rent))}
+                        </div>
+                      </div>
+                      <div>
+                        <div>
+                          {" "}
+                          <span className="font-semibold">
+                            Established:{" "}
+                          </span>{" "}
+                          {getListing?.est
+                            ?.toDateString()
+                            .split("")
+                            .splice(3, 4)}
+                          {getListing?.est?.toDateString().split("").splice(10)}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -169,53 +194,99 @@ export default async function ListingComponent({
                     </h1>
                     <div className="mt-4 justify-between px-10 pb-5">
                       <div className=" grid grid-flow-row-dense grid-cols-2 gap-x-10 ">
-                        <tr>
-                          <td className="font-semibold">Location: </td>
-                          <td>{getListing?.location}</td>
-                        </tr>
-                        <tr>
-                          <td className="font-semibold">Inventory: </td>
-                          <td>
+                        <div>
+                          <div className="pb-5">
+                            <span className="font-semibold">Location: </span>
+                            {getListing?.location}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="pb-5">
                             {" "}
+                            <span className="font-semibold">
+                              Inventory:{" "}
+                            </span>{" "}
                             {formatPrice.format(Number(getListing.inventory))}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="font-semibold">Real Estate:</td>
-                          <td> {getListing?.realEstate}</td>
-                        </tr>
-                        <tr>
-                          <td className="font-semibold">
-                            Building Square Feet:
-                          </td>
-                          <td> {getListing?.buildingSf}</td>
-                        </tr>
-                        <tr>
-                          <td className="font-semibold">Lease Expiration: </td>
-                          <td> {getListing?.location}</td>
-                        </tr>
-                        <tr>
-                          <td className="font-semibold">Employees:</td>
-                          <td> {getListing?.employees}</td>
-                        </tr>
-                        <tr>
-                          <td className="font-semibold">
-                            Furniture, Fixture & Equipment (FF&E):
-                          </td>
-                          <td> {formatPrice.format(Number(getListing.ffe))}</td>
-                        </tr>
-                        <tr>
-                          <td className="font-semibold">Facilities:</td>
-                          <td> {getListing?.facilities}</td>
-                        </tr>
-                        <tr>
-                          <td className="font-semibold">Reason for Selling:</td>
-                          <td> {getListing?.reasonForSelling}</td>
-                        </tr>
-                        <tr>
-                          <td className="font-semibold">Franchise:</td>
-                          <td> {getListing?.franchise}</td>
-                        </tr>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="pb-5">
+                            <span className="font-semibold">Real Estate:</span>{" "}
+                            {getListing?.realEstate}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="pb-5">
+                            <span className="font-semibold">
+                              Building Square Feet:
+                            </span>{" "}
+                            {getListing?.buildingSf}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="pb-5">
+                            {" "}
+                            <span className="font-semibold">
+                              Lease Expiration:{" "}
+                            </span>
+                            {getListing?.leaseExp
+                              ?.toDateString()
+                              .split("")
+                              .splice(3, 4)}
+                            {getListing?.leaseExp
+                              ?.toDateString()
+                              .split("")
+                              .splice(10)}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="pb-5">
+                            <span className="font-semibold">Employees: </span>{" "}
+                            {getListing?.employees}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="pb-5">
+                            <span className="font-semibold">
+                              Furniture, Fixture & Equipment (FF&E):{" "}
+                            </span>
+                            {formatPrice.format(Number(getListing.ffe))}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="pb-5">
+                            <span className="font-semibold">Facilities: </span>{" "}
+                            {getListing?.facilities}
+                          </div>
+                        </div>
+                        <div>
+                          <div>
+                            {" "}
+                            <span className="font-semibold">
+                              Reason for Selling:
+                            </span>{" "}
+                            {getListing?.reasonForSelling}
+                          </div>
+                        </div>
+                        <div>
+                          <div>
+                            {" "}
+                            <span className="font-semibold">
+                              Franchise:{" "}
+                            </span>{" "}
+                            {getListing?.franchise ? (
+                              <>
+                                <span>This is an established franchise.</span>
+                              </>
+                            ) : (
+                              <>
+                                <span>
+                                  This is not an established franchise.
+                                </span>
+                              </>
+                            )}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -238,7 +309,7 @@ export default async function ListingComponent({
         </div>
         <div className=" flex ">
           <div className=" ">
-            <ContactForm user={getListing?.User?.firstName} />
+            <ContactForm user={getListing?.User?.firstName ?? ""} />
           </div>
         </div>
       </div>
