@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-import { type Listing } from "@prisma/client";
+import { type Listing, type Session } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import HeartIcon from "~/components/misc/HeartIcon";
@@ -28,11 +28,11 @@ export default function ListingCard({ listing }: ListingCardProps) {
 
   return (
     <Card className="rounded-lg shadow-md">
-      <div className="flex">
+      <div className="flex justify-stretch">
         <div className="basis-1/4">
           <Image
-            width={200}
-            height={200}
+            width={300}
+            height={300}
             style={{ width: "100%", height: "auto" }}
             src={listing.img ? listing.img : "/business.jpg"}
             alt={""}
@@ -48,6 +48,7 @@ export default function ListingCard({ listing }: ListingCardProps) {
             </div>
             <div className="flex flex-row">
               <HeartIcon id={listing.id} liked={listing.liked} />
+              {}
               <Link
                 href={`/listing/${listing.id}`}
                 className={cn(buttonVariants({ variant: "outline" }))}
@@ -62,7 +63,7 @@ export default function ListingCard({ listing }: ListingCardProps) {
             <div className="text-ellipsis text-balance">
               {listing.description}
             </div>
-            <div className="mt-2 flex flex-row justify-between">
+            <div className="mt- flex flex-row justify-between">
               <div>
                 <p>{formatPrice.format(Number(listing.askingPrice))}</p>
                 <p className="font-semibold">Asking Price</p>

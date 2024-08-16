@@ -34,7 +34,7 @@ export default function DeleteTopic({ id }: { id: string }) {
 
   const handleDelete = (id: string) => {
     deleteTopic.mutate({ id });
-    router.push("/settings/messages/General");
+    router.push("/settings/forum/general");
   };
 
   return (

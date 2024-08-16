@@ -31,7 +31,6 @@ export default function MessageLayout({
   children: React.ReactNode;
 }) {
   const [add, setAdd] = useState(false);
- 
 
   return (
     <div>
@@ -39,7 +38,7 @@ export default function MessageLayout({
         <main>
           <Card>
             <CardHeader className="flex justify-between">
-              <CardTitle className="mt-2">Message Board</CardTitle>
+              <CardTitle className="mt-2">Forum</CardTitle>
             </CardHeader>
 
             <CardContent>
@@ -80,7 +79,7 @@ export default function MessageLayout({
                         </div>
                       </div>
                       <div className=" border-b-2 p-2">
-                        <Link href={`/settings/messages/General`}>
+                        <Link href={`/settings/forum/general`}>
                           <div className="before:[content] m-3 flex flex-row justify-between">
                             <div>General</div>{" "}
                             <ChevronRight className="hover:backdrop-blur-xl" />{" "}

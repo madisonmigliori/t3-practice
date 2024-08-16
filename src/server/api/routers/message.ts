@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
+import { create } from "domain";
 import type { Session } from "next-auth";
 import { useContext } from "react";
 import { z } from "zod";
@@ -18,17 +19,43 @@ export const messageRouter = createTRPCRouter({
     .input(
       z.object({
         message: z.string(),
-        topicId: z.string(),
-        parentId: z.string(),
+        topicId: z.string().optional(),
+        parentId: z.string().optional(),
       }),
     )
     .mutation(({ input, ctx }) => {
       const message = ctx.db.message.create({
         data: {
-          message: input?.message,
-          userId: ctx.session.user.id,
-          topicId: input.topicId,
-          parentId: input.parentId,
+          message: input.message,
+          parent: {
+            connectOrCreate: {
+              where: {
+                id: input.parentId,
+              },
+              create: {
+                message: input.message,
+                parentId: input.parentId ?? "NONE",
+                userId: ctx.session.user.id,
+              },
+            },
+          },
+          Topic: {
+            connectOrCreate: {
+              where: {
+                id: input.topicId ?? "",
+              },
+              create: {
+                title: "General",
+                userId: "Admin",
+              },
+            },
+          },
+
+          users: {
+            connect: {
+              id: ctx.session.user.id,
+            },
+          },
         },
       });
       return message;
@@ -60,7 +87,7 @@ export const messageRouter = createTRPCRouter({
           topicId: input.id,
         },
         include: {
-          topic: input.id === "" ? false : true,
+          Topic: input.id === "" ? false : true,
         },
         orderBy: { id: "desc" },
       });
@@ -122,6 +149,45 @@ export const messageRouter = createTRPCRouter({
         orderBy: { id: "desc" },
       });
       return comments;
+    }),
+
+  getMessage: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(({ ctx, input }) => {
+      const message = ctx.db.message.findUnique({
+        where: {
+          id: input.id,
+        },
+      });
+      return message;
+    }),
+
+  updateMessage: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+
+        message: z.string(),
+      }),
+    )
+    .mutation(async ({ input, ctx }) => {
+      const updateMessage = ctx.db.message.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          message: input.message,
+        },
+      });
+      return updateMessage;
+    }),
+
+  deleteMessage: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(({ ctx, input }) => {
+      return ctx.db.message.delete({
+        where: { id: input.id },
+      });
     }),
 
   updateTopic: protectedProcedure

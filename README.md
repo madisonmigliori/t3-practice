@@ -28,17 +28,17 @@
 - [x] Handle Error Handling with Forms and Listings
 - [ ] Cloudinary Set-up
 - [ ] Formating Phone numbers
-- [ ] Fixed footer
+- [x] Fixed footer, yuh
 - [x] Fix Like Button
 - [x] Edit Listing Cards on Home Page
 - [x] Edit [id] listing page (IMG, Date attributes)
 - [x] Edit Buying Page when there are no liked listings
 - [x] Fix Selling Page when there are no listing the user added
 - [ ] Add some delay to allow data to update
-- [ ] Fix comment sizing
-- [ ] change buying to liked listing
-- [ ] create a contact us page
-- [ ] change messageboard to forums
+- [x] Fix comment sizing
+- [x] change buying to liked listing
+- [x] create a contact us page
+- [x] change messageboard to forums
 - [ ] add some usestates to messageboard for when form is added/edited
 - [ ] add the option to delete and edit post
 - [ ] create a chat room to recieve messages about certain listings and who posted it

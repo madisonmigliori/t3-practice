@@ -10,8 +10,8 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { string, z } from "zod";
-import SearchPage from "~/app/search/page";
-import TopicSelected from "~/app/settings/messages/[id]/page";
+import SearchPage from "~/app/(app)/search/page";
+
 
 import {
   Form,
@@ -40,7 +40,7 @@ export default function SearchTopics({ placeholder }: { placeholder: string }) {
 
   const onSubmit = (formData: SearchBarType) => {
     const encodedSearchQuery = encodeURI(formData.entry);
-    router.push(`/settings/messages/?q=${encodedSearchQuery}`);
+    router.push(`/settings/forum/?q=${encodedSearchQuery}`);
   };
 
   return (

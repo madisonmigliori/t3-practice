@@ -6,8 +6,8 @@ import { SessionProvider } from "next-auth/react";
 import Footer from "~/components/misc/Footer";
 import NavBar from "~/components/misc/NavBar";
 import { Pagination } from "~/components/ui/pagination";
-import { TRPCReactProvider } from "~/trpc/react";
 import { Toaster } from "~/components/ui/toaster";
+import { TRPCReactProvider } from "~/trpc/react";
 
 export const metadata = {
   title: "T3 Practice",
@@ -22,12 +22,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body className={`relative min-h-screen w-full flex-col bg-slate-100`}>
+      <body className={`flex min-h-screen w-full flex-col bg-slate-100`}>
         <NavBar />
         <div className="pb-[2.5rem]">
           <TRPCReactProvider> {children} </TRPCReactProvider>
         </div>
         <Toaster />
+
         <Footer />
       </body>
     </html>

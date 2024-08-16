@@ -4,10 +4,10 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <div className="flex flex-col">
-      <footer className="mt-auto flex bg-slate-500">
+    <div className="flex flex-1">
+      <footer className="mt-auto flex-1 bg-slate-500">
         <div className="mx-auto w-full max-w-screen-xl p-4 ">
-          <div className="sm:flex sm:items-center sm:justify-between">
+          <div className=" sm:flex sm:items-center sm:justify-between">
             <Link
               href="/"
               className="mb-4 flex items-center space-x-3 sm:mb-0 rtl:space-x-reverse"

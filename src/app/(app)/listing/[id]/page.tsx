@@ -5,6 +5,7 @@ import { now } from "next-auth/client/_utils";
 import Image from "next/image";
 import Link from "next/link";
 import ContactForm from "~/components/listings/ContactForm";
+import ShareListing from "~/components/listings/ShareListing";
 
 import DeleteButton from "~/components/misc/DeleteButton";
 import HeartIcon from "~/components/misc/HeartIcon";
@@ -69,7 +70,10 @@ export default async function ListingComponent({
                 </div>
                 <div>
                   {!created && (
-                    <HeartIcon id={getListing.id} liked={getListing.liked} />
+                    <div className="flex flex-row">
+                      <HeartIcon id={getListing.id} liked={getListing.liked} />
+                      <ShareListing id={getListing.id} />
+                    </div>
                   )}
 
                   {created && (
@@ -308,8 +312,25 @@ export default async function ListingComponent({
           )}
         </div>
         <div className=" flex ">
-          <div className=" ">
-            <ContactForm user={getListing?.User?.firstName ?? ""} />
+          <div className="gap-2 ">
+            <ContactForm
+              contactFirstName={getListing?.User?.firstName ?? ""}
+              contactId={""}
+              client={{
+                id: me?.id ?? "",
+                name: me?.name ?? "",
+                firstName: me?.firstName ?? "",
+                lastName: me?.lastName ?? "",
+                email: me?.email ?? "",
+                title: null,
+                mobilePhone: me?.mobilePhone ?? "",
+                officePhone: null,
+                homePhone: null,
+                emailVerified: null,
+                image: null,
+                messageId: null,
+              }}
+            />
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import router from "next/router";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import addListing from "~/app/listing/addListing/page";
+import addListing from "~/app/(app)/listing/addListing/page";
 import { Button } from "~/components/ui/button";
 import { toast, useToast } from "~/components/ui/use-toast";
 

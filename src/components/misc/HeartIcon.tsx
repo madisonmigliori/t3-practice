@@ -14,7 +14,7 @@ export default function HeartIcon({ id, liked }: HeartIconProps) {
   const showHeart = heart.data !== null ? true : false;
 
   const [isLiked, setIsLiked] = useState(showHeart);
-  console.log("liked", liked);
+
   const utils = api.useUtils();
 
   const like = api.listing.likeListing.useMutation({

@@ -1,7 +1,7 @@
 "use client";
 import { PlusIcon } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import TopicSelected from "~/app/settings/messages/[id]/page";
+import TopicSelected from "~/app/(app)/settings/forum/[id]/page";
 
 import AddTopic from "~/components/setting/messages/AddTopic";
 import SearchTopics from "~/components/setting/messages/SearchTopics";
@@ -17,9 +17,6 @@ export default function Message() {
   const searching = api.message.searchTopic.useQuery({
     title: searchQuery ?? "",
   });
-
-  const fido = searching.refetch.name;
-  console.log("Bark", fido);
 
   const searchSize = searching.data?.length;
 

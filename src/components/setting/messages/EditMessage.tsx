@@ -1,66 +1,59 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { Topic } from "@prisma/client";
-
-import React from "react";
+import type { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "~/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
-import { toast } from "~/components/ui/use-toast";
 import { api } from "~/trpc/react";
 
 interface TopicItemsProps {
   id: string;
-  parentId: string;
+  setEdit: Dispatch<SetStateAction<boolean>>;
+  message: string;
 }
 
-const messageSchema = z.object({
-  message: z.string().min(1, "Message is required"),
+const postSchema = z.object({
+  message: z.string(),
 });
 
-export default function TopicMessage({ id, parentId }: TopicItemsProps) {
+export default function EditMessage({ id, setEdit, message }: TopicItemsProps) {
   const utils = api.useUtils();
+  const post = api.message.getMessage.useQuery({ id });
 
-  const addMessage = useForm<z.infer<typeof messageSchema>>({
-    resolver: zodResolver(messageSchema),
+  const editPost = useForm<z.infer<typeof postSchema>>({
+    resolver: zodResolver(postSchema),
+
     defaultValues: {
-      message: "",
+      message: post.data?.message ?? message,
     },
   });
 
-  const createMessage = api.message.create.useMutation({
+  const updatePost = api.message.updateMessage.useMutation({
     onSuccess: async () => {
+      setEdit(false);
       await utils.message.invalidate();
 
-      addMessage.reset();
+      editPost.reset();
     },
 
-    onError: async () => {
-      toast({
-        variant: "destructive",
-        title: "Error: Failed to add new message",
-        description: "Please fill out all required fields correctly.",
-      });
-    },
+    onError: async () => {},
   });
 
-  const onSubmit = async (values: z.infer<typeof messageSchema>) => {
-    createMessage.mutate({
+  const onSubmit = async (values: z.infer<typeof postSchema>) => {
+    updatePost.mutate({
       message: values.message,
-      topicId: id,
-      parentId: parentId,
+      id: id,
     });
   };
 
   return (
     <div>
-      <Form {...addMessage}>
-        <form onSubmit={addMessage.handleSubmit(onSubmit)}>
+      <Form {...editPost}>
+        <form onSubmit={editPost.handleSubmit(onSubmit)}>
           <div>
             <FormField
-              control={addMessage.control}
+              control={editPost.control}
               name={"message"}
               render={({ field }) => {
                 return (
@@ -76,7 +69,7 @@ export default function TopicMessage({ id, parentId }: TopicItemsProps) {
 
           <div className="my-5 flex justify-end">
             <div>
-              <Button type="submit">Post Message</Button>
+              <Button type="submit">Update</Button>
             </div>
           </div>
         </form>

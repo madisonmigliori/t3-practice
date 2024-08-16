@@ -155,7 +155,6 @@ export default function EditListingCard({ id }: { id: number }) {
                         </FormControl>
                       </FormItem>
                     );
-                    s;
                   }}
                 />
               </div>

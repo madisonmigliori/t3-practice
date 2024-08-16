@@ -9,13 +9,13 @@ export default function SettingsNavBar() {
             <Link href="/settings/account">Account</Link>
           </div>
           <div>
-            <Link href="/settings/buying">Buying</Link>
+            <Link href="/settings/liked-listings">Liked Listings</Link>
           </div>
           <div>
             <Link href="/settings/selling">Selling</Link>
           </div>
           <div>
-            <Link href="/settings/messages/General">Messages</Link>
+            <Link href="/settings/forum/general">Forum</Link>
           </div>
         </div>
       </div>

@@ -5,10 +5,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import router from "next/router";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import addListing from "~/app/listing/addListing/page";
+import addListing from "~/app/(app)/listing/addListing/page";
 import { Button } from "~/components/ui/button";
 import { Textarea } from "~/components/ui/textarea";
 
+import type { User } from "@prisma/client";
 import {
   Card,
   CardContent,
@@ -26,7 +27,14 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import { toast } from "~/components/ui/use-toast";
 import { api } from "~/trpc/react";
+
+interface ContactFormProps {
+  contactFirstName: string;
+  contactId: string;
+  client: User;
+}
 
 const contactSchema = z.object({
   firstName: z.string(),
@@ -36,21 +44,34 @@ const contactSchema = z.object({
   message: z.string().optional(),
 });
 
-export default function ContactForm({ user }: { user: string }) {
+export default function ContactForm({
+  contactFirstName,
+  contactId,
+  client,
+}: ContactFormProps) {
   const contact = useForm<z.infer<typeof contactSchema>>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      mobilePhone: "",
+      firstName: client.firstName,
+      lastName: client.lastName,
+      email: client.email,
+      mobilePhone: client.mobilePhone,
       message: "",
     },
   });
 
-  const contactUser = api.user.update.useMutation({
+  const contactUser = api.contact.contactListing.useMutation({
     onSuccess: async () => {
-      console.log("Success");
+      toast({
+        title: "Message sent",
+      });
+      contact.reset();
+    },
+
+    onError: async () => {
+      toast({
+        title: "Message could not be sent",
+      });
     },
   });
 
@@ -59,10 +80,9 @@ export default function ContactForm({ user }: { user: string }) {
       firstName: values.firstName,
       lastName: values.lastName,
       email: values.email,
-      mobilePhone: values.mobilePhone ?? "",
-      homePhone: values.mobilePhone ?? "",
-      officePhone: values.mobilePhone ?? "",
-      message: values.message,
+      mobilePhone: values.mobilePhone,
+      comment: values.message,
+      recieverId: contactId,
     });
   };
 
@@ -175,19 +195,21 @@ export default function ContactForm({ user }: { user: string }) {
                 />
               </div>
             </div>
-          </form>
-          <div className="mx-10 my-5 grid grid-flow-row-dense grid-cols-2">
-            <div className="basis-1/8">
-              <Button type="submit">Submit</Button>
+            <div className="mx-10 my-5 grid grid-flow-row-dense grid-cols-2">
+              <div className="basis-1/8">
+                <Button type="submit">Submit</Button>
+              </div>
             </div>
-          </div>
+          </form>
         </Form>
-        {!user ? (
+        {!contactFirstName ? (
           <div className="text-sm text-gray-400">Listed by Jane Doe </div>
         ) : (
           <>
             {" "}
-            <div className="text-sm text-gray-400">Listed by {user}</div>
+            <div className="text-sm text-gray-400">
+              Listed by {contactFirstName}
+            </div>
           </>
         )}
       </CardContent>

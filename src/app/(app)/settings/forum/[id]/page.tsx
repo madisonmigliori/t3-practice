@@ -16,7 +16,7 @@ import { api } from "~/trpc/react";
 export default function TopicSelected({ params }: { params: { id: string } }) {
   //   const topicSelected = await api.message.getSingleTopic({ id });
   // useState
-  const id = params.id === "General" ? "" : params.id;
+  const id = params.id === "general" ? "" : params.id;
   const msg = api.message.getManyMsg.useQuery({ id });
   const me = api.user.me.useQuery();
 
@@ -64,7 +64,7 @@ export default function TopicSelected({ params }: { params: { id: string } }) {
         <div>
           <div className=" mt-5 grid grid-flow-row items-center">
             <div className="grid w-full gap-2">
-              <TopicMessage id={topicMsgs.data?.id ?? ""} parentId="" />
+              <TopicMessage id={topicMsgs.data?.id ?? ""} parentId="NONE" />
             </div>
             <div>
               <ScrollArea className="h-[600px] w-[auto] px-5">

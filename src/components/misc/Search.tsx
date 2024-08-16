@@ -10,7 +10,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { string, z } from "zod";
-import SearchPage from "~/app/search/page";
+import SearchPage from "~/app/(app)/search/page";
 import {
   Form,
   FormControl,

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import BuyingCard from "~/components/setting/buying/BuyingCard";
-import { api } from "~/trpc/server";
 
 export const metadata: Metadata = {
   title: "Liked Listings",

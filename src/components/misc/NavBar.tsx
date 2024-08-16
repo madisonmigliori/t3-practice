@@ -67,13 +67,8 @@ export default async function NavBar() {
           </>
         )}
         {session && (
-          <>
-            <Link
-              href="/contact-us"
-              className=" flex w-full items-center justify-between  bg-white px-10 py-4"
-            >
-              Contact Us
-            </Link>
+          <div className="flex w-full items-center justify-between gap-5 py-4">
+            <Link href="/contact-us">Contact Us</Link>
             <Avatar>
               <DropdownMenu>
                 <DropdownMenuTrigger>
@@ -114,7 +109,7 @@ export default async function NavBar() {
                 </DropdownMenuContent>
               </DropdownMenu>
             </Avatar>
-          </>
+          </div>
         )}
       </div>
     </nav>

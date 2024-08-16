@@ -66,13 +66,19 @@ export default async function Listing() {
       <div className="mx-10">
         {listingSize !== 0 ? (
           <div className="mx-10 my-4 grid grid-flow-row-dense gap-2">
-            {listings.map((listing: Listing) => (
+            {session ?? !session ? (
               <>
-                <div className="mx-20 my-2 rounded-lg">
-                  <ListingCard key={listing.id} listing={listing} />
-                </div>
+                {listings.map((listing: Listing) => (
+                  <>
+                    <div className="mx-20 my-2 rounded-lg">
+                      <ListingCard key={listing.id} listing={listing} />
+                    </div>
+                  </>
+                ))}{" "}
               </>
-            ))}{" "}
+            ) : (
+              <></>
+            )}
           </div>
         ) : (
           "No Listings Yet. Add a listing"

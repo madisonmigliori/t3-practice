@@ -57,7 +57,13 @@ export default function SearchPage() {
             ))}{" "}
           </div>
         ) : (
-          "Search for a business or location"
+          <div className="flex justify-center p-10 align-middle text-xl">
+            <p>Sorry, we couldn&apos;t find any results. </p>
+            <p>
+              {" "}
+              Try again by searching the business name or business location.
+            </p>
+          </div>
         )}
       </div>
     </div>

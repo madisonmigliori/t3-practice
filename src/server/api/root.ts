@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { contactUsRouter } from "~/server/api/routers/contactUs";
 import { listingRouter } from "~/server/api/routers/listing";
 import { messageRouter } from "~/server/api/routers/message";
 import { userRouter } from "~/server/api/routers/user";
@@ -13,6 +14,7 @@ export const appRouter = createTRPCRouter({
   listing: listingRouter,
   user: userRouter,
   message: messageRouter,
+  contact: contactUsRouter,
 });
 
 // export type definition of API
