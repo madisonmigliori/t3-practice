@@ -5,6 +5,7 @@ import type { Listing } from "@prisma/client";
 import Link from "next/link";
 import type { Key } from "react";
 import { z } from "zod";
+import ListingCard from "~/components/listings/ListingCard";
 import SellingItem from "~/components/setting/selling/SellingItem";
 
 import { Button } from "~/components/ui/button";
@@ -37,7 +38,7 @@ export default function SellingCard() {
           <div className="mx-5 grid grid-flow-row-dense grid-cols-1 gap-4">
             {sellings.data?.map((selling: Listing) => (
               <>
-                <SellingItem key={selling.id} selling={selling} />
+                <ListingCard key={selling.id} listing={selling} />
               </>
             ))}
           </div>

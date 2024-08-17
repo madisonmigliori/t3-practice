@@ -12,7 +12,7 @@ import { Label } from "~/components/ui/label";
 import { cn } from "~/lib/utils";
 import { api } from "~/trpc/react";
 
-export default function Account() {
+export default function AccountDetails() {
   const me = api.user.me.useQuery();
 
   return (

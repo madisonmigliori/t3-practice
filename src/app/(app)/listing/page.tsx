@@ -9,6 +9,7 @@ import { db } from "~/server/db";
 
 import type { Metadata } from "next";
 import ListingCard from "~/components/listings/ListingCard";
+import Paginator from "~/components/misc/Paginator";
 import Search from "~/components/misc/Search";
 import {
   Tooltip,
@@ -17,10 +18,11 @@ import {
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 import { getServerAuthSession } from "~/server/auth";
+import type { SetStateAction } from "react";
 
 // const [listings, setListings] = useState<Listing[]>([]);
 export const metadata: Metadata = {
-  title: "Search Listings",
+  title: "Search Businesses",
   description: "",
 };
 
@@ -34,8 +36,12 @@ export default async function Listing() {
       <div className="mx-10 grid grid-flow-row-dense grid-cols-2 gap-4">
         <div className="column-1 items-center px-5 text-center">
           <div className="px-10 py-10 text-left ">
-            <h1 className="pb-2 text-3xl font-bold">All Listings</h1>
-            <h2 className="text-lg">Showing {listingSize} listings</h2>
+            <h1 className="from-neutral-400 pb-2 text-4xl font-bold">
+              All Businesses
+            </h1>
+            <h2 className="text-xl text-black">
+              Showing {listingSize} businesses
+            </h2>
           </div>
         </div>
         <div className="flex justify-end">
@@ -65,7 +71,7 @@ export default async function Listing() {
       </div>
       <div className="mx-10">
         {listingSize !== 0 ? (
-          <div className="mx-10 my-4 grid grid-flow-row-dense gap-2">
+          <div className="mx-10 my-4 grid grid-flow-row-dense gap-2 ">
             {session ?? !session ? (
               <>
                 {listings.map((listing: Listing) => (
@@ -79,6 +85,9 @@ export default async function Listing() {
             ) : (
               <></>
             )}
+            <Paginator totalItems={0} itemsPerPage={0} currentPage={0} setCurrentPage={function (value: SetStateAction<number>): void {
+              throw new Error("Function not implemented.");
+            } } />
           </div>
         ) : (
           "No Listings Yet. Add a listing"

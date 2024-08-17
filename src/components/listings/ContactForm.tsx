@@ -55,7 +55,7 @@ export default function ContactForm({
       firstName: client.firstName,
       lastName: client.lastName,
       email: client.email,
-      mobilePhone: client.mobilePhone,
+      mobilePhone: client.mobilePhone ?? "",
       message: "",
     },
   });

@@ -64,7 +64,7 @@ export default function TopicSelected({ params }: { params: { id: string } }) {
         <div>
           <div className=" mt-5 grid grid-flow-row items-center">
             <div className="grid w-full gap-2">
-              <TopicMessage id={topicMsgs.data?.id ?? ""} parentId="NONE" />
+              <TopicMessage id={topicMsgs.data?.id ?? ""} parentId="" />
             </div>
             <div>
               <ScrollArea className="h-[600px] w-[auto] px-5">
@@ -77,8 +77,8 @@ export default function TopicSelected({ params }: { params: { id: string } }) {
                           key={msgPid.id ?? ""}
                           message={msgPid.message}
                           id={msgPid.id ?? ""}
-                          parentId={msgPid.parentId}
-                          userId={msgPid.userId}
+                          parentId={msgPid.parentId ?? ""}
+                          userId={msgPid.userId ?? ""}
                           topicId={topicMsgs.data?.id ?? ""}
                         />
                       ))}{" "}

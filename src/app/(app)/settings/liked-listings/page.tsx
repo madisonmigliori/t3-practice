@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import ListingCard from "~/components/listings/ListingCard";
 import BuyingCard from "~/components/setting/buying/BuyingCard";
 
 export const metadata: Metadata = {

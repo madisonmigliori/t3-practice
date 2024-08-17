@@ -183,9 +183,9 @@ export default function ContactUsForm() {
               <div className="basis-1/2">
                 <div className="mt-10 text-wrap text-xl font-normal">
                   <p>
-                    Thank you for reaching out to Dealonomy. We have recieved
-                    your inquiry and one of our team members will get back to
-                    you within the next 24-48 hours
+                    Thank you for reaching out to StandOn. We have recieved your
+                    inquiry and one of our team members will get back to you
+                    within the next 24-48 hours
                   </p>
                   <p className="mt-5">
                     In the meantime, feel free to explore our website for more

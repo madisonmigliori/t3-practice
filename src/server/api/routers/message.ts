@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
 import { create } from "domain";
+import { connect } from "http2";
 import type { Session } from "next-auth";
 import { useContext } from "react";
 import { z } from "zod";
@@ -24,7 +25,7 @@ export const messageRouter = createTRPCRouter({
       }),
     )
     .mutation(({ input, ctx }) => {
-      const message = ctx.db.message.create({
+      const post = ctx.db.message.create({
         data: {
           message: input.message,
           parent: {
@@ -33,19 +34,19 @@ export const messageRouter = createTRPCRouter({
                 id: input.parentId,
               },
               create: {
+                id: input.parentId ?? "",
                 message: input.message,
-                parentId: input.parentId ?? "NONE",
-                userId: ctx.session.user.id,
               },
             },
           },
-          Topic: {
+          topic: {
             connectOrCreate: {
               where: {
                 id: input.topicId ?? "",
               },
               create: {
                 title: "General",
+                id: "general",
                 userId: "Admin",
               },
             },
@@ -58,7 +59,7 @@ export const messageRouter = createTRPCRouter({
           },
         },
       });
-      return message;
+      return post;
     }),
 
   createTopic: protectedProcedure
@@ -75,7 +76,7 @@ export const messageRouter = createTRPCRouter({
 
   getManyTopics: publicProcedure.query(({ ctx }) => {
     return ctx.db.topic.findMany({
-      orderBy: { id: "desc" },
+      orderBy: { userId: "asc" },
     });
   }),
 
@@ -87,7 +88,7 @@ export const messageRouter = createTRPCRouter({
           topicId: input.id,
         },
         include: {
-          Topic: input.id === "" ? false : true,
+          topic: input.id === "" ? false : true,
         },
         orderBy: { id: "desc" },
       });

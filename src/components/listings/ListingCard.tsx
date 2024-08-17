@@ -15,6 +15,7 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 import { cn } from "~/lib/utils";
+import { api } from "~/trpc/server";
 
 interface ListingCardProps {
   listing: Listing;
@@ -27,8 +28,8 @@ export default function ListingCard({ listing }: ListingCardProps) {
   });
 
   return (
-    <Card className="rounded-lg shadow-md">
-      <div className="flex justify-stretch">
+    <Card className="duration:200 rounded-lg shadow-md transition-all group-hover:scale-105">
+      <div className="flex justify-stretch ">
         <div className="basis-1/4">
           <Image
             width={300}

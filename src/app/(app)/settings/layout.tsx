@@ -17,7 +17,7 @@ export default function SettingsLayout({
       <div>
         <div className="column-1 items-center px-5 text-center">
           <div className="text-left">
-            <h1 className="px-10 py-10 text-3xl font-bold">Settings</h1>
+            <h1 className="px-10 py-10 text-4xl font-bold">Settings</h1>
           </div>
         </div>
       </div>

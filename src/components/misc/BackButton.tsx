@@ -13,7 +13,11 @@ export default function BackButton() {
   };
   return (
     <div>
-      <Button variant="secondary" className="m-6" onClick={handleClick}>
+      <Button
+        variant="secondary"
+        className="m-6 bg-transparent"
+        onClick={handleClick}
+      >
         <ArrowLeft />
       </Button>
     </div>

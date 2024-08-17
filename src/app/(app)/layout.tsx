@@ -10,9 +10,9 @@ import { Toaster } from "~/components/ui/toaster";
 import { TRPCReactProvider } from "~/trpc/react";
 
 export const metadata = {
-  title: "T3 Practice",
+  title: "StandOn",
   description: "Practice T3 app",
-  icons: [{ rel: "icon", url: "/shopping-icon.png" }],
+  icons: [{ rel: "icon", url: "/stand.png" }],
 };
 
 export default function RootLayout({
@@ -22,7 +22,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body className={`flex min-h-screen w-full flex-col bg-slate-100`}>
+      <body className={`flex min-h-screen w-full flex-col`}>
         <NavBar />
         <div className="pb-[2.5rem]">
           <TRPCReactProvider> {children} </TRPCReactProvider>

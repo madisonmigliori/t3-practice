@@ -33,7 +33,7 @@ export const contactUsRouter = createTRPCRouter({
               create: {
                 id: "Admin",
                 name: "Admin",
-                email: "inquiry@t3practice.com",
+                email: "inquiry@standoncompany.com",
               },
             },
           },
@@ -47,7 +47,7 @@ export const contactUsRouter = createTRPCRouter({
       z.object({
         firstName: z.string(),
         lastName: z.string(),
-        email: z.string(),
+        email: z.string().optional(),
         mobilePhone: z.string().optional(),
         comment: z.string().optional(),
         recieverId: z.string().optional(),
@@ -68,9 +68,8 @@ export const contactUsRouter = createTRPCRouter({
                 id: input.recieverId,
               },
               create: {
-                id: "contact",
                 name: "Jane Doe",
-                email: "contact@t3practice.com",
+                email: "contact@standoncompany.com",
               },
             },
           },

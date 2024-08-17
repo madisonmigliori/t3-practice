@@ -49,7 +49,7 @@ export default async function ListingComponent({
 
   return (
     <div>
-      <Button variant="secondary" className="m-6">
+      <Button variant="secondary" className="m-6 bg-transparent">
         <Link href="/listing">
           {" "}
           <ArrowLeft />
@@ -106,7 +106,7 @@ export default async function ListingComponent({
               <CardContent>
                 <div>
                   <div className="my-10 grid grid-flow-row-dense grid-cols-2 justify-between gap-x-10 px-10 text-3xl">
-                    <div className="text-blue-800">
+                    <div className="text-green-700">
                       <div>
                         <div>
                           <span className="font-semibold">Asking Price:</span>

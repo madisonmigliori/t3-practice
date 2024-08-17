@@ -13,7 +13,6 @@ datasource db {
     // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
     // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
     url      = env("DATABASE_URL")
-    // relationMode = "prisma"
 }
 
 //change IMG to File[]
@@ -126,18 +125,18 @@ model File {
 
 model Message {
     id        String   @id @default(cuid())
-    parentId  String
-    userId    String
+    parentId  String?
+    userId    String?
     topicId   String?
     message   String
     createdAt DateTime @default(now())
 
-    users User @relation(fields: [userId], references: [id])
+    users User? @relation(fields: [userId], references: [id])
 
-    parent   Message   @relation("parent", fields: [parentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    parent   Message?  @relation("parent", fields: [parentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
     children Message[] @relation("parent")
 
-    Topic Topic? @relation(fields: [topicId], references: [id])
+    topic Topic? @relation(fields: [topicId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Topic {

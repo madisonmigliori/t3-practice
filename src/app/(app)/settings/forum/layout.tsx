@@ -32,6 +32,14 @@ export default function MessageLayout({
 }) {
   const [add, setAdd] = useState(false);
 
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [topicSelected, setTopicSelected] = useState<string>("");
+  const topics = api.message.getManyTopics.useQuery();
+
+  const gen = topics.data?.find(
+    (topic) => topic.title === "General" || topic.title === "general",
+  );
+
   return (
     <div>
       <div>
@@ -78,14 +86,18 @@ export default function MessageLayout({
                           </div>
                         </div>
                       </div>
-                      <div className=" border-b-2 p-2">
-                        <Link href={`/settings/forum/general`}>
-                          <div className="before:[content] m-3 flex flex-row justify-between">
-                            <div>General</div>{" "}
-                            <ChevronRight className="hover:backdrop-blur-xl" />{" "}
-                          </div>
-                        </Link>
-                      </div>
+                      {gen === undefined ? (
+                        <div className=" border-b-2 p-2">
+                          <Link href={`/settings/forum/general`}>
+                            <div className="before:[content] m-3 flex flex-row justify-between">
+                              <div>General</div>{" "}
+                              <ChevronRight className="hover:backdrop-blur-xl" />{" "}
+                            </div>
+                          </Link>
+                        </div>
+                      ) : (
+                        <></>
+                      )}
                       {add ? (
                         <>
                           <div className=" border-b-2 p-2">

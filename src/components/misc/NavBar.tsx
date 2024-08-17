@@ -40,21 +40,21 @@ export default async function NavBar() {
   const session = await getServerAuthSession();
 
   return (
-    <nav className=" flex w-full items-center justify-between border-b-2 bg-white px-10 py-4">
-      <div className="items-left flex gap-10">
-        <div className="flex justify-between gap-4">
+    <nav className=" flex w-full items-center justify-between border-b-2 bg-[#f8e6b6] px-10 py-4 align-middle text-black">
+      <div className="flex items-center gap-10 text-lg">
+        <div className="flex items-center justify-between gap-4">
           {" "}
           <Image
-            src="/shopping-icon.png"
-            alt="shoping-icon"
-            width="30"
-            height={30}
+            src="/stand.png"
+            alt="stand-icon"
+            width="60"
+            height={60}
           ></Image>
-          <Link className="font-bold" href="/">
-            Home
+          <Link className="text-xl font-bold" href="/">
+            StandOn
           </Link>
         </div>
-        <Link href="/listing">Listings</Link>
+        <Link href="/listing">Businesses</Link>
         {session && <Link href="/settings/account">Settings</Link>}
       </div>
 

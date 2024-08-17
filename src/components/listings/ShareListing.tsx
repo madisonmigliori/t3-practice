@@ -17,7 +17,7 @@ export default function ShareListing({ id }: ShareListingProps) {
     <div className="w-full">
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="outline"> Share Listing</Button>
+          <Button variant="outline"> Share Business</Button>
         </PopoverTrigger>
         <PopoverContent>
           <ShareSocial

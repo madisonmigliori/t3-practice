@@ -14,7 +14,7 @@ export default function addListing() {
   return (
     <div>
       <div className="flex flex-row justify-center">
-        <Button variant="secondary" className="m-6">
+        <Button variant="secondary" className="m-6 bg-transparent">
           <Link href="/listing">
             {" "}
             <ArrowLeft />
